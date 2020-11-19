@@ -15,7 +15,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import Results from './results/results';
-import Footer from './Footer';
+// import Footer from './Footer';
 
 class Landing extends Component {
   
@@ -114,25 +114,31 @@ class Landing extends Component {
         <Results/>
         {/* <Footer/> */}
       </div>
-    ); else AuthCheck = (
-      <div className="container center" style={{ height: "100vh", marginTop: '50px' }}>
-        <div className="row">
-          <div className="col">
-            <div className="container center">
-              <img src={Logo} alt="BRANCHINY" width="50%" style={{ padding: '15px'}}/>
-              <h3>
-                <b>Nous connectons les artistes aux opportunités afin de faciliter le booking</b>
-              </h3>
-            </div>
-          </div>
-        </div>
-        <Results/>
-        {/* <Footer/> */}
-      </div>
-    );
+    ); else {
+      const { user } = this.props.auth;
+      window.location.href = '/p/' + user.id;
+    }
 
+    // AuthCheck = (
+    //   <div className="container center" style={{ height: "100%", marginTop: '50px' }}>
+    //     <div className="row">
+    //       <div className="col">
+    //         <div className="container center">
+    //           <img src={Logo} alt="BRANCHINY" width="50%" style={{ padding: '15px'}}/>
+    //           <h3>
+    //             <b>Nous connectons les artistes aux opportunités afin de faciliter le booking</b>
+    //           </h3>
+    //         </div>
+    //       </div>
+    //     </div>
+    //     <Results/>
+    //     {/* <Footer/> */}
+    //   </div>
+    // );
     if (this.state.searching === false) {
-      return ( <div>{AuthCheck}</div> );
+      return ( <div style={{ height: "100vh" }}>
+        {AuthCheck}
+      </div> );
     }
     return (
       <div style={{ height: "100%" }}>

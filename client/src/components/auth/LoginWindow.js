@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(5),
         paddingTop: theme.spacing(0),
         textAlign: 'center',
+        height: '100%',
         // borderWidth: '1px',
         // borderColor: '#191919',
         // borderStyle: 'solid',

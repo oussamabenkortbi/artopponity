@@ -10,7 +10,7 @@ const admins = require("./routes/api/admins");
 const clients = require("./routes/api/clients");
 const prestations = require("./routes/api/prestations");
 const videos = require("./routes/api/videos");
-const email = require("./routes/api/email");
+const emails = require("./routes/api/emails");
 const photos = require("./routes/api/photos");
 
 const app = express();
@@ -54,7 +54,7 @@ app.use("/api/admins", admins);
 app.use("/api/clients", clients);
 app.use("/api/prestations", prestations);
 app.use("/api/videos", videos);
-// app.use("/api/email", email);
+app.use("/verify", emails)
 app.use("/api/photos", photos);
 
 const port = process.env.PORT || 5000;

@@ -10,13 +10,10 @@ const ArtistSchema = new Schema({
     fullName: {
         type: String,
     },
-    dicepline: {
+    dicipline: {
         type: String,
     },
     categories: {
-        type: String,
-    },
-    phoneNumber: {
         type: String,
     },
     description: {

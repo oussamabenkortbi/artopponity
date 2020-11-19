@@ -9,12 +9,7 @@ import { logoutUser } from "../../../actions/authActions";
 import { Deciplines, Wilaya } from '../Types';
 import Dropdown from 'react-dropdown';
 
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Button from '@material-ui/core/Button';
+import { FormLabel, FormControl, FormGroup, FormControlLabel, Checkbox, Button } from '@material-ui/core';
 
 function EditArtistInfo(props) {
 

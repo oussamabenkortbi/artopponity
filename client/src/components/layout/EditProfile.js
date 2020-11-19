@@ -31,8 +31,7 @@ import { GiPartyFlags } from "react-icons/gi";
 import { BiPhotoAlbum } from "react-icons/bi";
 import { BsCollectionPlay } from "react-icons/bs";
 import { RiLockPasswordLine } from "react-icons/ri";
-
-import UserData from "../auth/userData"
+import { IoMdSettings } from "react-icons/io";
 
 const drawerWidth = 75;
 
@@ -73,6 +72,8 @@ function EditProfile(props) {
     const classes = useStyles();
     const theme = useTheme();
     const [mobileOpen, setMobileOpen] = React.useState(false);
+    
+    const [isConfirmed, setisConfirmed] = React.useState(false);
 
     const [btn0, setBtn0] = React.useState(true);
     const [btn1, setBtn1] = React.useState(false);
@@ -84,21 +85,22 @@ function EditProfile(props) {
     const [progress, setProgress] = React.useState(0);
     const { user } = props.auth;
 
-    
-    React.useEffect(() => {
-
-        const artist = {
-            _id: user.id
-        }
-        axios.post("/api/artists/getArtistsProgress", artist) // get photos
-            .then(res => { 
-                setProgress(res.data.progress)
-            }).catch(e => console.log(e))
-    }, [user.id]);
-
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
+
+    React.useEffect(() => {
+        const artist = {
+          _id: user.id
+        }
+        axios.post("/api/users/isConfirmed", artist)
+            .then(res => {
+                console.log(res.data)
+                setisConfirmed(res.data.isConfirmed)
+            })
+    
+    }, [user.id]);
+    // React.useEffect()
     const handlebtn0 = () => {
         setBtn0(true);
         setBtn1(false);
@@ -186,6 +188,13 @@ function EditProfile(props) {
     );
 
     const container = window !== undefined ? () => window().document.body : undefined;
+
+    if (isConfirmed === false) return (
+        <div className="container center" style={{ height: '100vh', paddingTop: '30vh' }}>
+            <h2><b>Inscription effectuée avec succes</b></h2>
+            <h5><b>Confirmez Votre Email</b></h5>
+        </div>
+    )
     
     return (
         <div className={classes.root}>
@@ -201,9 +210,9 @@ function EditProfile(props) {
                             onClick={handleDrawerToggle}
                             className={classes.menuButton}
                         >
-                            <MenuIcon />
+                            <IoMdSettings className="react-icons"/>
                         </IconButton>
-                        <Progress progress={progress}/><div style={{ marginTop: '8px', marginLeft: '10px' }}><h4> {progress} % </h4></div>
+                        <Progress id={user.id} bar={true}/>
                     </Toolbar>
                 </Hidden>
                 <Hidden xsDown implementation="css">
@@ -215,9 +224,9 @@ function EditProfile(props) {
                             onClick={handleDrawerToggle}
                             className={classes.menuButton}
                         >
-                            <MenuIcon />
+                            <IoMdSettings className="react-icons"/>
                         </IconButton>
-                        <Progress progress={progress} /><div style={{ marginTop: '8px', marginLeft: '15px' }}><h4> {progress} % </h4></div>
+                        <Progress id={user.id} bar={true}/>
                     </Toolbar>
                 </Hidden>
             </AppBar>

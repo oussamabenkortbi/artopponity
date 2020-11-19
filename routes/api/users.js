@@ -89,7 +89,9 @@ router.post("/register", (req, res) => {
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
+        phoneNumber: req.body.phoneNumber,
         type: req.body.type,
+        isConfirmed: false,
       });
 
       // Hash password before saving in database
@@ -157,13 +159,21 @@ router.post("/updatePassword", (req, res) => {
 
 router.get("/getUsersList", (req, res) => {
 
-  User.find({}, { name: 1, _id: 1})
+  User.find({}, { name: 1, _id: 1, password: 0 })
     .then(user => {
       res.json({
         user
       });
     }
   );
+})
+
+router.post("/isConfirmed", (req, res) => {
+
+  User.findOne({ _id: req.body._id }, { isConfirmed: 1 })
+    .then(user => {
+      res.json({ isConfirmed: user.isConfirmed });
+    }).catch(err => console.log(err))
 })
 
 module.exports = router;

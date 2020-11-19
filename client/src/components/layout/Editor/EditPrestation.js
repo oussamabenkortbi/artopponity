@@ -73,6 +73,7 @@ class EditPrestations extends Component {
                         type="text" 
                         value={this.state.name} 
                         name="name"
+                        required
                     />
                 </div>
                 <div className="Button-Margin">
@@ -93,6 +94,7 @@ class EditPrestations extends Component {
                         type="number" 
                         value={this.state.time} 
                         name="time"
+                        required
                     />
                 </div>
                 <div>
@@ -103,6 +105,7 @@ class EditPrestations extends Component {
                         type="number" 
                         value={this.state.price} 
                         name="price"
+                        required
                     />
                 </div>
                 <div>
@@ -113,6 +116,7 @@ class EditPrestations extends Component {
                         type="number" 
                         value={this.state.artists} 
                         name="artists"
+                        required
                     />
                 </div>
                 <div>
@@ -123,6 +127,7 @@ class EditPrestations extends Component {
                         type="number" 
                         value={this.state.space} 
                         name="space"
+                        required
                     />
                 </div>
                 <div>
@@ -133,6 +138,7 @@ class EditPrestations extends Component {
                         type="number" 
                         value={this.state.prepareTime} 
                         name="prepareTime"
+                        required
                     />
                 </div>
                 <br/>

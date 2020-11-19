@@ -61,7 +61,7 @@ export default function EditPhotos({id, type}) {
                     <br/>
                     <div style={{ paddingTop: '10px'}}></div>
                     <div className="contain">
-                        <div className={classes.image} style={{ backgroundColor: '#191919'}}></div>
+                        {/* <div className={classes.image} style={{ backgroundColor: '#191919'}}></div> */}
                         { PreviewSource && (
                             <img src={PreviewSource} alt="pic" className={classes.image} />
                         )}

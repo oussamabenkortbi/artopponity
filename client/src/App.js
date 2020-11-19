@@ -10,11 +10,12 @@ import store from "./store";
 import Navbar from "./components/layout/Navbar";
 import Landing from "./components/layout/Landing";
 import Error from "./components/layout/Error";
-import Register from "./components/auth/Register";
-import Login from "./components/auth/Login";
+import RegisterPage from "./components/auth/RegisterPage";
+import LoginPage from "./components/auth/LoginPage";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import ProfileRouter from "./components/layout/ProfileRouter";
 import EditProfile from "./components/layout/EditProfile";
+import ForgotPassword from "./components/layout/ForgotPassword";
 
 import "./App.css";
 
@@ -45,11 +46,12 @@ class App extends Component {
           <div className="App">
             <Navbar />
             <Switch>
-              <Route exact path="/" component={Landing} />
-              <Route exact path="/register" component={Register} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/p/:id" component={ProfileRouter} />
-              <PrivateRoute exact path="/EditProfile" component={EditProfile} />
+              <Route exact path = "/" component = {Landing} />
+              <Route exact path = "/register" component = {RegisterPage} />
+              <Route exact path = "/login" component = {LoginPage} />
+              <Route exact path = "/ForgotPassword" component = {ForgotPassword} />
+              <Route exact path = "/p/:id" component = {ProfileRouter} />
+              <PrivateRoute exact path = "/EditProfile" component = {EditProfile} />
               <Route component = {Error} />
             </Switch>
           </div>

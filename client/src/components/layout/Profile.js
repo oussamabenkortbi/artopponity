@@ -22,6 +22,9 @@ import { FaCheckCircle, FaMapMarkedAlt, FaMoneyBillAlt, FaRegEye } from "react-i
 import { BsFillPeopleFill } from "react-icons/bs";
 import { RiMusic2Fill } from "react-icons/ri";
 
+import Progress from './Editor/Progress';
+
+// import { UserData } from "../auth/userData";
 
 class Profile extends Component {
 
@@ -35,6 +38,7 @@ class Profile extends Component {
       fullName: "",
       type: "",
       phone: 0,
+      dicipline: '',
       description: "",
       wilaya: "",
       progress: 0,
@@ -71,57 +75,66 @@ class Profile extends Component {
           dashboard: true 
         })
       }
-    }     
-
+    }
+    
+    // const artistData = UserData(this.props.id);
+    // console.log(UserData(this.props.id).artistdata.firstName)
+    
     axios.post("/api/artists/getArtistsProgress", artist)
       .then(res => {
-        this.setState({ progress: res.data.progress })
+        this.setState({ progress: this.state.progress + res.data.progress })
       }).catch(err => console.log(err));
 
     axios.post("/api/artists/getInfoArtists", artist)
       .then(res => {
         this.setState({
           fullName: res.data.artist.fullName,
-          type: res.data.artist.type,
-          age: res.data.artist.age,
+          eventType: res.data.artist.eventType,
+          phoneNumber: res.data.artist.phoneNumber,
           description: res.data.artist.description,
           wilaya: res.data.artist.wilaya,
           isValid: res.data.artist.isValid,
+          dicipline: res.data.artist.dicipline,
+          eventType: res.data.artist.eventType,
+          categories: res.data.artist.categories,
         })
       }).catch(err => console.log(err));
 
     axios.post("/api/prestations/get", artist)
       .then(res => {
-        this.setState({
+        if (res.data.prestations) this.setState({
           prestations: res.data.prestations,
+          progress: this.state.progress + 10,
         })
       }).catch(err => console.log(err));
 
     axios.post("/api/videos/get", artist)
       .then(res => {
-        this.setState({
+        if (res.data.videos) this.setState({
           videos: res.data.videos,
+          progress: this.state.progress + 10,
         })
       }).catch(err => console.log(err));
 
 
     axios.post("/api/photos/getProfilePic", { artist: artist._id }) // get photos
-      .then(res => { this.setState({ profilePic: res.data.photo.image }) })
+      .then(res => { if (res.data.photo) this.setState({ profilePic: res.data.photo.image, progress: this.state.progress + 10, }) })
       .catch(e => console.log(e))
     axios.post("/api/photos/getCoverPic", { artist: artist._id }) // get photos
-      .then(res => { this.setState({ coverPic: res.data.photo.image }) })
+      .then(res => { if (res.data.photo) this.setState({ coverPic: res.data.photo.image, progress: this.state.progress + 10, }) })
       .catch(e => console.log(e))
     axios.post("/api/photos/getGallery", { artist: artist._id }) // get photos
       .then(res => { 
-        this.setState({ 
-          photos: res.data.photos
+        if (res.data.photos) this.setState({ 
+          photos: res.data.photos,
+          progress: this.state.progress + 10,
         }) 
       }).catch(e => console.log(e))
-
-    if (this.state.progress < 70) this.setState({ isEmpty: true })
   }
 
   render() {
+
+    const { user } = this.props.auth
 
     const useStyles = makeStyles((theme) => ({
       root: {
@@ -280,7 +293,7 @@ class Profile extends Component {
     if (this.state.isValid === true) validIcon = (<FaCheckCircle/>)
     if (this.state.isValid === true) isValid = (<p style={{ marginBottom: '20px' }}><FaCheckCircle className="react-icons"/> <b> Profile Validé</b> par BRANCHINY</p>)
     if (this.state.dashboard === true) {
-      if (this.state.isEmpty === true) VideChecker = (<Alert severity="error" style={{ marginBottom: '20px' }}>Profile Non Complete ! (Progress = {this.state.progress}%)</Alert>)
+      VideChecker = (<Progress id={user.id} bar={false}/>)
       if (this.state.isConfirmed === false) ConfirmeChecker = (<Alert severity="error" style={{ marginBottom: '20px' }}>Confirmé Votre Email !</Alert>)
       isAuth = (
         <div>

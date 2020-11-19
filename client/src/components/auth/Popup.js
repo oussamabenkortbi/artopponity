@@ -12,6 +12,7 @@ export default function AlertDialog() {
 
   const handleClose = () => {
     setOpen(false);
+    window.location.reload();
   };
 
   return (
@@ -23,7 +24,7 @@ export default function AlertDialog() {
             open={open}
             onClose={handleClose}
         >
-            <Register/>
+          <Register style={{ width: '700px'}}/>
         </Dialog>
     </div>
   );

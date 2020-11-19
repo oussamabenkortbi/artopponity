@@ -2,31 +2,20 @@ const express = require("express");
 const router = express.Router();
 const Artist = require("../../models/Artist");
 
-router.post("/addArtist", (req, res) => {
-  const userKey = new Artist({
-    _id: req.body._id,
-    phoneNumber: req.body.phoneNumber,
-    isValid: req.body.isValid
-  })
-  userKey.save()
-    .then(artist => res.json(artist))
-    .catch(err => console.log(err))
-})
-
 router.post("/registerArtist" , (req, res) => {
+
   Artist.findOne({ _id: req.body._id }).then( artist => {
     if (!artist) {
       const newArtist = new Artist({
         _id: req.body._id,
         fullName: req.body.fullName,
         phoneNumber: req.body.phoneNumber,
-        description: req.body.description,
-        wilaya: req.body.wilaya,
-        type: req.body.type,
+        dicipline: req.body.dicipline,
+        eventType: req.body.eventType,
         isValid: false,
       });
       newArtist.save()
-        .then(artist => res.json(artist))
+        .then(() => res.json({ success: true }))
         .catch(err => console.log(err));
     } else {
       if (req.body.eventType) artist.eventType = req.body.eventType
@@ -34,8 +23,10 @@ router.post("/registerArtist" , (req, res) => {
       if (req.body.phoneNumber) artist.phoneNumber = req.body.phoneNumber;
       if (req.body.description) artist.description = req.body.description;
       if (req.body.wilaya) artist.wilaya = req.body.wilaya;
-      if (req.body.type) artist.type = req.body.type;
       if (req.body.isValid) artist.isValid = req.body.isValid;
+      if (req.body.dicipline) artist.dicipline = req.body.dicipline;
+      if (req.body.eventType) artist.eventType = req.body.eventType;
+      if (req.body.categories) artist.categories = req.body.categories;
       artist
         .save()
           .then(() => res.json("success!!"))
@@ -69,13 +60,14 @@ router.post("/getArtistsProgress", (req, res) => {
 router.get("/getArtistList", (req, res) => {
   Artist.find({ 
     $and: [ 
-      { fullName: {$ne: ''} }, 
-      { description: {$ne: ''} }, 
-      { wilaya: {$ne: ''} }, 
-      { type: {$ne: ''} }, 
-      { isValid: true }, 
+      { fullName: { $ne: '' } },
+      { description: { $ne: '' } },
+      { wilaya: { $ne: '' } },
+      { type: { $ne: '' } },
+      { description: { $ne: '' } },
+      { isValid: true },
     ]}, {})
-    .then(artists => { res.json({ artists }); });
+    .then(artists => { res.json({ artists }); })
 })
 
 router.post("/FindArtist", (req, res) => {

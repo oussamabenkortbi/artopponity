@@ -28,8 +28,8 @@ class NavbarBranchiny extends Component {
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto"></Nav>
             <Nav >
-              <Link to="/login" style={{ color: '#191919', paddingLeft: '15px', paddingTop: '5px' }}><h5>Connexion</h5></Link>
-              <Link to="/register" style={{ color: '#191919', paddingLeft: '15px', paddingTop: '5px' }}><h5>s'inscrire</h5></Link>
+              <Link to="/login" style={{ color: '#191919', paddingLeft: '15px', paddingTop: '5px', textDecoration: 'none' }}><h5>Connexion</h5></Link>
+              <Link to="/register" style={{ color: '#191919', paddingLeft: '15px', paddingTop: '5px', textDecoration: 'none' }}><h5>s'inscrire</h5></Link>
             </Nav>
           </Navbar.Collapse>
         </Navbar>
@@ -39,7 +39,7 @@ class NavbarBranchiny extends Component {
       const link = "/p/" + user.id;
       return (
         <Navbar collapseOnSelect expand="lg" className="nav" sticky="top">
-          <Navbar.Brand href="/" className="logo"><img src={Logo} alt="BRANCHINY" height="45px"/></Navbar.Brand>
+          <Navbar.Brand href={link} className="logo"><img src={Logo} alt="BRANCHINY" height="45px"/></Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto"></Nav>

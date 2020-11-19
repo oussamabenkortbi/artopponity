@@ -21,9 +21,9 @@ Button {
 }
 .description {
   position: absolute;
-  top: 1%;
-  left: 85%;
-  /* transform: translate(-50%, -50%); */
+  /* top: 18%;
+  left: 50%; */
+  
   opacity: 0;
   background-color: var(--yellow);
   padding: 14px 25px;
@@ -91,6 +91,9 @@ input
   letter-spacing: 1px;
 }
 
+.MuiListItemText-secondary {
+  color: var(--yellow)
+}
 .NavText {
   color: #191919;
   font-weight: medium;
@@ -101,7 +104,9 @@ input
 .navEdit {
   background-color: whitesmoke;
 }
-
+.Button-Padding {
+  padding: 0px 10px;
+}
 .profilePic {
   border-radius: 50%;
 }

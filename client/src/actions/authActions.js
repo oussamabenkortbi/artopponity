@@ -11,25 +11,32 @@ export const registerUser = (userData) => dispatch => {
     .then(res => {
       const Data = {
         _id: res.data._id,
-        phoneNumber: userData.number,
         isValid: false,
-      }; // test 05 06 07 
+      };
 
-      //window edit profile cover progress
+      const newData = Object.assign(Data, userData);
+
+      axios.post("/verify/send", newData).catch(err => console.log(err))
+
       if (userData.type === "Artist") {
-        axios.post("/api/artists/addArtist", Data)
-        .catch(err => console.log(err))
+        axios.post("/api/artists/registerArtist", newData).catch(err => console.log(err))
       }
-      if (userData.type === "Client") {
-        axios.post("/api/clients/addClient", res.data)
-        .catch(err => console.log(err))
-      }
-      if (userData.type === "Admin") {
-        axios.post("/api/admins/addAdmin", res.data)
-        .catch(err => console.log(err))
-      }
+      
+      // if (userData.type === "Client") {
+      //   axios.post("/api/clients/addClient", res.data)
+      //   .catch(err => console.log(err))
+      // }
+      // if (userData.type === "Admin") {
+      //   axios.post("/api/admins/addAdmin", res.data)
+      //   .catch(err => console.log(err))
+      // }
     })
-    .catch(err => console.error(err));
+    .catch(err => 
+      dispatch({
+        type: GET_ERRORS,
+        payload: err
+      })
+    )
 };
 
 // Update User
@@ -70,7 +77,7 @@ export const loginUser = (userData) => dispatch => {
       // Set current user
       dispatch(setCurrentUser(decoded));
     })
-    .catch(err =>
+    .catch(err => 
       dispatch({
         type: GET_ERRORS,
         payload: err

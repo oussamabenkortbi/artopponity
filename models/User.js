@@ -15,6 +15,9 @@ const UserSchema = new Schema({
     lowercase: true,
     required: true
   },
+  phoneNumber: {
+    type: String,
+  },
   password: {
     type: String,
     required: true
@@ -22,6 +25,10 @@ const UserSchema = new Schema({
   type: {
     type: String,
   },
+  isConfirmed: {
+    type: Boolean,
+    required: true
+  }
 });
 
 module.exports = User = mongoose.model("users", UserSchema);
