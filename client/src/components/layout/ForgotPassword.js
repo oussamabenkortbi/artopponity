@@ -1,47 +1,54 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
-import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import classnames from "classnames";
 import { connect } from "react-redux";
+import { restorePassword } from "../../actions/authActions";
 
-class ForgotPasword extends Component {
+class ForgotPassword extends Component {
 
     constructor() {
         super();
         this.state = {
           email: "",
           errors: {},
-          submitted: true
+          submitted: false
         };
     }
 
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        if (nextProps.errors) {
+            this.setState({
+                errors: nextProps.errors.response.data
+            });
+        }
+    }
+    
     onChange = (e) => {
         this.setState({ [e.target.id]: e.target.value });
     }
-
+    
     onSubmit = (e) => {
         e.preventDefault();
-        const user = {
+        const usermail = {
             email: this.state.email,
         }
-        axios.post("/verify/ForgotPassword", user)
-            .then(() => {
-                window.location.href = "/";
-                this.setState({ submitted: true })
-            })
-            .catch(err => console.log(err));
+        this.props.restorePassword(usermail)
+        this.setState({ submitted: true })
     }
     render() {
 
         const { errors } = this.state;
 
-        if (this.state.submitted === false) return (
-            <div className="container" style={{ height: '100vh', maxWidth: '400px' }}>
+        return (
+            <div className="container" style={{ height: '100vh', maxWidth: '600px' }}>
                 <div className="row">
                     <div className="col">
                         <form onSubmit={this.onSubmit} style={{ paddingTop: '10vh' }}>
                             <h2>Mot de pass oublié</h2>
+                            { (this.state.submitted === true && this.state.errors === {}) && (
+                                <span className="red-text">lien de récupération a ete envoyé a votre address mail</span>
+                            )}
                             <div className="input-field">
                                 <label htmlFor="email" style={{ color: '#191919' }}>Email</label>
                                 <input
@@ -53,41 +60,34 @@ class ForgotPasword extends Component {
                                     type="email"
                                     style={{ color: '#191919' }}
                                     className={classnames("", {
-                                        invalid: errors.email || errors.emailnotfound
+                                        invalid: errors.email
                                     })}
                                 />
                                 <span className="red-text">
                                     {errors.email}
-                                    {errors.emailnotfound}
                                 </span>
                             </div>
                             <Button 
+                                variant="contained" 
+                                type="submit" 
                                 style={{ 
-                                    width: '100%',
-                                    border: '2px solid #191919',
-                                    borderRadius: '10px',
-                                    textAlign: 'center',
-                                    maxWidth: '150px'
+                                    backgroundColor: '#191919', 
+                                    color: '#fbcf36' 
                                 }}
-                                className="hoverable"
-                                type="submit"
-                                ><b>Submit</b>
+                            >
+                                Valider
                             </Button>
                         </form>
                     </div>
                 </div>
             </div>
         )
-        return (
-            <div className="container center" style={{ height: '100vh', paddingTop: '10vh' }}>
-                <h2>lien de récupération a ete envoyé a votre email</h2>
-            </div>
-        )
     }
 }
 
-ForgotPasword.propTypes = {
+ForgotPassword.propTypes = {
     // loginUser: PropTypes.func.isRequired,
+    restorePassword: PropTypes.func.isRequired,
     errors: PropTypes.object.isRequired
   };
   
@@ -97,6 +97,6 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    { }
-  )(ForgotPasword);
+    { restorePassword }
+  )(ForgotPassword);
   

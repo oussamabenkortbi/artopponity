@@ -21,7 +21,7 @@ class ChangePassword extends Component {
     UNSAFE_componentWillReceiveProps(nextProps) {
         if (nextProps.errors) {
           this.setState({
-            errors: nextProps.errors
+            errors: nextProps.errors.response.data
           });
         }
     }

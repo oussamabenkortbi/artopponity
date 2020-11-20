@@ -115,7 +115,7 @@ class Login extends Component {
               </Button>
               <br/>
               <p style={{ paddingTop: '20px' }}>mot de pass <Link style={{ color: '#ff414e' }}
-                to="/forgetpassword">oublié?</Link>
+                to="/ForgotPassword">oublié?</Link>
               </p>
               <Popup/>
             </form>

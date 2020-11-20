@@ -110,3 +110,13 @@ export const logoutUser = () => dispatch => {
   // Set current user to empty object {} which will set isAuthenticated to false
   dispatch(setCurrentUser({}));
 };
+
+export const restorePassword = (user) => dispatch => {
+  axios.post("/verify/ForgotPassword", user)
+    .catch(err => 
+      dispatch({
+        type: "GET_ERRORS",
+        payload: err
+      })
+    )
+}
