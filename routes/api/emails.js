@@ -103,7 +103,7 @@ router.post('/reset-password', function (req, res) {
                         }
                     })
                 token = crypto.randomBytes(32).toString('hex')//creating the token to be sent to the forgot password form (react)
-                bcrypt.hash(token, null, null, function (err, hash) {//hashing the password to store in the db node.js
+                bcrypt.hash(token, null, null, function (err, hash) { //hashing the password to store in the db node.js
                     ResetPassword.create({
                         userId: user.id,
                         resetPasswordToken: hash,

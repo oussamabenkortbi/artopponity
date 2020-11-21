@@ -44,8 +44,8 @@ class ForgotPassword extends Component {
             <div className="container" style={{ height: '100vh', maxWidth: '600px' }}>
                 <div className="row">
                     <div className="col">
-                        <form onSubmit={this.onSubmit} style={{ paddingTop: '10vh' }}>
-                            <h2>Mot de pass oublié</h2>
+                        <form onSubmit={this.onSubmit} style={{ paddingTop: '20px' }}>
+                            <h3>Mot de pass oublié</h3>
                             { (this.state.submitted === true && this.state.errors === {}) && (
                                 <span className="red-text">lien de récupération a ete envoyé a votre address mail</span>
                             )}

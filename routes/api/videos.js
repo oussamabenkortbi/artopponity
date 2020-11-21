@@ -25,6 +25,12 @@ router.post("/update", (req, res) => {
     })
 });
 
+router.post("/delete", (req, res) => {
+    Video.deleteOne({ _id: req.body._id })
+      .then(res.json("success"))
+      .catch(err => { console.log(err) });
+});
+
 router.post("/get" , (req, res) => {
     Video.find({ owner: req.body._id })
       .then(videos => { res.json({videos}) })
@@ -34,12 +40,6 @@ router.post("/getVideo" , (req, res) => {
     Video.findOne({ _id: req.body._id })
       .then(videos => { res.json({videos}) })
       .catch(err => { console.log(err) });
-});
-
-router.post("/deleteVideo" , (req, res) => {
-  Prestation.deleteOne({ _id: req.body._id })
-    .then(res.json("success"))
-    .catch(err => { console.log(err) });
 });
 
 module.exports = router;

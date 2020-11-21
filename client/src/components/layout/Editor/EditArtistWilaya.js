@@ -80,7 +80,7 @@ class EditProfile extends Component {
                         marginLeft: '15px' 
                     }}
                     >
-                    Modifé
+                    modifier
                 </Button>
             </form>
         );

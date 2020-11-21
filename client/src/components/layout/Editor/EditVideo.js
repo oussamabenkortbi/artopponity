@@ -10,14 +10,52 @@ class EditVideo extends Component {
     constructor() {
         super();
         this.state = {
-            video: "",
             embedSrc: "",
             render: false,
+            old: false,
+            edit: false,
+            delete: false,
         };
-        this.onChange = this.onChange.bind(this);
+    };
+
+    componentDidMount() {
+        this.setState({
+            embedSrc: this.props.video.embed,
+            old: true
+        })
     }
 
-    onSubmit = () => {
+    onEdit = () => {
+        const body = {
+            _id: this.props.video._id,
+            embed: this.state.embedSrc
+        }
+        axios.post("/api/videos/update", body)
+            .catch(e => console.log(e));
+    };
+
+    onDeleteConfirmation = () => {
+        this.setState({
+            delete: true,
+        })
+    }
+
+    onCancelConfirmation = () => {
+        this.setState({
+            delete: false,
+        })
+    }
+
+    onDelete = () => {
+        const body = {
+            _id: this.props.video._id,
+        }
+        axios.post("/api/videos/delete", body)
+            .then(() => window.location.reload())
+            .catch(e => console.log(e));
+    };
+
+    onChange = e => {
         function getId(url) {
             const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
             const match = url.match(regExp);
@@ -27,68 +65,99 @@ class EditVideo extends Component {
               : null;
         }
         this.setState({
-            embedSrc: "//www.youtube.com/embed/" + getId(this.state.video),
-            render: true
+            embedSrc: "//www.youtube.com/embed/" + getId(e.target.value),
+            old: false,
+            render: true,
         })
-    }
-
-    onSave = () => {
-        const body = {
-            video: this.state.embedSrc
-        }
-        axios.post("/api/videos/add", body)
-            .catch(e => console.log(e));
-    }
-
-    onChange = e => {
-        this.setState({ [e.target.name]: e.target.value });
     };
 
     onCancel = e => {
         this.setState({
             render: false,
-            video: "",
             embedSrc: "",
         });
     };
 
-    render() {         
-        const RenderCheck = () => {
-            if (this.state.render === true) return (
+    render() {      
+        
+        const DeleteCheck = () => {
+            if (this.state.delete === true) return(
                 <div>
-                    <iframe title="embed" width="560" height="315" src={this.state.embedSrc} frameBorder="0" allowFullScreen></iframe>
-                    <br/>
                     <button 
-                        onClick={this.onSave}
+                        onClick={this.onDelete}
+                        className="btn"
+                        >Confirmer
+                    </button>
+                    <button 
+                        onClick={this.onCancelConfirmation}
                         className="btn Search-drop"
-                    >Enregistrer</button><button 
-                        onClick={this.onCancel}
-                        className="btn"
-                    >Annnuler</button>
+                        >Annuler
+                    </button>
                 </div>
-            ); else return (
-                <div>
-                    <button 
-                        onClick={this.onSubmit}
-                        className="btn"
-                    >Submit</button>
-                </div>
+            )
+            return (
+                <button 
+                    onClick={this.onDeleteConfirmation}
+                    className="btn"
+                    >Supprimer
+                </button>
             )
         }
         return (
-            <div className="container-fluid App" style={{height: "300px"}}>
+            <div className="container-fluid App" style={{ maxHeight: "400px", minWidth: '40vw', padding: '20px' }}>
                 <div className="row">
-                    <div className="col" style={{ padding: '50px'}}>
+                    <div className="col">
                         <div>
-                            <h3><b>Modifé Video</b></h3>
+                            <h3><b>modifier Video</b></h3>
                         </div>
-                        <label htmlFor="text" style={{ color: '#191919' }}>Vidéo Link</label>
-                        <input
-                            type="text"
-                            name="video"
-                            onChange={this.onChange}
-                        />
-                        <RenderCheck/>
+                        <div className="input-field">
+                            <label htmlFor="text" style={{ color: '#191919' }}>Vidéo url</label>
+                            <input
+                                type="text"
+                                name="video"
+                                onChange={this.onChange}
+                            />
+                        </div>
+                        { this.state.old === true && (
+                            <div>
+                                <div className="contain">
+                                    <iframe 
+                                        title="embed" 
+                                        src={this.state.embedSrc} 
+                                        className="responsive-iframe" 
+                                        frameBorder="0" 
+                                        allowFullScreen="1"
+                                    />
+                                </div>
+                                <br/>
+                                <DeleteCheck/>
+                            </div>
+                        )}
+                        { this.state.render === true && (
+                            <div>
+                                <div className="contain">
+                                    <iframe 
+                                        title="embed" 
+                                        src={this.state.embedSrc} 
+                                        className="responsive-iframe" 
+                                        frameBorder="0" 
+                                        allowFullScreen="1"
+                                    />
+                                </div>
+                                <br/>
+                                <button 
+                                    onClick={this.onEdit}
+                                    className="btn Search-drop"
+                                    >Enregistrer
+                                </button>
+                                <button 
+                                    onClick={this.onCancel}
+                                    className="btn"
+                                    >Annuler
+                                </button>
+                            </div>
+                        )}
+                        <br/>
                     </div>
                 </div>
             </div>

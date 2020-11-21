@@ -14,9 +14,9 @@ export default function EditGallery(id) {
     }, [id]);
 
     return (
-        <div className="container">
+        <div className="container-fluid">
             <div style={{ paddingTop: '20px' }}>
-                <h3><b>Modifé Gallery</b></h3>
+                <h3><b>modifier Gallery</b></h3>
             </div>
             <Photos photos={Gallery} editable={true} paper={false} owner={id.id}/>
         </div>

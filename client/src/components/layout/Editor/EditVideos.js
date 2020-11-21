@@ -35,7 +35,7 @@ export default function EditVideos({_id}) {
     const checkNbr = (nbrPrestation) => {
         if (nbrPrestation < 4) return (
             <div>
-                <Button variant="contained" onClick={handleClickOpen} style={{ backgroundColor: '#191919', color: '#fbcf36', marginLeft: '15px' }}>
+                <Button variant="contained" onClick={handleClickOpen} style={{ backgroundColor: '#191919', color: '#fbcf36' }}>
                     Ajouter Video
                 </Button>
                 <Dialog
@@ -50,10 +50,10 @@ export default function EditVideos({_id}) {
     }
 
     return (
-        <div className="container">
-            <Videos videos={videos} editable={true} paper={false}/> 
-            <br/>
+        <div className="container-fluid" style={{ paddingTop: '20px', paddingRight: '45px' }}>
             {checkNbr(number)}
+            <br/>
+            <Videos videos={videos} editable={true} paper={false}/> 
         </div>
     );
 }

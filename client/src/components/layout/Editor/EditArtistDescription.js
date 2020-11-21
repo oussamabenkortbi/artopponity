@@ -51,7 +51,7 @@ export default function EditArtistDescription({_id}) {
                     marginLeft: '15px' 
                 }}
                 >
-                Modifé
+                modifier
             </Button>
         </form>
     );

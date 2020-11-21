@@ -48,7 +48,7 @@ class ChangePassword extends Component {
         return (
             <div className="container-fluid center" style={{ maxWidth: '700px', paddingTop: '20px' }}>
                 <form noValidate onSubmit={this.onSubmit}>
-                    <h4><b>Modifé mot du pass </b></h4>
+                    <h4><b>modifier mot du pass </b></h4>
                     <div className="input-field">
                         <input
                             onChange={this.onChange}

@@ -21,6 +21,20 @@ export const registerUser = (userData) => dispatch => {
       if (userData.type === "Artist") {
         axios.post("/api/artists/registerArtist", newData).catch(err => console.log(err))
       }
+
+      axios.post("/api/users/login", userData)
+        .then(res => {
+          // Set token to localStorage
+          const { token } = res.data;
+          localStorage.setItem("jwtToken", token);
+          // Set token to Auth header
+          setAuthToken(token);
+          // Decode token to get user data
+          const decoded = jwt_decode(token);
+          // Set current user
+          dispatch(setCurrentUser(decoded));
+        })
+        .catch(err => console.log(err));
       
       // if (userData.type === "Client") {
       //   axios.post("/api/clients/addClient", res.data)

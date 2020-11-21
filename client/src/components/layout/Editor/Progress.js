@@ -43,10 +43,9 @@ export default function CustomizedProgressBars({ id, bar }) {
       .then(res => {
         let prog = 0;
         if(res.data.artist.fullName) { prog = prog + 5 }
-        if(res.data.artist.phoneNumber) { prog = prog + 5 }
         if(res.data.artist.description) { prog = prog + 5 }
         if(res.data.artist.wilaya) { prog = prog + 5 }
-        if(res.data.artist.isValid) { prog = prog + 5 }
+        if(res.data.artist.isValid === true) { prog = prog + 5 }
         if(res.data.artist.dicipline) { prog = prog + 5 }
         if(res.data.artist.eventType) { prog = prog + 5 }
         if(res.data.artist.categories) { prog = prog + 5 }
@@ -55,12 +54,12 @@ export default function CustomizedProgressBars({ id, bar }) {
 
     axios.post("/api/prestations/get", artist)
       .then(res => {
-        if (res.data.prestations) setPrestationsProgress(10)
+        if (res.data.prestations[0]) setPrestationsProgress(10)
       }).catch(err => console.log(err));
 
     axios.post("/api/videos/get", artist)
       .then(res => {
-        if (res.data.videos) setVideosProgress(10)
+        if (res.data.videos[0]) setVideosProgress(10)
       }).catch(err => console.log(err));
 
     axios.post("/api/photos/getProfilePic", { artist: artist._id }) 
@@ -68,24 +67,33 @@ export default function CustomizedProgressBars({ id, bar }) {
     axios.post("/api/photos/getCoverPic", { artist: artist._id }) 
       .then(res => { if (res.data.photo) setCoverProgress(10) }).catch(e => console.log(e))
     axios.post("/api/photos/getGallery", { artist: artist._id }) 
-      .then(res => { if (res.data.photos) setGalleryProgress(10) }).catch(e => console.log(e))    
+      .then(res => { if (res.data.photos[0]) setGalleryProgress(10) }).catch(e => console.log(e))    
 
-  }, [id]);
-
-  const final = artistProgress + prestationsProgress + videosProgress + ProfilePicProgress + CoverProgress + GalleryProgress
+    }, [id]);
     
-  if (bar === true) {
+    
+    const finalProgress = artistProgress + prestationsProgress + videosProgress + ProfilePicProgress + CoverProgress + GalleryProgress
+
+    localStorage.setItem("final", finalProgress);
+    
     const Bar = () => {
       return(
         <div className={classes.root}>
-          <BorderLinearProgress variant="determinate" value={final}/>
-        </div>
-      )
-    }
-    return <><Bar/><div style={{ marginTop: '8px', marginLeft: '10px' }}><h4> {final} % </h4></div></>
+        <BorderLinearProgress variant="determinate" value={finalProgress}/>
+      </div>
+    )
   }
-  else if (final < 70) return (
-    <Alert severity="error" style={{ marginBottom: '20px' }}>Profile Non Complete ! (Progress = {final}%)</Alert>
-  )
+
+  if (bar === true) {
+    return <><Bar/><div style={{ marginTop: '8px', marginLeft: '10px' }}><h4> {finalProgress} % </h4></div></>
+  }
+  
+  else if (finalProgress < 70) {
+    return (
+      <Alert severity="error" style={{ marginBottom: '20px' }}>Profile Non Complete ! (Progress = {finalProgress}%)</Alert>
+    )
+  }
+
   else return (<></>)
+
 }

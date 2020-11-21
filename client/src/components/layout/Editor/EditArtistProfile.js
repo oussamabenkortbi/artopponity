@@ -93,7 +93,7 @@ class EditArtistProfile extends Component {
 
             return (
               <>
-                    <Button variant="contained" onClick={handleClickOpen} style={{ color: '#191919', backgroundColor: '#fbcf36' }}>Modifé</Button>
+                    <Button variant="contained" onClick={handleClickOpen} style={{ color: '#191919', backgroundColor: '#fbcf36' }}>modifier</Button>
                     <Dialog
                         open={open}
                         onClose={handleClose}

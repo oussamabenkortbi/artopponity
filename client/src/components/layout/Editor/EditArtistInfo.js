@@ -155,7 +155,7 @@ function EditArtistInfo(props) {
                                 width: '100px'
                             }}
                             >
-                            Modifé
+                            modifier
                         </Button>
                     </form>
                 </div>

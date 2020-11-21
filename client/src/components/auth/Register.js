@@ -82,7 +82,6 @@ class Register extends Component {
         type: this.state.labelAccount,
       };
       this.props.registerUser(newUser, this.props.history);
-      // window.location.href = "/EditProfile"
     } else this.setState({ showMessages: true })
   };
 

@@ -21,12 +21,12 @@ export default function Results({photos, editable, paper, owner}) {
     let check = []
     const black = (<Photo editable={editable} black={true} owner={owner}/>)
 
-    if (photos[0]) check[0] = (<Photo photo={photos[0].image} editable={editable} owner={owner} key={photos[0]._id}/>); else check[0] = (<div>{black}</div>)
-    if (photos[1]) check[1] = (<Photo photo={photos[1].image} editable={editable} owner={owner} key={photos[1]._id}/>); else check[1] = (<div>{black}</div>)
-    if (photos[2]) check[2] = (<Photo photo={photos[2].image} editable={editable} owner={owner} key={photos[2]._id}/>); else check[2] = (<div>{black}</div>)
-    if (photos[3]) check[3] = (<Photo photo={photos[3].image} editable={editable} owner={owner} key={photos[3]._id}/>); else check[3] = (<div>{black}</div>)
-    if (photos[4]) check[4] = (<Photo photo={photos[4].image} editable={editable} owner={owner} key={photos[4]._id}/>); else check[4] = (<div>{black}</div>)
-    if (photos[5]) check[5] = (<Photo photo={photos[5].image} editable={editable} owner={owner} key={photos[5]._id}/>); else check[5] = (<div>{black}</div>)
+    if (photos[0]) check[0] = (<Photo photo={photos[0]} editable={editable} owner={owner} />); else check[0] = (<div>{black}</div>)
+    if (photos[1]) check[1] = (<Photo photo={photos[1]} editable={editable} owner={owner} />); else check[1] = (<div>{black}</div>)
+    if (photos[2]) check[2] = (<Photo photo={photos[2]} editable={editable} owner={owner} />); else check[2] = (<div>{black}</div>)
+    if (photos[3]) check[3] = (<Photo photo={photos[3]} editable={editable} owner={owner} />); else check[3] = (<div>{black}</div>)
+    if (photos[4]) check[4] = (<Photo photo={photos[4]} editable={editable} owner={owner} />); else check[4] = (<div>{black}</div>)
+    if (photos[5]) check[5] = (<Photo photo={photos[5]} editable={editable} owner={owner} />); else check[5] = (<div>{black}</div>)
 
     if (paper === false) return (
         <div className={classes.root}>

@@ -60,91 +60,89 @@ class EditPrestations extends Component {
             prepareTime: this.state.prepareTime,
         }
         axios.post("/api/prestations/update", updater)
+            .then(() => window.location.reload())
             .catch(err => console.log(err));
     }
 
     render() {
         return (
             <div className="App" style={{height: "100%", padding: '50px'}}>
-                <div>
-                    <label htmlFor="text" style={{ color: '#191919' }}>Nom du prestation</label>
-                    <input 
-                        onChange={this.onChange}
-                        type="text" 
-                        value={this.state.name} 
-                        name="name"
-                        required
-                    />
-                </div>
-                <div className="Button-Margin">
-                    <label htmlFor="text" style={{ color: '#191919' }}>Description</label>
-                    <textarea 
-                        onChange={this.onChange}
-                        type="textarea"
-                        value={this.state.description}
-                        style={{height: "150px"}}
-                        name="description"
-                    />
-                </div>
-                <div>
+                <form onSubmit={this.onClick}>
+                    <div>
+                        <label htmlFor="name" style={{ color: '#191919' }}>Nom du prestation</label>
+                        <input 
+                            onChange={this.onChange}
+                            type="text" 
+                            value={this.state.name} 
+                            name="name"
+                            required
+                        />
+                    </div>
+                    <div className="Button-Margin">
+                        <label htmlFor="description" style={{ color: '#191919' }}>Description</label>
+                        <textarea 
+                            onChange={this.onChange}
+                            type="textarea"
+                            value={this.state.description}
+                            style={{height: "150px"}}
+                            name="description"
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="time" style={{ color: '#191919' }}>Durée de la prestation (min)</label>
+                        <input 
+                            onChange={this.onChange}
+                            type="number" 
+                            value={this.state.time} 
+                            name="time"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="price" style={{ color: '#191919' }}>Prix en DA</label>
+                        <input 
+                            onChange={this.onChange}
+                            type="number" 
+                            value={this.state.price} 
+                            name="price"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="artists" style={{ color: '#191919' }}>Nombre d'artist</label>
+                        <input 
+                            onChange={this.onChange}
+                            type="number" 
+                            value={this.state.artists} 
+                            name="artists"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="space" style={{ color: '#191919' }}>Espace nécessair (Mettre Carreé)</label>
+                        <input 
+                            onChange={this.onChange}
+                            type="number" 
+                            value={this.state.space} 
+                            name="space"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="prepareTime" style={{ color: '#191919' }}>Temps de preparation (min)</label>
+                        <input 
+                            onChange={this.onChange}
+                            type="number" 
+                            value={this.state.prepareTime} 
+                            name="prepareTime"
+                            required
+                        />
+                    </div>
                     <br/>
-                    <label htmlFor="text" style={{ color: '#191919' }}>Durée de la prestation (min)</label>
-                    <input 
-                        onChange={this.onChange}
-                        type="number" 
-                        value={this.state.time} 
-                        name="time"
-                        required
-                    />
-                </div>
-                <div>
-                    <br/>
-                    <label htmlFor="text" style={{ color: '#191919' }}>Prix en DA</label>
-                    <input 
-                        onChange={this.onChange}
-                        type="number" 
-                        value={this.state.price} 
-                        name="price"
-                        required
-                    />
-                </div>
-                <div>
-                    <br/>
-                    <label htmlFor="text" style={{ color: '#191919' }}>Nombre d'artist</label>
-                    <input 
-                        onChange={this.onChange}
-                        type="number" 
-                        value={this.state.artists} 
-                        name="artists"
-                        required
-                    />
-                </div>
-                <div>
-                    <br/>
-                    <label htmlFor="text" style={{ color: '#191919' }}>Espace nécessair (Mettre Carreé)</label>
-                    <input 
-                        onChange={this.onChange}
-                        type="number" 
-                        value={this.state.space} 
-                        name="space"
-                        required
-                    />
-                </div>
-                <div>
-                    <br/>
-                    <label htmlFor="text" style={{ color: '#191919' }}>Temps de preparation (min)</label>
-                    <input 
-                        onChange={this.onChange}
-                        type="number" 
-                        value={this.state.prepareTime} 
-                        name="prepareTime"
-                        required
-                    />
-                </div>
-                <br/>
-                <Button onClick={this.onClick} style={{ backgroundColor: '#191919', color: '#fbcf36' }}>
-                    Enregistrer
-                </Button>
+                    <Button type="submit" style={{ backgroundColor: '#191919', color: '#fbcf36' }}>
+                        Enregistrer
+                    </Button>
+                </form>
             </div>
         );
     }

@@ -63,7 +63,7 @@ export default function Result({prestation, editable}) {
     };
 
     const EditChecker = () => { 
-        // 0: no button, 1: commande, 2: modifé
+        // 0: no button, 1: commande, 2: modifier
         if (editable === 1) return (
             <Button disabled onClick={soon} style={{ backgroundColor: '#191919', color: '#fbcf36' }}>
                 {btn}
@@ -105,7 +105,7 @@ export default function Result({prestation, editable}) {
                         </div>
                     </Dialog>
                     <Button variant="contained" onClick={handleClickOpen} style={{ backgroundColor: '#191919', color: '#fbcf36', marginLeft: '20px' }}>
-                        Modifé
+                        modifier
                     </Button>
                     <Dialog
                         open={open}

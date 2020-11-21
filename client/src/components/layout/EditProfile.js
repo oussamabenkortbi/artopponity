@@ -8,7 +8,6 @@ import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { withRouter } from "react-router-dom";
@@ -56,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
             display: 'none',
         },
     },
-    // toolbar: theme.mixins.toolbar,
+    toolbar: theme.mixins.toolbar,
     drawerPaper: {
         backgroundColor: "#fbcf36",
         width: drawerWidth,
@@ -75,14 +74,13 @@ function EditProfile(props) {
     
     const [isConfirmed, setisConfirmed] = React.useState(false);
 
-    const [btn0, setBtn0] = React.useState(true);
+    const [btn0, setBtn0] = React.useState(false);
     const [btn1, setBtn1] = React.useState(false);
     const [btn2, setBtn2] = React.useState(false);
-    const [btn3, setBtn3] = React.useState(false);
+    const [btn3, setBtn3] = React.useState(true);
     const [btn4, setBtn4] = React.useState(false);
     const [btn5, setBtn5] = React.useState(false);
     
-    const [progress, setProgress] = React.useState(0);
     const { user } = props.auth;
 
     const handleDrawerToggle = () => {
@@ -95,7 +93,6 @@ function EditProfile(props) {
         }
         axios.post("/api/users/isConfirmed", artist)
             .then(res => {
-                console.log(res.data)
                 setisConfirmed(res.data.isConfirmed)
             })
     

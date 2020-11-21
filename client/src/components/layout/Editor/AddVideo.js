@@ -13,7 +13,7 @@ class AddVideo extends Component {
             embedSrc: "",
             render: false,
         };
-    }
+    };
 
     onSave = () => {
         const { user } = this.props.auth;
@@ -23,7 +23,7 @@ class AddVideo extends Component {
         }
         axios.post("/api/videos/add", body)
             .catch(e => console.log(e));
-    }
+    };
 
     onChange = e => {
         function getId(url) {
@@ -50,7 +50,7 @@ class AddVideo extends Component {
     render() {       
         
         return (
-            <div className="container-fluid App" style={{ width: '60vw' ,height: "900px", padding: '20px' }}>
+            <div className="container-fluid App" style={{ height: "600px", minWidth: '40vw', padding: '20px' }}>
                 <div className="row">
                     <div className="col">
                         <div>
@@ -64,6 +64,16 @@ class AddVideo extends Component {
                         />
                         { this.state.render === true && (
                             <div>
+                                <div className="contain">
+                                    <iframe 
+                                        title="embed" 
+                                        src={this.state.embedSrc} 
+                                        className="responsive-iframe" 
+                                        frameBorder="0" 
+                                        allowFullScreen="1"
+                                    />
+                                </div>
+                                <br/>
                                 <button 
                                     onClick={this.onSave}
                                     className="btn Search-drop"
@@ -74,7 +84,6 @@ class AddVideo extends Component {
                                     className="btn"
                                     >Annuler
                                 </button>
-                                <iframe title="embed" width="560" height="315" src={this.state.embedSrc} frameBorder="0" allowFullScreen></iframe>
                             </div>
                         )}
                         <br/>

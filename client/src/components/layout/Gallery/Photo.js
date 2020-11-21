@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import EditPhotos from '../Editor/EditPhotos';
 import Dialog from '@material-ui/core/Dialog';
 import Button from '@material-ui/core/Button';
+import { FaPencilAlt } from 'react-icons/fa';
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
@@ -29,8 +30,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Result({photo, editable, black, owner}) {
     
-    const classes = useStyles();
     const [open, setOpen] = React.useState(false);
+    const classes = useStyles();
 
     const handleClose = () => {
         setOpen(false);
@@ -38,26 +39,6 @@ export default function Result({photo, editable, black, owner}) {
   
     const handleClickOpen = () => {
         setOpen(true);
-    };
-
-    const [openDelete, setOpenDelete] = React.useState(false);
-  
-    const handleCloseDelete = () => {
-        setOpenDelete(false);
-    };
-
-    const handleClickOpenDelete = () => {
-        setOpenDelete(true);
-    };
-
-    const handleDelete = () => {
-        const id = {
-            _id: photo._id
-        }
-        axios.post("/api/prestations/deletePresation", id)
-            .then(() => {
-                window.location.reload();
-            }).catch(error => console.log(error))
     };
 
     if (editable === true) {
@@ -71,13 +52,13 @@ export default function Result({photo, editable, black, owner}) {
                     </div>
                     <br/>
                     <Button variant="contained" onClick={handleClickOpen} style={{ backgroundColor: '#191919', color: '#fbcf36', marginLeft: '15px' }}>
-                        Modifé
+                        <FaPencilAlt className="react-icons"/>
                     </Button>
                     <Dialog
                         open={open}
                         onClose={handleClose}
                     >
-                        <EditPhotos id={owner} type={3}/>
+                        <EditPhotos id={owner} type={3} photo={photo}/>
                     </Dialog>
                 </div>
             )
@@ -86,60 +67,24 @@ export default function Result({photo, editable, black, owner}) {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col">
-                            <div className={classes.paper}>
+                            <div className={classes.paper} style={{ position: 'absolute' }}>
                                 <div className="contain">
                                     <img 
-                                        src={photo} 
+                                        src={photo.image} 
                                         alt="pics" 
                                         className={classes.image}
                                     />
                                 </div>
                             </div>
-                            <div className="container-fluid">
-                                <div className="row">
-                                    <Button variant="contained" onClick={handleClickOpenDelete} style={{ backgroundColor: '#191919', color: '#fbcf36' }}>
-                                        Supprimer
-                                    </Button>
-                                    <Dialog
-                                        open={openDelete}
-                                        onClose={handleCloseDelete}
-                                    >
-                                        <div 
-                                            className="container-fluid center"
-                                            style={{
-                                                display: 'flex',
-                                                justifyContent: 'center',
-                                                alignItems: 'center',
-                                                backgroundColor: '#fbcf36',
-                                                maxWidth: '300px',
-                                                height: '200px'
-                                            }}>
-                                                <div 
-                                                    className="row"
-                                                    style={{ 
-                                                        margin: '20px'
-                                                    }}>
-                                                        <Button variant="contained" onClick={handleCloseDelete} style={{ backgroundColor: '#191919', color: '#fbcf36' }}>
-                                                            Annuler
-                                                        </Button>
-                                                        <div style={{ padding: '0px 10px' }}></div>
-                                                        <Button variant="contained" onClick={handleDelete} style={{ backgroundColor: '#191919', color: '#fbcf36' }}>
-                                                            Confirmer
-                                                        </Button>
-                                                </div>
-                                        </div>
-                                    </Dialog>
-                                    <Button variant="contained" onClick={handleClickOpen} style={{ backgroundColor: '#191919', color: '#fbcf36', marginLeft: '20px' }}>
-                                        Modifé
-                                    </Button>
-                                    <Dialog
-                                        open={open}
-                                        onClose={handleClose}
-                                    >
-                                        <EditPhotos id={owner} type={3}/> 
-                                    </Dialog>
-                                </div>
-                            </div>
+                            <Button variant="contained" onClick={handleClickOpen} style={{ backgroundColor: '#191919', color: '#fbcf36', marginLeft: '40px', marginTop: '40px', padding: '10px 0px' }}>
+                                <FaPencilAlt className="react-icons"/>
+                            </Button>
+                            <Dialog
+                                open={open}
+                                onClose={handleClose}
+                            >
+                                <EditPhotos id={owner} type={3} photo={photo}/>
+                            </Dialog>
                         </div>
                     </div>
                 </div>

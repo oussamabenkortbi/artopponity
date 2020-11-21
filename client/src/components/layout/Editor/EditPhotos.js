@@ -17,10 +17,14 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function EditPhotos({id, type}) {
+export default function EditPhotos({id, type, photo}) {
     
     const classes = useStyles();
     const [ PreviewSource, setPreviewSource ] = useState('');
+
+    React.useEffect(() => {
+        setPreviewSource(photo.image)
+    },[])
 
     const FileInputChange = (e) => {
         const file = e.target.files[0];
@@ -49,34 +53,34 @@ export default function EditPhotos({id, type}) {
     }
 
     return (
-        <div className="App" style={{ padding: '100px'}}>
-            <div>
-                <form onSubmit={onSubmit}>
-                    <input
-                        type="file"
-                        name="image"
-                        onChange={FileInputChange}
-                        className="form-input"
-                    />
-                    <br/>
-                    <div style={{ paddingTop: '10px'}}></div>
-                    <div className="contain">
-                        {/* <div className={classes.image} style={{ backgroundColor: '#191919'}}></div> */}
+        <div className="container-fluid App" style={{ height: "310px", minWidth: '40vw', padding: '20px' }}>
+            <form onSubmit={onSubmit}>
+                <input
+                    required
+                    type="file"
+                    name="image"
+                    onChange={FileInputChange}
+                    className="form-input"
+                />
+                <br/>
+                <div style={{ paddingTop: '10px'}}></div>
+                <div className="contain">
+                    <div className={classes.image} style={{ backgroundColor: '#191919'}}>
                         { PreviewSource && (
                             <img src={PreviewSource} alt="pic" className={classes.image} />
                         )}
                     </div>
-                    <div style={{ paddingTop: '10px'}}></div>
-                    <Button 
-                        variant="contained" 
-                        type="submit" 
-                        style={{ backgroundColor: '#191919', color: '#fbcf36' }}
-                    >
-                        Enregistrer
-                    </Button>
-                    <br/>
-                </form>
-            </div>
+                </div>
+                <div style={{ paddingTop: '10px'}}></div>
+                <Button 
+                    variant="contained" 
+                    type="submit" 
+                    style={{ backgroundColor: '#191919', color: '#fbcf36' }}
+                >
+                    Enregistrer
+                </Button>
+                <br/>
+            </form>
         </div>
     )
 }
