@@ -32,10 +32,10 @@ function EditArtistInfo(props) {
         };
         axios.post("/api/artists/getInfoArtists", artist)
             .then(res => {
-                setDecipline(res.data.artist.decipline)
+                setDecipline(res.data.artist.dicipline)
                 setDescription(res.data.artist.description)
                 setWilaya(res.data.artist.wilaya)
-                setState(res.data.artist.eventType)
+                if (res.data.artist.eventType) setState(res.data.artist.eventType)
             })
             .catch(err => console.log(err));
     },[props.auth.user.id])
@@ -49,10 +49,10 @@ function EditArtistInfo(props) {
     };
 
     const onWilayaChange = e => {
-        this.setState({ wilaya: e.value });
+        setWilaya(e.value);
     };
     const onDeciplineChange = e => {
-        this.setState({ decipline: e.value });
+        setDecipline(e.value);
     };
 
     const onSubmit = e => {
@@ -66,6 +66,7 @@ function EditArtistInfo(props) {
         }
 
         axios.post("/api/artists/registerArtist", updater)
+            .then(() => window.location.reload())
             .catch(err => console.log(err));
     };
 

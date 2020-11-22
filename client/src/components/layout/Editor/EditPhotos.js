@@ -3,7 +3,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import axios from 'axios'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
+    paper: {
+        width: '100%',
+        backgroundColor: '#fbcf36',
+        color: '#191919'
+    },
     image: {
         objectFit: 'cover',
         objectPosition: '50% 0%',
@@ -21,9 +26,13 @@ export default function EditPhotos({id, type, photo}) {
     
     const classes = useStyles();
     const [ PreviewSource, setPreviewSource ] = useState('');
+    const [ OldPreviewSource, setOldPreviewSource ] = useState('');
+    const [ black, setBlack ] = useState(false);
+    const [ state, setState ] = useState(0);
 
     React.useEffect(() => {
-        setPreviewSource(photo.image)
+        if (photo) setPreviewSource(photo.image)
+        else setBlack(true)
     },[])
 
     const FileInputChange = (e) => {
@@ -31,14 +40,32 @@ export default function EditPhotos({id, type, photo}) {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onloadend = () => {
+            setOldPreviewSource(PreviewSource)
             setPreviewSource(reader.result)
         }
+    }
+
+    const onEdit0 = () => {
+        setState(0)
+        setPreviewSource(OldPreviewSource)
+    }
+    const onEdit1 = () => {
+        setState(1)
+    }
+    const onEdit2 = () => {
+        setState(2)
     }
 
     const onSubmit = (e) => {
         e.preventDefault();
         if (!PreviewSource) return;
         uploadImage(PreviewSource);
+    }
+    const onEditSubmit = (e) => {
+        e.preventDefault();
+        if (!PreviewSource) return;
+        if (!photo) return;
+        editImage(PreviewSource);
     }
 
     const uploadImage = async (base64Encoded) => {
@@ -48,22 +75,133 @@ export default function EditPhotos({id, type, photo}) {
             type: type
         }
         axios.post("/api/photos/upload", reqbody)
-            .then(res => res.json)
+            .then(() => window.location.reload())
+            .catch(err => console.error(err))    
+    }
+    const editImage = async (base64Encoded) => {
+        const reqbody = {
+            _id: photo._id,
+            image: base64Encoded,
+        }
+        axios.post("/api/photos/edit", reqbody)
+            .then(() => window.location.reload())
             .catch(err => console.error(err))
     }
 
-    return (
-        <div className="container-fluid App" style={{ height: "310px", minWidth: '40vw', padding: '20px' }}>
-            <form onSubmit={onSubmit}>
-                <input
-                    required
-                    type="file"
-                    name="image"
-                    onChange={FileInputChange}
-                    className="form-input"
-                />
-                <br/>
+    const deletePhoto = () => {
+        if (!photo) return;
+        const reqbody = {
+            _id: photo._id,
+        }
+        axios.post("/api/photos/delete", reqbody)
+            .then(() => window.location.reload())
+            .catch(err => console.error(err))    
+    }
+
+    const Editor = () => {
+        if (state === 0) return (
+            <div className="container" style={{ margin: '10px 20px' }}>
+                <div className="row">
+                    <Button 
+                        variant="contained" 
+                        onClick={onEdit1}
+                        style={{ backgroundColor: '#191919', color: '#fbcf36' }}
+                        >
+                        Modifer
+                    </Button>
+                    <div style={{ paddingTop: '20px', paddingLeft: '20px' }}></div>
+                    <Button 
+                        variant="contained" 
+                        onClick={onEdit2}
+                        style={{ backgroundColor: '#191919', color: '#fbcf36' }}
+                        >
+                        Supprimer
+                    </Button>
+                </div>
+            </div>
+        )
+        if (state === 1) return (
+            <div className="container" style={{ margin: '10px 20px' }}>
+                <div className="row">
+                    <input
+                        type="file"
+                        name="editImage"
+                        onChange={FileInputChange}
+                    />
+                </div>
+                <div className="row">
+                    <Button 
+                        variant="contained" 
+                        onClick={onEditSubmit}
+                        style={{ backgroundColor: '#191919', color: '#fbcf36' }}
+                        >
+                        Enregistrer
+                    </Button>
+                    <div style={{ paddingTop: '10px', paddingLeft: '20px' }}></div>
+                    <Button 
+                        variant="contained" 
+                        onClick={onEdit0}
+                        style={{ backgroundColor: '#191919', color: '#fbcf36' }}
+                        >
+                        Annuler
+                    </Button>
+                </div>
+            </div>
+        )
+        if (state === 2) return (
+            <div>
+                <Button 
+                    variant="contained" 
+                    onClick={onEdit0}
+                    style={{ backgroundColor: '#191919', color: '#fbcf36' }}
+                    >
+                    Annuler
+                </Button>
                 <div style={{ paddingTop: '10px'}}></div>
+                <Button 
+                    variant="contained" 
+                    onClick={deletePhoto}
+                    style={{ backgroundColor: '#191919', color: '#fbcf36' }}
+                    >
+                    Supprimer
+                </Button>
+            </div>
+        )
+    }
+
+    const Checker = () => {
+        if (black === true) return (
+            <div>
+                <div className={classes.paper}>
+                    <div className="contain">
+                        <div className={classes.image} style={{ backgroundColor: '#191919'}}>
+                            { PreviewSource && (
+                                <img src={PreviewSource} alt="pic" className={classes.image} />
+                            )}
+                        </div>
+                    </div>
+                </div>
+                <div style={{ paddingTop: '10px'}}></div>
+                <form onSubmit={onSubmit}>
+                    <input
+                        type="file"
+                        name="image"
+                        onChange={FileInputChange}
+                    />
+                    <br/>
+                    <div style={{ paddingTop: '10px'}}></div>
+                    <Button 
+                        variant="contained" 
+                        type="submit" 
+                        style={{ backgroundColor: '#191919', color: '#fbcf36' }}
+                        >
+                        Enregistrer
+                    </Button>
+                    <br/>
+                </form>
+            </div>
+        ); else return (
+            <div>
                 <div className="contain">
                     <div className={classes.image} style={{ backgroundColor: '#191919'}}>
                         { PreviewSource && (
@@ -71,16 +209,16 @@ export default function EditPhotos({id, type, photo}) {
                         )}
                     </div>
                 </div>
-                <div style={{ paddingTop: '10px'}}></div>
-                <Button 
-                    variant="contained" 
-                    type="submit" 
-                    style={{ backgroundColor: '#191919', color: '#fbcf36' }}
-                >
-                    Enregistrer
-                </Button>
-                <br/>
-            </form>
+                <div className="row" style={{ paddingTop: '10px'}}>
+                    <Editor/>
+                </div>
+            </div>
+        )
+    }
+    
+    return (
+        <div className="container-fluid App" style={{ maxHeight: "100%", minWidth: '100%', padding: '20px' }}>
+            <Checker/>
         </div>
     )
 }

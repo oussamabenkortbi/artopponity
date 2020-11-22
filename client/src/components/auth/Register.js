@@ -52,10 +52,14 @@ class Register extends Component {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.errors.response.data) {
-      this.setState({
-        errors: nextProps.errors.response.data
-      });
+    if(nextProps.errors){
+      if(nextProps.errors.response) {
+        if (nextProps.errors.response.data) {
+          this.setState({
+            errors: nextProps.errors.response.data
+          });
+        }
+      }
     }
   }
 

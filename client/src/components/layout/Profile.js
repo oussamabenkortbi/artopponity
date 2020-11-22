@@ -48,7 +48,7 @@ class Profile extends Component {
 
       isValid: false,
       isEmpty: false,
-      isConfirmed: true,
+      isConfirmed: null,
 
       profilePic: '',
       coverPic: '',
@@ -134,7 +134,11 @@ class Profile extends Component {
 
     const { user } = this.props.auth
 
-    if (this.state.isConfirmed === false || this.state.progress < 40) {
+    if (this.state.isConfirmed === false) {
+      window.location.href = "/EditProfile";
+      return (<></>)
+    }
+    if (this.state.progress < 40) {
       window.location.href = "/EditProfile";
       return (<></>)
     }
@@ -318,7 +322,7 @@ class Profile extends Component {
       }
   
       return (
-        <div style={{ height: '100%' }}>
+        <div style={{ minHeight: '100vh' }}>
           
           <div style={{ position: 'relative', marginBottom: '95px' }}>
             <div style={{

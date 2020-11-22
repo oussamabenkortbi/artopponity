@@ -2,6 +2,7 @@ import React from 'react';
 import Photo from './Photo';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
+import Hidden from '@material-ui/core/Hidden';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -29,79 +30,175 @@ export default function Results({photos, editable, paper, owner}) {
     if (photos[5]) check[5] = (<Photo photo={photos[5]} editable={editable} owner={owner} />); else check[5] = (<div>{black}</div>)
 
     if (paper === false) return (
-        <div className={classes.root}>
-            <div className={classes.paper} elevation={5}>
-                <h5><b>Gallery:</b></h5>
-                <div className="container-fluid">
-                    <div className="row">
-                        <div className="col-md">
-                            <br/>
-                            {check[0]}
-                            <br/>
-                            {check[1]}
-                            <br/>
-                        </div>
-                        <div className="col-md">
-                            <br/>
-                            {check[2]}
-                            <br/>
-                            {check[3]}
-                            <br/>
-                        </div>
-                        <div className="col-md">
-                            <br/>
-                            {check[4]}
-                            <br/>
-                            {check[5]}
-                            <br/>
+        <div>
+            <Hidden mdUp implementation="css">
+                <div className={classes.root}>
+                    <div className={classes.paper} elevation={5}>
+                        <div className="container-fluid">
+                            <div className="row">
+                                <div className="col-md">
+                                    {check[0]}
+                                    <div style={{ paddingTop: '50%'}}></div>
+                                    {check[1]}
+                                </div>
+                                <div className="col-md">
+                                    <div style={{ paddingTop: '50%'}}></div>
+                                    {check[2]}
+                                    <div style={{ paddingTop: '50%'}}></div>
+                                    {check[3]}
+                                </div>
+                                <div className="col-md">
+                                    <div style={{ paddingTop: '50%'}}></div>
+                                    {check[4]}
+                                    <div style={{ paddingTop: '50%'}}></div>
+                                    {check[5]}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </Hidden>
+            <Hidden smDown implementation="css">
+                <div className={classes.root}>
+                    <div className={classes.paper} elevation={5}>
+                        <div className="container-fluid">
+                            <div className="row">
+                                <div className="col-md">
+                                    {check[0]}
+                                    <div style={{ paddingTop: '50%'}}></div>
+                                    {check[3]}
+                                </div>
+                                <div className="col-md">
+                                    {check[1]}
+                                    <div style={{ paddingTop: '50%'}}></div>
+                                    {check[4]}
+                                </div>
+                                <div className="col-md">
+                                    {check[2]}
+                                    <div style={{ paddingTop: '50%'}}></div>
+                                    {check[5]}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Hidden>
         </div>
     )
     return (
-        <div className={classes.root}>
-            <Paper className={classes.paper} elevation={5}>
-                <h5><b>Gallery:</b></h5>
-                <div className="container-fluid">
-                    <div className="row">
-                        <div className="col-md">
-                            <br/>
-                            { (photos[0]) && (
-                                <Photo photo={photos[0].image} editable={editable} key={photos[0]._id}/>
-                            )}
-                            <br/>
-                            { (photos[1]) && (
-                                <Photo photo={photos[1].image} editable={editable} key={photos[1]._id}/>
-                            )}
-                            <br/>
+        <div>
+            <Hidden smUp implementation="css">
+                <div className={classes.root}>
+                    <Paper className={classes.paper} elevation={5}>
+                        <h5><b>Gallery:</b></h5>
+                        <div className="container-fluid">
+                            <div className="row">
+                                <div className="col-md">
+                                    <br/>
+                                    <div>
+                                        { (photos[0]) && (
+                                            <Photo photo={photos[0].image} editable={editable} key={photos[0]._id}/>
+                                        )}
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        { (photos[1]) && (
+                                            <Photo photo={photos[1].image} editable={editable} key={photos[1]._id}/>
+                                        )}
+                                    </div>
+                                    <br/>
+                                </div>
+                                <div className="col-md">
+                                    <br/>
+                                    <div>
+                                        { (photos[2]) && (
+                                            <Photo photo={photos[2].image} editable={editable} key={photos[2]._id}/>
+                                        )}
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        { (photos[3]) && (
+                                            <Photo photo={photos[3].image} editable={editable} key={photos[3]._id}/>
+                                        )}
+                                    </div>
+                                    <br/>
+                                </div>
+                                <div className="col-md">
+                                    <br/>
+                                    <div>
+                                        { (photos[4]) && (
+                                            <Photo photo={photos[4].image} editable={editable} key={photos[4]._id}/>
+                                        )}
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        { (photos[5]) && (
+                                            <Photo photo={photos[5].image} editable={editable} key={photos[5]._id}/>
+                                        )}
+                                    </div>
+                                    <br/>
+                                </div>
+                            </div>
                         </div>
-                        <div className="col-md">
-                            <br/>
-                            { (photos[2]) && (
-                                <Photo photo={photos[2].image} editable={editable} key={photos[2]._id}/>
-                            )}
-                            <br/>
-                            { (photos[3]) && (
-                                <Photo photo={photos[3].image} editable={editable} key={photos[3]._id}/>
-                            )}
-                            <br/>
-                        </div>
-                        <div className="col-md">
-                            <br/>
-                            { (photos[4]) && (
-                                <Photo photo={photos[4].image} editable={editable} key={photos[4]._id}/>
-                            )}
-                            <br/>
-                            { (photos[5]) && (
-                                <Photo photo={photos[5].image} editable={editable} key={photos[5]._id}/>
-                            )}
-                            <br/>
-                        </div>
-                    </div>
+                    </Paper>
                 </div>
-            </Paper>
+            </Hidden>
+            <Hidden xsDown implementation="css">
+                <div className={classes.root}>
+                    <Paper className={classes.paper} elevation={5}>
+                        <h5><b>Gallery:</b></h5>
+                        <div className="container-fluid">
+                            <div className="row">
+                                <div className="col-md">
+                                    <br/>
+                                    <div>
+                                        { (photos[0]) && (
+                                            <Photo photo={photos[0].image} editable={editable} key={photos[0]._id}/>
+                                        )}
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        { (photos[3]) && (
+                                            <Photo photo={photos[3].image} editable={editable} key={photos[3]._id}/>
+                                        )}
+                                    </div>
+                                    <br/>
+                                </div>
+                                <div className="col-md">
+                                    <br/>
+                                    <div>
+                                        { (photos[1]) && (
+                                            <Photo photo={photos[1].image} editable={editable} key={photos[1]._id}/>
+                                        )}
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        { (photos[4]) && (
+                                            <Photo photo={photos[4].image} editable={editable} key={photos[4]._id}/>
+                                        )}
+                                    </div>
+                                    <br/>
+                                </div>
+                                <div className="col-md">
+                                    <br/>
+                                    <div>
+                                        { (photos[2]) && (
+                                            <Photo photo={photos[2].image} editable={editable} key={photos[2]._id}/>
+                                        )}
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        { (photos[5]) && (
+                                            <Photo photo={photos[5].image} editable={editable} key={photos[5]._id}/>
+                                        )}
+                                    </div>
+                                    <br/>
+                                </div>
+                            </div>
+                        </div>
+                    </Paper>
+                </div>
+            </Hidden>
         </div>
     )
 }

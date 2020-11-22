@@ -57,8 +57,16 @@ router.post('/getGallery', (req, res) => {
         .catch(err => console.log(err))
 })
 
-router.post("/deletePhoto" , (req, res) => {
-    Prestation.deleteOne({ _id: req.body._id })
+router.post("/edit" , (req, res) => {
+    Photo.findOne({ _id: req.body._id })
+        .then(photo => {
+            photo.image = req.body.image;
+            photo.save().then(() => res.json("success")).catch(err => console.log(err))
+        })
+        .catch(err => { console.log(err) });
+});
+router.post("/delete" , (req, res) => {
+    Photo.deleteOne({ _id: req.body._id })
       .then(res.json("success"))
       .catch(err => { console.log(err) });
 });

@@ -4,7 +4,7 @@ import EditPhotos from '../Editor/EditPhotos';
 import Dialog from '@material-ui/core/Dialog';
 import Button from '@material-ui/core/Button';
 import { FaPencilAlt } from 'react-icons/fa';
-import axios from "axios";
+import { GrAdd } from 'react-icons/gr';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -41,24 +41,29 @@ export default function Result({photo, editable, black, owner}) {
         setOpen(true);
     };
 
+    const IsPhoto = () => {
+        if (photo) return (<EditPhotos id={owner} type={3} photo={photo}/>)
+        return (<EditPhotos id={owner} type={3}/>)
+    }
+
     if (editable === true) {
         if (black === true) {
             return (
                 <div>
-                    <div className={classes.paper}>
+                    <div className={classes.paper} style={{ position: 'absolute' }}>
                         <div className="contain">
-                            <div className={classes.image} style={{ backgroundColor: '#191919' }}></div>
+                            <div className={classes.image} style={{ backgroundColor: '#191919', marginLeft: '20px' }}></div>
                         </div>
                     </div>
                     <br/>
-                    <Button variant="contained" onClick={handleClickOpen} style={{ backgroundColor: '#191919', color: '#fbcf36', marginLeft: '15px' }}>
-                        <FaPencilAlt className="react-icons"/>
+                    <Button variant="contained" onClick={handleClickOpen} style={{ backgroundColor: '#fbcf36', color: '#191919', marginLeft: '40px', marginTop: '40px', padding: '10px 0px' }}>
+                        <GrAdd className="react-icons"/>
                     </Button>
                     <Dialog
                         open={open}
                         onClose={handleClose}
                     >
-                        <EditPhotos id={owner} type={3} photo={photo}/>
+                        <IsPhoto/>
                     </Dialog>
                 </div>
             )
