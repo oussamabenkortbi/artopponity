@@ -139,8 +139,12 @@ class Profile extends Component {
       return (<></>)
     }
     if (this.state.progress < 40) {
-      window.location.href = "/EditProfile";
-      return (<></>)
+      return (
+        <div className="container center" style={{ height: '100vh' }}>
+          <h2 style={{ paddingTop: '30vh' }}><b>Complétez votre profil à plus de 40% pour voir cette page</b></h2>
+          <h5>Progress = {this.state.progress}%</h5>
+        </div>
+      )
     }
 
     else {

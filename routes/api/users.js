@@ -6,7 +6,6 @@ const keys = require("../../config/keys");
 
 // Load input validation
 const validateRegisterInput = require("../../validation/register");
-const validateUpdateInput = require("../../validation/update");
 const validateLoginInput = require("../../validation/login");
 const validateUpdatePassword = require("../../validation/updatePassword");
 
@@ -61,9 +60,8 @@ router.post("/login", (req, res) => {
           }
         );
       } else {
-        return res
-          .status(400)
-          .json({ passwordincorrect: "Password incorrect" });
+        errors.password = "Password incorrect"
+        return res.status(400).json(errors);
       }
     });
   });
@@ -149,9 +147,8 @@ router.post("/updatePassword", (req, res) => {
         });
 
       } else {
-        return res
-          .status(400)
-          .json({ passwordincorrect: "Password incorrect" });
+        errors.oldPassword = "Password incorrect"
+        return res.status(400).json(errors);
       }
     });
   });

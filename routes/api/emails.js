@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const nodemailer = require('nodemailer');
+const bcrypt = require("bcryptjs");
 
 const User = require("../../models/User");
 
@@ -21,14 +22,14 @@ router.post('/send', (req, res) => {
     
     host = req.get('host');
     link = "http://" + req.get('host') + "/verify?id=" + user._id;
-
+    
     mailOptions = {
         from: 'kortbyoussama@gmail.com',
         to : user.email,
-        subject : "Please confirm your Email account",
-        html : "Hello,<br> Please Click on the link to verify your email.<br><a href="+link+">Click here to verify</a>" 
+        subject : "Vérifier votre adresse émail",
+        html : "Bonjour,<br> Veuillez cliquer sur le lien pour vérifier votre email.<br><a href="+link+">Cliquez ici pour vérifier</a><br>Cordialement",
     }
-
+    
     transporter.sendMail(mailOptions, function(error, info){
         if (error) res.status(400).json(error);
         else res.json('Email sent: ' + info.response)
@@ -52,83 +53,60 @@ router.get('/', (req,res) => {
 });
 
 router.post('/ForgotPassword', (req, res) => {
-
+    
     //validate email
     const errors = {}
-
+    
     User.findOne({ email: req.body.email })
-        .then((user) => {
-            if (!user) {
-                errors.email = "Email is invalid";
-                res.status(400).json(errors);
-            }    
-            else {
-                link = "http://" + req.get('host') + "/verify?id=";
-            
-                mailOptions = {
-                    from: 'kortbyoussama@gmail.com',
-                    to : req.body.email,
-                    subject : "Please confirm your Email account",
-                    html : "Hello,<br> Password.<br><a href="+link+">Click here to verify</a>" 
-                }
-            
-                transporter.sendMail(mailOptions, function(error, info){
-                    if (error) res.status(400).json(error);
-                    else res.json('Email sent: ' + info.response)
+    .then((user) => {
+        if (!user) {
+            errors.email = "Email is invalid";
+            res.status(400).json(errors);
+        }    
+        else {
+                const random = (length = 8) => {
+                    // Declare all characters
+                    let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                    // Pick characers randomly
+                    let str = '';
+                    for (let i = 0; i < length; i++) {
+                        str += chars.charAt(Math.floor(Math.random() * chars.length));
+                    }
+                    return str;
+                };
+
+                const tmp = random(14);
+                
+                // Hash password before saving in database
+                bcrypt.genSalt(10, (err, salt) => {
+                    bcrypt.hash(tmp, salt, (err, hash) => {
+                    if (err) throw err;
+                    user.password = hash;
+                    user
+                        .save()
+                        .then(() => {
+                            link = "https://branchiny.com/"
+                            mailOptions = {
+                                from: 'kortbyoussama@gmail.com',
+                                to : req.body.email,
+                                subject : "Mot de pass oublié",
+                                html : "Bonjour,<br> Votre mot de passe temporaire est <b>"+tmp+"</b>.<br>Veuillez changer votre mot de passe en moins de 24H. <br><a href="+link+"></a><br>Cordialement"
+                            }
+                        
+                            transporter.sendMail(mailOptions, function(error, info){
+                                if (error) res.status(400).json(error);
+                                else {
+                                    errors.email = "Un mot de passe temporaire a été envoyé à votre email, Veuillez changer votre mot de passe en moins de 24H.";
+                                    res.status(400).json(errors);
+                                }    
+                            });
+                        })
+                        .catch(err => console.log(err));
+                    });
                 });
             }
         })
-    .catch((err) => console.log(err))
-    
+    .catch((err) => console.log(err))  
 });
-
-router.post('/reset-password', function (req, res) {
-    const email = req.body.email
-    User
-        .findOne({
-            where: {email: email},//checking if the email address sent by client is present in the db(valid)
-        })
-        .then(function (user) {
-            if (!user) {
-                return throwFailed(res, 'No user found with that email address.')
-            }
-            ResetPassword
-                .findOne({
-                    where: {userId: user.id, status: 0},
-                }).then(function (resetPassword) {
-                if (resetPassword)
-                    resetPassword.destroy({
-                        where: {
-                            id: resetPassword.id
-                        }
-                    })
-                token = crypto.randomBytes(32).toString('hex')//creating the token to be sent to the forgot password form (react)
-                bcrypt.hash(token, null, null, function (err, hash) { //hashing the password to store in the db node.js
-                    ResetPassword.create({
-                        userId: user.id,
-                        resetPasswordToken: hash,
-                        expire: moment.utc().add(config.tokenExpiry, 'seconds'),
-                    }).then(function (item) {
-                        if (!item)
-                            return throwFailed(res, 'Oops problem in creating new password record')
-                        let mailOptions = {
-                            from: 'kortbyoussama@gmail.com',
-                            to: user.email,
-                            subject: 'Reset your account password',
-                            html: '<h4><b>Reset Password</b></h4>' +
-                            '<p>To reset your password, complete this form:</p>' +
-                            '<a href=' + config.clientUrl + 'reset/' + user.id + '/' + token + '">' + config.clientUrl + 'reset/' + user.id + '/' + token + '</a>' +
-                            '<br><br>' +
-                            '<p>--Team</p>'
-                        }
-                        transporter.sendMail(mailOptions, function(error, info){
-                            if (error) res.status(400).json(error);
-                            else res.json('Email sent: ' + info.response)
-                        });
-                    })
-                })
-            });
-        })
-})
 
 module.exports = router;

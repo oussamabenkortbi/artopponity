@@ -34,7 +34,7 @@ export default function EditVideos({_id}) {
 
     const checkNbr = (nbrPrestation) => {
         if (nbrPrestation < 4) return (
-            <div>
+            <div className="container center">
                 <Button variant="contained" onClick={handleClickOpen} style={{ backgroundColor: '#191919', color: '#fbcf36' }}>
                     Ajouter Video
                 </Button>

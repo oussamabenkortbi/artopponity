@@ -96,7 +96,7 @@ class Login extends Component {
                     invalid: errors.password || errors.passwordincorrect
                   })}
                 />
-                <label htmlFor="password" style={{ color: '#191919' }}>Password</label>
+                <label htmlFor="password" style={{ color: '#191919' }}>Mot de pass</label>
                 <span className="red-text">
                   {errors.password}
                   {errors.passwordincorrect}

@@ -86,7 +86,7 @@ function EditArtistInfo(props) {
                                 type="textarea"
                             />
                         </div>
-                        <div>
+                        {/* <div>
                             <FormLabel component="legend" style={{ color: '#191919' }}><b>Decipline</b></FormLabel>
                             <Dropdown 
                                 name="decipline"
@@ -97,7 +97,7 @@ function EditArtistInfo(props) {
                                 onChange={onDeciplineChange}
                                 placeholder="Decipline"
                             />
-                        </div>
+                        </div> */}
                         <div>
                             <FormLabel component="legend" style={{ color: '#191919' }}><b>Wilaya</b></FormLabel>
                             <Dropdown 

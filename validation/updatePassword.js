@@ -11,23 +11,23 @@ module.exports = function validateUpdatePassword(data) {
   
     // Password checks
     if (Validator.isEmpty(data.password)) {
-      errors.password = "Password field is required";
+      errors.password = "mot de pass est obligatoire";
     }
     // Password checks
     if (Validator.isEmpty(data.oldPassword)) {
-      errors.password = "Old Password field is required";
+      errors.password = "Ancien mot de pass est obligatoire";
     }
   
     if (Validator.isEmpty(data.password2)) {
-      errors.password2 = "Confirm password field is required";
+      errors.password2 = "il faut confirmer votre mot de pass";
     }
   
-    if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
-      errors.password = "Password must be at least 6 characters";
+    if (!Validator.isLength(data.password, { min: 6, max: 24 })) {
+      errors.password = "Le mot de passe doit comprendre entre 6 et 24 caractères";
     }
   
     if (!Validator.equals(data.password, data.password2)) {
-      errors.password2 = "Passwords must match";
+      errors.password2 = "Les mots de passe doivent correspondre";
     }
   
     return {

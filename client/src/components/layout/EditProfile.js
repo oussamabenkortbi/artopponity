@@ -7,7 +7,6 @@ import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import Toolbar from '@material-ui/core/Toolbar';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { withRouter } from "react-router-dom";
@@ -16,7 +15,6 @@ import { logoutUser } from "../../actions/authActions";
 import Navbar from './Navbar';
 import axios from 'axios'
 
-import ChangePassword from './Editor/ChangePassword';
 import EditArtistInfo from './Editor/EditArtistInfo';
 import EditArtistProfile from './Editor/EditArtistProfile';
 import EditPrestations from './Editor/EditPrestations';
@@ -74,11 +72,10 @@ function EditProfile(props) {
     
     const [isConfirmed, setisConfirmed] = React.useState(false);
 
-    const [btn0, setBtn0] = React.useState(false);
+    const [btn0, setBtn0] = React.useState(true);
     const [btn1, setBtn1] = React.useState(false);
     const [btn2, setBtn2] = React.useState(false);
-    const [btn3, setBtn3] = React.useState(true);
-    const [btn4, setBtn4] = React.useState(false);
+    const [btn3, setBtn3] = React.useState(false);
     const [btn5, setBtn5] = React.useState(false);
     
     const { user } = props.auth;
@@ -95,67 +92,67 @@ function EditProfile(props) {
             .then(res => {
                 setisConfirmed(res.data.isConfirmed)
             })
-    
+        if (!localStorage.getItem("currentBtn")) localStorage.setItem("currentBtn", 0);
     }, [user.id]);
     // React.useEffect()
     const handlebtn0 = () => {
+        localStorage.setItem("currentBtn", 0);
         setBtn0(true);
         setBtn1(false);
         setBtn2(false);
         setBtn3(false);
-        setBtn4(false);
         setBtn5(false);
     };
     const handlebtn1 = () => {
+        localStorage.setItem("currentBtn", 1);
         setBtn0(false);
         setBtn1(true);
         setBtn2(false);
         setBtn3(false);
-        setBtn4(false);
         setBtn5(false);
     };
     const handlebtn2 = () => {
+        localStorage.setItem("currentBtn", 2);
         setBtn0(false);
         setBtn1(false);
         setBtn2(true);
         setBtn3(false);
-        setBtn4(false);
         setBtn5(false);
     };
     const handlebtn3 = () => {
+        localStorage.setItem("currentBtn", 3);
         setBtn0(false);
         setBtn1(false);
         setBtn2(false);
         setBtn3(true);
-        setBtn4(false);
         setBtn5(false);
     };
-    const handlebtn4 = () => {
-        setBtn0(false);
-        setBtn1(false);
-        setBtn2(false);
-        setBtn3(false);
-        setBtn4(true);
-        setBtn5(false);
-    };
+
     const handlebtn5 = () => {
+        localStorage.setItem("currentBtn", 5);
         setBtn0(false);
         setBtn1(false);
         setBtn2(false);
         setBtn3(false);
-        setBtn4(false);
         setBtn5(true);
     };
     
     const BtnChecker = () => {
 
-        if (btn0 === true) return (<EditArtistProfile/>)
-        if (btn5 === true) return (<EditArtistInfo/>)
-        if (btn1 === true) return (<EditPrestations/>)
-        if (btn2 === true) return (<EditVideos _id={user.id} />)
-        if (btn3 === true) return (<EditGallery id={user.id} type={3}/>)
-        if (btn4 === true) return (<ChangePassword/>)
-        return (<></>)
+        if (localStorage.getItem('currentBtn')) {
+            if (localStorage.getItem('currentBtn') == 0) return (<EditArtistProfile/>)
+            if (localStorage.getItem('currentBtn') == 5) return (<EditArtistInfo/>)
+            if (localStorage.getItem('currentBtn') == 1) return (<EditPrestations/>)
+            if (localStorage.getItem('currentBtn') == 2) return (<EditVideos _id={user.id} />)
+            if (localStorage.getItem('currentBtn') == 3) return (<EditGallery id={user.id} type={3}/>)
+        }
+        else {
+            if (btn0 === true) return (<EditArtistProfile/>)
+            if (btn5 === true) return (<EditArtistInfo/>)
+            if (btn1 === true) return (<EditPrestations/>)
+            if (btn2 === true) return (<EditVideos _id={user.id} />)
+            if (btn3 === true) return (<EditGallery id={user.id} type={3}/>)
+        }
     }
 
     const drawer = (
@@ -163,22 +160,22 @@ function EditProfile(props) {
             <div className={classes.toolbar} ></div>
             <List style={{ paddingTop: '145px' }}>
                 <ListItem button onClick={handlebtn0}>
-                    <ListItemText><GrUserSettings className="react-icons-bar" /></ListItemText>
+                    <GrUserSettings className="react-icons-bar" />
                 </ListItem>
                 <ListItem button onClick={handlebtn5}>
-                    <ListItemText><BsInfoSquare className="react-icons-bar" /></ListItemText>
+                    <BsInfoSquare className="react-icons-bar" />
                 </ListItem>
                 <ListItem button onClick={handlebtn1}>
-                    <ListItemText><GiPartyFlags className="react-icons-bar" /></ListItemText>
+                    <GiPartyFlags className="react-icons-bar" />
                 </ListItem>
                 <ListItem button onClick={handlebtn2}>
-                    <ListItemText><BsCollectionPlay className="react-icons-bar" /></ListItemText>
+                    <BsCollectionPlay className="react-icons-bar" />
                 </ListItem>
                 <ListItem button onClick={handlebtn3}>
-                    <ListItemText><BiPhotoAlbum className="react-icons-bar" /></ListItemText>
+                    <BiPhotoAlbum className="react-icons-bar" />
                 </ListItem>
-                <ListItem button onClick={handlebtn4}>
-                    <ListItemText><RiLockPasswordLine className="react-icons-bar" /></ListItemText>
+                <ListItem>
+                    <a href="/ChangePassword" style={{ color: '#191919', padding: '0px' }}><RiLockPasswordLine className="react-icons-bar" /></a>
                 </ListItem>
             </List>
         </div>

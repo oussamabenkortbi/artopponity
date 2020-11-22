@@ -1,28 +1,26 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { updatePassword , logoutUser } from "../../../actions/authActions";
-import classnames from "classnames";
+import { updatePassword } from "../../../actions/authActions";
 import Button from '@material-ui/core/Button';
+import classnames from "classnames";
 
 class ChangePassword extends Component {
-
     constructor() {
         super();
         this.state = {
-            oldpassword: "",
+            oldPassword: "",
             password: "",
             password2: "",
             errors: {}
         };
     }
-
+    
     UNSAFE_componentWillReceiveProps(nextProps) {
         if (nextProps.errors) {
-          this.setState({
-            errors: nextProps.errors.response.data
-          });
+            this.setState({
+                errors: nextProps.errors.response.data
+            });
         }
     }
 
@@ -33,39 +31,45 @@ class ChangePassword extends Component {
     onSubmit = e => {
         e.preventDefault();
         const { user } = this.props.auth;
-        const updater = {
+        const userData = {
             _id: user.id, 
             oldPassword: this.state.oldpassword,
             password: this.state.password,
             password2: this.state.password2,
-        };
-        this.props.updatePassword(updater, this.props.history);
+        }
+        
+        this.props.updatePassword(userData);
     };
 
     render() {
-        
+
         const { errors } = this.state;
+
         return (
-            <div className="container-fluid center" style={{ maxWidth: '700px', paddingTop: '20px' }}>
-                <form noValidate onSubmit={this.onSubmit}>
-                    <h4><b>modifier mot du pass </b></h4>
+            <div className="container-fluid center" style={{ maxWidth: '700px', paddingTop: '20px', height: '100vh' }}>
+                <h4><b>modifier mot du pass</b></h4>
+                <form onSubmit={this.onSubmit}>
                     <div className="input-field">
                         <input
+                            required
                             onChange={this.onChange}
                             error={errors.oldpassword}
+                            value={this.state.oldpassword}
                             id="oldpassword"
                             type="password"
                             className={classnames("", {
-                                invalid: errors.oldpassword
+                                invalid: errors.oldPassword
                             })}
                         />
                         <label htmlFor="password" style={{ color: '#191919' }}>Old Password</label>
-                        <span className="red-text">{errors.oldpassword}</span>
+                        <span className="red-text">{errors.oldPassword}</span>
                     </div>
                     <div className="input-field">
                         <input
+                            required
                             onChange={this.onChange}
                             error={errors.password}
+                            value={this.state.password}
                             id="password"
                             type="password"
                             className={classnames("", {
@@ -77,8 +81,10 @@ class ChangePassword extends Component {
                     </div>
                     <div className="input-field">
                         <input
+                            required
                             onChange={this.onChange}
                             error={errors.password2}
+                            value={this.state.password2}
                             id="password2"
                             type="password"
                             className={classnames("", {
@@ -88,7 +94,7 @@ class ChangePassword extends Component {
                         <label htmlFor="password2" style={{ color: '#191919' }}>Confirm Password</label>
                         <span className="red-text">{errors.password2}</span>
                     </div>
-                    <Button type="submit" variant="contained" onClick={this.onChange5} style={{ backgroundColor: '#191919', color: '#fbcf36' }}>
+                    <Button type="submit" variant="contained" style={{ backgroundColor: '#191919', color: '#fbcf36' }}>
                         Enregistrer
                     </Button>
                 </form>
@@ -98,17 +104,17 @@ class ChangePassword extends Component {
 }
 
 ChangePassword.propTypes = {
-    updatePassword: PropTypes.func.isRequired,
-    logoutUser: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired
+  updatePassword: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-     auth: state.auth,
-     errors: state.errors
+  auth: state.auth,
+  errors: state.errors
 });
 
 export default connect(
-    mapStateToProps,
-    { logoutUser, updatePassword }
-)(withRouter(ChangePassword));
+  mapStateToProps,
+  { updatePassword }
+)(ChangePassword);

@@ -19,40 +19,39 @@ module.exports = function validateRegisterInput(data) {
 
   // Email checks
   if (Validator.isEmpty(data.email)) {
-    errors.email = "Email field is required";
+    errors.email = "Le champ Email est obligatoire";
   } else if (!Validator.isEmail(data.email)) {
-    errors.email = "Email is invalid";
+    errors.email = "Email est invalide";
   }
 
   // Password checks
   if (Validator.isEmpty(data.password)) {
-    errors.password = "Password field is required";
+    errors.password = "Le champ mot de pass est obligatoire";
   }
 
   if (Validator.isEmpty(data.password2)) {
-    errors.password2 = "Confirm password field is required";
+    errors.password2 = "Confirmation du mot de pass est obligatoire";
   }
 
   if (!Validator.isLength(data.password, 6, 24 )) {
-    errors.password = "Password must be between 6 and 24 characters";
+    errors.password = "Le mot de passe doit comprendre entre 6 et 24 caractères";
   }
 
   if (!Validator.equals(data.password, data.password2)) {
-    errors.password2 = "Passwords must match";
+    errors.password2 = "Les mots de passe doivent correspondre";
   }
 
   // phoneNumber checks
   if (Validator.isEmpty(phoneNumberStr)) {
-    errors.phoneNumber = "Phone Number field is required";
+    errors.phoneNumber = "Le champ Numéro de téléphone est obligatoire";
   }
   
   if (phoneNumberStr.length !== 10) {
-    errors.phoneNumber = "Phone Number is invalid";
+    errors.phoneNumber = "Numéro de téléphone est invalide";
   }
 
   if (phoneNumberStr.charAt(1) !== '5' && phoneNumberStr.charAt(1) !== '6' && phoneNumberStr.charAt(1) !== '7') {
-    console.log(phoneNumberStr.charAt(1))
-    errors.phoneNumber = "Phone Number must start with 05/06/07"
+    errors.phoneNumber = "Numéro de téléphone doit commencer par 05/06/07"
   }
 
   return {

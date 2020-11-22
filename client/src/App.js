@@ -16,6 +16,7 @@ import PrivateRoute from "./components/private-route/PrivateRoute";
 import ProfileRouter from "./components/layout/ProfileRouter";
 import EditProfile from "./components/layout/EditProfile";
 import ForgotPassword from "./components/layout/ForgotPassword";
+import ChangePassword from "./components/layout/Editor/ChangePassword";
 
 import "./App.css";
 
@@ -50,6 +51,7 @@ class App extends Component {
               <Route exact path = "/register" component = {RegisterPage} />
               <Route exact path = "/login" component = {LoginPage} />
               <Route exact path = "/ForgotPassword" component = {ForgotPassword} />
+              <Route exact path = "/ChangePassword" component = {ChangePassword} />
               <Route exact path = "/p/:id" component = {ProfileRouter} />
               <PrivateRoute exact path = "/EditProfile" component = {EditProfile} />
               <Route component = {Error} />

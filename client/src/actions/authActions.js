@@ -16,25 +16,63 @@ export const registerUser = (userData) => dispatch => {
 
       const newData = Object.assign(Data, userData);
 
-      axios.post("/verify/send", newData).catch(err => console.log(err))
-
-      if (userData.type === "Artist") {
-        axios.post("/api/artists/registerArtist", newData).catch(err => console.log(err))
-      }
-
-      axios.post("/api/users/login", userData)
-        .then(res => {
-          // Set token to localStorage
-          const { token } = res.data;
-          localStorage.setItem("jwtToken", token);
-          // Set token to Auth header
-          setAuthToken(token);
-          // Decode token to get user data
-          const decoded = jwt_decode(token);
-          // Set current user
-          dispatch(setCurrentUser(decoded));
-        })
-        .catch(err => console.log(err));
+      axios.post("/verify/send", newData)
+        .then(() => {
+          if (userData.type === "Artist") {
+            axios.post("/api/artists/registerArtist", newData)
+              .then(() => {
+                axios.post("/api/users/login", userData)
+                  .then(res => {
+                    // Set token to localStorage
+                    const { token } = res.data;
+                    localStorage.setItem("jwtToken", token);
+                    // Set token to Auth header
+                    setAuthToken(token);
+                    // Decode token to get user data
+                    const decoded = jwt_decode(token);
+                    // Set current user
+                    dispatch(setCurrentUser(decoded));
+                  })
+                  .catch(err => console.log(err));
+              }).catch(err => console.log(err))
+          }
+          // if (userData.type === "Client") {
+          //   axios.post("/api/artists/registerArtist", newData)
+          //     .then(() => {
+          //       axios.post("/api/users/login", userData)
+          //         .then(res => {
+          //           // Set token to localStorage
+          //           const { token } = res.data;
+          //           localStorage.setItem("jwtToken", token);
+          //           // Set token to Auth header
+          //           setAuthToken(token);
+          //           // Decode token to get user data
+          //           const decoded = jwt_decode(token);
+          //           // Set current user
+          //           dispatch(setCurrentUser(decoded));
+          //         })
+          //         .catch(err => console.log(err));
+          //     }).catch(err => console.log(err))
+          // }
+          // if (userData.type === "Admin") {
+          //   axios.post("/api/artists/registerArtist", newData)
+          //     .then(() => {
+          //       axios.post("/api/users/login", userData)
+          //         .then(res => {
+          //           // Set token to localStorage
+          //           const { token } = res.data;
+          //           localStorage.setItem("jwtToken", token);
+          //           // Set token to Auth header
+          //           setAuthToken(token);
+          //           // Decode token to get user data
+          //           const decoded = jwt_decode(token);
+          //           // Set current user
+          //           dispatch(setCurrentUser(decoded));
+          //         })
+          //         .catch(err => console.log(err));
+          //     }).catch(err => console.log(err))
+          // }
+        }).catch(err => console.log(err))
       
       // if (userData.type === "Client") {
       //   axios.post("/api/clients/addClient", res.data)
@@ -53,26 +91,15 @@ export const registerUser = (userData) => dispatch => {
     )
 };
 
-// Update User
-export const updateUser = (userData) => dispatch => {
-  axios
-    .post("/api/users/update", userData)
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
-};
-
 // Change Password
 export const updatePassword = (userData) => dispatch => {
   axios
     .post("/api/users/updatePassword", userData)
+    .then(() => console.log("success"))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data
+        payload: err
       })
     );
 };
@@ -117,8 +144,10 @@ export const setUserLoading = () => {
 
 // Log user out
 export const logoutUser = () => dispatch => {
-  // Remove token from local storage
+  // Remove token and user data from local storage
   localStorage.removeItem("jwtToken");
+  localStorage.removeItem("final");
+  localStorage.removeItem("currentBtn");
   // Remove auth header for future requests
   setAuthToken(false);
   // Set current user to empty object {} which will set isAuthenticated to false

@@ -52,6 +52,10 @@ class Register extends Component {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
+    if (this.props.auth.isAuthenticated) {
+      const { user } = this.props.auth;
+      window.location.href = "/p/" + user.id;
+    }
     if(nextProps.errors){
       if(nextProps.errors.response) {
         if (nextProps.errors.response.data) {
@@ -192,7 +196,7 @@ class Register extends Component {
                   </div>
                 )}
               </div>
-              <div className="Button-Padding"></div>
+              <div style={{ padding: '0px 10px' }}></div>
               <div className="input-field">
                 <input
                   required
@@ -249,7 +253,7 @@ class Register extends Component {
                     invalid: errors.password
                   })}
                 />
-                <label style={{ color: '#191919' }} htmlFor="password">Password *</label>
+                <label style={{ color: '#191919' }} htmlFor="password">Mot de pass *</label>
                 <span className="red-text">{errors.password}</span>
               </div>
               <div className="input-field">
