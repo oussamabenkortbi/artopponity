@@ -41,6 +41,7 @@ class Profile extends Component {
       dicipline: '',
       description: "",
       wilaya: "",
+      eventType: {},
       progress: 100,
 
       prestations: [],
@@ -206,7 +207,30 @@ class Profile extends Component {
           </Paper>
         )
       }
-      function Results({ wilaya, edit }) {
+      
+      const EventType = () => {
+
+        let festival = "";
+        let fete = "";
+        let hotel = "";
+        let proEvent = "";
+        let animation = "";
+        let publicEvent = "";
+        let privateEvent = "";
+
+        if (this.state.eventType.festival ==! false) festival = ""; else festival = "festival"
+        if (this.state.eventType.fete ==! false) fete = ""; else fete = "fete"
+        if (this.state.eventType.hotel ==! false) hotel = ""; else hotel = "hotel"
+        if (this.state.eventType.proEvent ==! false) proEvent = ""; else proEvent = "proEvent"
+        if (this.state.eventType.animation ==! false) animation = ""; else animation = "animation"
+        if (this.state.eventType.publicEvent ==! false) publicEvent = ""; else publicEvent = "publicEvent"
+        if (this.state.eventType.privateEvent ==! false) privateEvent = ""; else privateEvent = "privateEvent"
+        
+        return (
+          <p><FaRegEye className="react-icons"/><b>{festival} {fete} {hotel} {proEvent} {animation} {publicEvent} {privateEvent}</b></p>
+        )
+      }
+      function Results({ wilaya, edit, eventType }) {
   
         const [openInfo, setopenInfo] = React.useState(false);
       
@@ -222,7 +246,7 @@ class Profile extends Component {
         if (wilaya !== "") getWilaya = (
           <p><FaMapMarkedAlt className="react-icons"/><b> {wilaya}</b></p>
         )
-  
+
         const classes = useStyles();
     
         return (
@@ -232,6 +256,7 @@ class Profile extends Component {
               <>{isValid}</>
               <GetPrice/>
               {getWilaya}
+              <EventType/>
               <p><RiMusic2Fill className="react-icons"/><b> repertoir hiphop breakdance urbain</b></p>
               <p><FaRegEye className="react-icons"/><b> profile visité 'x' fois</b></p>
               { edit === true && (
@@ -388,6 +413,7 @@ class Profile extends Component {
                 wilaya={this.state.wilaya} 
                 style={{ width:'100%' }}
                 edit={this.state.edit}
+                eventType={this.state.eventType}
               />
               <br/>
               { this.state.edit === true && (
