@@ -33,7 +33,7 @@ export default function EditPhotos({id, type, photo}) {
     React.useEffect(() => {
         if (photo) setPreviewSource(photo.image)
         else setBlack(true)
-    },[])
+    },[photo])
 
     const FileInputChange = (e) => {
         const file = e.target.files[0];

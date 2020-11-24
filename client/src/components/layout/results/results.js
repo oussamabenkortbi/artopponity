@@ -24,11 +24,13 @@ export default function Results() {
     // )
 
     let number;
-    if (artists.length > 9) number = (
-        <h5 className="center-align">
-            {artists.length} Artist Deja Inscrit
-        </h5>
-    )
+    if (artists.length) {
+        if (artists.length > 9) number = (
+            <h5 className="center-align">
+                {artists.length} Artist Deja Inscrit
+            </h5>
+        )
+    }
 
     return (
         <div className="container-fluid" style={{ textAlign: 'center' }}>

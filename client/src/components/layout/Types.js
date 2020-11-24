@@ -58,7 +58,6 @@ export const Categories = {
         Métal: false,
         Pop: false,
         Reggae: false,
-        Soul: false, 
         ClassiqueUniversel: false,  
         Oriental: false,
         MusiqueArabe: false, 

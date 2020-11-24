@@ -140,11 +140,11 @@ function EditProfile(props) {
     const BtnChecker = () => {
 
         if (localStorage.getItem('currentBtn')) {
-            if (localStorage.getItem('currentBtn') == 0) return (<EditArtistProfile/>)
-            if (localStorage.getItem('currentBtn') == 5) return (<EditArtistInfo/>)
-            if (localStorage.getItem('currentBtn') == 1) return (<EditPrestations/>)
-            if (localStorage.getItem('currentBtn') == 2) return (<EditVideos _id={user.id} />)
-            if (localStorage.getItem('currentBtn') == 3) return (<EditGallery id={user.id} type={3}/>)
+            if (localStorage.getItem('currentBtn') === 0) return (<EditArtistProfile/>)
+            if (localStorage.getItem('currentBtn') === 5) return (<EditArtistInfo/>)
+            if (localStorage.getItem('currentBtn') === 1) return (<EditPrestations/>)
+            if (localStorage.getItem('currentBtn') === 2) return (<EditVideos _id={user.id} />)
+            if (localStorage.getItem('currentBtn') === 3) return (<EditGallery id={user.id} type={3}/>)
             else return (<EditArtistProfile/>)
         }
         else {
