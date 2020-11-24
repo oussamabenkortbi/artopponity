@@ -37,7 +37,7 @@ Button {
   -webkit-transition:.2s;
   transition:.2s;
 }
-.money .description {
+/* .money .description {
   opacity: 0;
 }
 .moneyicon:hover ~ .money { opacity:1; }
@@ -45,7 +45,7 @@ Button {
 .time .description {
   opacity: 0;
 }
-.timeicon:hover ~ .time { opacity:1; }
+.timeicon:hover ~ .time { opacity:1; } */
 
 .react-icons-bar {
   vertical-align: center;

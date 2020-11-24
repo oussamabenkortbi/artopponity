@@ -66,16 +66,14 @@ class EditPrestation extends Component {
                         <input 
                             type="text" 
                             onChange={this.onChange} 
-                            value={this.state.name} 
                             name="name"
                             required
                         />
                     </div>
                     <div className="Button-Margin">
-                        <label htmlFor="text" style={{ color: '#191919' }}><b>Description *</b></label>
+                        <label htmlFor="text" style={{ color: '#191919' }}><b>Description</b></label>
                         <textarea 
                             onChange={this.onChange}
-                            value={this.state.description}
                             error={errors.description}
                             style={{height: "150px"}}
                             name="description"
@@ -89,8 +87,7 @@ class EditPrestation extends Component {
                         <input 
                             type="number" 
                             onChange={this.onChange} 
-                            value={this.state.fullName} 
-                            name="temp"
+                            name="time"
                             required
                         />
                     </div>
@@ -100,7 +97,6 @@ class EditPrestation extends Component {
                         <input 
                             type="number" 
                             onChange={this.onChange} 
-                            value={this.state.fullName} 
                             name="price"
                             required
                         />
@@ -111,7 +107,6 @@ class EditPrestation extends Component {
                         <input 
                             type="number" 
                             onChange={this.onChange} 
-                            value={this.state.fullName} 
                             name="artists"
                             required
                         />
@@ -122,7 +117,6 @@ class EditPrestation extends Component {
                         <input 
                             type="number" 
                             onChange={this.onChange} 
-                            value={this.state.fullName} 
                             name="space"
                             required
                         />
@@ -133,7 +127,6 @@ class EditPrestation extends Component {
                         <input 
                             type="number" 
                             onChange={this.onChange} 
-                            value={this.state.fullName} 
                             name="prepareTime"
                             required
                         />

@@ -22,6 +22,7 @@ class AddVideo extends Component {
             embed: this.state.embedSrc
         }
         axios.post("/api/videos/add", body)
+            .then(() => window.location.reload())
             .catch(e => console.log(e));
     };
 

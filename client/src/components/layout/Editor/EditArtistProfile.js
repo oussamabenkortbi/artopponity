@@ -38,10 +38,6 @@ class EditArtistProfile extends Component {
             _id: user.id,
         }
 
-        // const artist = UserData(user.id)
-
-        // this.setState({ nom: artist._id })
-
         axios.post("/api/artists/getInfoArtists", id)
             .then(res => {
                     this.setState({
@@ -73,6 +69,7 @@ class EditArtistProfile extends Component {
             fullName: this.state.nom,
         };
         axios.post("/api/artists/registerArtist", updater)
+            .then(() => window.location.reload())
             .catch(err => console.log(err));
     };
   
@@ -80,7 +77,7 @@ class EditArtistProfile extends Component {
         const { errors } = this.state;
         const { user } = this.props.auth;
 
-        function PicChange({type}) {
+        function PicChange({type, photo}) {
             const [open, setOpen] = React.useState(false);
           
             const handleClickOpen = () => {
@@ -91,6 +88,10 @@ class EditArtistProfile extends Component {
               setOpen(false);
             };
 
+            const pic = {
+                image: photo
+            }
+
             return (
               <>
                     <Button variant="contained" onClick={handleClickOpen} style={{ color: '#191919', backgroundColor: '#fbcf36' }}>modifier</Button>
@@ -98,7 +99,7 @@ class EditArtistProfile extends Component {
                         open={open}
                         onClose={handleClose}
                     >
-                        <EditPhotos id={user.id} type={type}/>
+                        <EditPhotos id={user.id} type={type} photo={pic}/>
                     </Dialog>
               </>
             );
@@ -117,7 +118,7 @@ class EditArtistProfile extends Component {
                             top: '20px',
                             left: '20px'
                         }}>
-                            <PicChange type={2}/>
+                            <PicChange type={2} photo={this.state.coverPic}/>
                         </div>
                         { this.state.coverPic && (
                             <img 
@@ -149,7 +150,7 @@ class EditArtistProfile extends Component {
                             left: '50%',
                             transform: 'translate(-50%, -50%)',
                         }}>
-                            <PicChange type={1}/>
+                            <PicChange type={1} photo={this.state.profilePic}/>
                         </div>
                         { this.state.profilePic && (
                             <img 

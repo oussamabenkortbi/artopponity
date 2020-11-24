@@ -65,6 +65,7 @@ export default function EditPhotos({id, type, photo}) {
         e.preventDefault();
         if (!PreviewSource) return;
         if (!photo) return;
+        if (!OldPreviewSource) return;
         editImage(PreviewSource);
     }
 
@@ -127,6 +128,7 @@ export default function EditPhotos({id, type, photo}) {
                         type="file"
                         name="editImage"
                         onChange={FileInputChange}
+                        required
                     />
                 </div>
                 <div className="row">
@@ -187,6 +189,7 @@ export default function EditPhotos({id, type, photo}) {
                         type="file"
                         name="image"
                         onChange={FileInputChange}
+                        required
                     />
                     <br/>
                     <div style={{ paddingTop: '10px'}}></div>

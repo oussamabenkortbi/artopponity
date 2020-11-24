@@ -42,11 +42,11 @@ export default function CustomizedProgressBars({ id, bar }) {
     axios.post("/api/artists/getInfoArtists", artist)
       .then(res => {
         let prog = 0;
-        if(res.data.artist.fullName) { prog = prog + 5 }
-        if(res.data.artist.description) { prog = prog + 5 }
-        if(res.data.artist.wilaya) { prog = prog + 5 }
-        if(res.data.artist.isValid === true) { prog = prog + 5 }
-        if(res.data.artist.dicipline) { prog = prog + 5 }
+        if(res.data.artist.fullName) { prog = prog + 10 }
+        if(res.data.artist.description) { prog = prog + 10 }
+        if(res.data.artist.wilaya) { prog = prog + 10 }
+        // if(res.data.artist.isValid === true) { prog = prog + 5 }
+        // if(res.data.artist.dicipline) { prog = prog + 5 }
         if(res.data.artist.eventType) { prog = prog + 5 }
         if(res.data.artist.categories) { prog = prog + 5 }
         setArtistProgress(prog)
@@ -59,7 +59,10 @@ export default function CustomizedProgressBars({ id, bar }) {
 
     axios.post("/api/videos/get", artist)
       .then(res => {
-        if (res.data.videos[0]) setVideosProgress(10)
+        let prog = 0;
+        if (res.data.videos[0]) { prog = prog + 10 }
+        if (res.data.videos[1]) { prog = prog + 5 }
+        setVideosProgress(prog)
       }).catch(err => console.log(err));
 
     axios.post("/api/photos/getProfilePic", { artist: artist._id }) 
@@ -67,7 +70,12 @@ export default function CustomizedProgressBars({ id, bar }) {
     axios.post("/api/photos/getCoverPic", { artist: artist._id }) 
       .then(res => { if (res.data.photo) setCoverProgress(10) }).catch(e => console.log(e))
     axios.post("/api/photos/getGallery", { artist: artist._id }) 
-      .then(res => { if (res.data.photos[0]) setGalleryProgress(10) }).catch(e => console.log(e))    
+      .then(res => {
+        let prog = 0;
+        if (res.data.photos[0]) { prog = prog + 5 }
+        if (res.data.photos[1]) { prog = prog + 5 }
+        setGalleryProgress(prog)
+      }).catch(e => console.log(e))    
 
     }, [id]);
     

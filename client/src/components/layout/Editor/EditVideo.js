@@ -104,7 +104,7 @@ class EditVideo extends Component {
             )
         }
         return (
-            <div className="container-fluid App" style={{ maxHeight: "400px", minWidth: '40vw', padding: '20px' }}>
+            <div className="container-fluid App" style={{ maxHeight: "600px", minWidth: '40vw', padding: '20px' }}>
                 <div className="row">
                     <div className="col">
                         <div>

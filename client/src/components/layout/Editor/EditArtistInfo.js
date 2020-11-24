@@ -6,15 +6,15 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../../actions/authActions";
 
-import { Deciplines, Wilaya } from '../Types';
+import { Wilaya } from '../Types';
 import Dropdown from 'react-dropdown';
+import Categorie from './Categorie'
 
 import { FormLabel, FormControl, FormGroup, FormControlLabel, Checkbox, Button } from '@material-ui/core';
 
 function EditArtistInfo(props) {
 
     const [description, setDescription] = React.useState("");
-    const [decipline, setDecipline] = React.useState("");
     const [wilaya, setWilaya] = React.useState("");
     const [state, setState] = React.useState({
         festival: false,
@@ -32,7 +32,7 @@ function EditArtistInfo(props) {
         };
         axios.post("/api/artists/getInfoArtists", artist)
             .then(res => {
-                setDecipline(res.data.artist.dicipline)
+                localStorage.setItem('dicipline', res.data.artist.dicipline)
                 setDescription(res.data.artist.description)
                 setWilaya(res.data.artist.wilaya)
                 if (res.data.artist.eventType) setState(res.data.artist.eventType)
@@ -50,9 +50,6 @@ function EditArtistInfo(props) {
 
     const onWilayaChange = e => {
         setWilaya(e.value);
-    };
-    const onDeciplineChange = e => {
-        setDecipline(e.value);
     };
 
     const onSubmit = e => {
@@ -86,32 +83,19 @@ function EditArtistInfo(props) {
                                 type="textarea"
                             />
                         </div>
-                        {/* <div>
-                            <FormLabel component="legend" style={{ color: '#191919' }}><b>Decipline</b></FormLabel>
-                            <Dropdown 
-                                name="decipline"
-                                className="Button-Margin"
-                                // error={errors.decipline}
-                                options={Deciplines}
-                                value={decipline}
-                                onChange={onDeciplineChange}
-                                placeholder="Decipline"
-                            />
-                        </div> */}
                         <div>
                             <FormLabel component="legend" style={{ color: '#191919' }}><b>Wilaya</b></FormLabel>
                             <Dropdown 
                                 name="wilaya"
                                 className="Button-Margin"
-                                // error={errors.wilaya}
                                 options={Wilaya}
                                 value={wilaya}
                                 onChange={onWilayaChange}
                                 placeholder="wilaya"
                                 style={{ color: '#191919' }}
                             />
-                            {/* <span className="red-text">{errors.wilaya}</span> */}
                         </div>
+                        <Categorie id={props.auth.user.id}/>
                         <div>
                             <FormControl component="fieldset">
                                 <FormLabel component="legend" style={{ color: '#191919' }}><b>Type d'evènement</b></FormLabel>

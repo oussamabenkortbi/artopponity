@@ -118,7 +118,7 @@ export default function Result({prestation, editable}) {
         )
         else return (<></>) 
     }
-
+    
     return (
         <div className={classes.root}>
             <div className={classes.paper} elevation={1}>

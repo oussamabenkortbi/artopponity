@@ -21,6 +21,7 @@ import { Dialog, Hidden, Paper, Button } from '@material-ui/core'
 import { FaCheckCircle, FaMapMarkedAlt, FaMoneyBillAlt, FaRegEye } from "react-icons/fa";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { RiMusic2Fill } from "react-icons/ri";
+import { IoIosMicrophone } from "react-icons/io";
 
 import Progress from './Editor/Progress';
 
@@ -77,8 +78,8 @@ class Profile extends Component {
         })
       }
     }
-
-    this.setState({ progress: localStorage.getItem('final') })
+    if (localStorage.getItem('final')) this.setState({ progress: localStorage.getItem('final') })
+    // else
 
     axios.post("/api/users/isConfirmed", artist)
       .then(res => {
@@ -139,6 +140,11 @@ class Profile extends Component {
       window.location.href = "/EditProfile";
       return (<></>)
     }
+
+    if (this.state.progress === 0) {
+      window.location.href = "/EditProfile";
+    }
+    
     if (this.state.progress < 40) {
       return (
         <div className="container center" style={{ height: '100vh' }}>
@@ -218,19 +224,19 @@ class Profile extends Component {
         let publicEvent = "";
         let privateEvent = "";
 
-        if (this.state.eventType.festival ==! false) festival = ""; else festival = "festival"
-        if (this.state.eventType.fete ==! false) fete = ""; else fete = "fete"
-        if (this.state.eventType.hotel ==! false) hotel = ""; else hotel = "hotel"
-        if (this.state.eventType.proEvent ==! false) proEvent = ""; else proEvent = "proEvent"
-        if (this.state.eventType.animation ==! false) animation = ""; else animation = "animation"
-        if (this.state.eventType.publicEvent ==! false) publicEvent = ""; else publicEvent = "publicEvent"
-        if (this.state.eventType.privateEvent ==! false) privateEvent = ""; else privateEvent = "privateEvent"
+        if (this.state.eventType.festival === true) festival = "festival -";
+        if (this.state.eventType.fete === true) fete = "féte et mariage -";
+        if (this.state.eventType.hotel === true) hotel = "hotel & restaurant -";
+        if (this.state.eventType.proEvent === true) proEvent = "évènement professionnel -";
+        if (this.state.eventType.animation === true) animation = "animation centre commercial -";
+        if (this.state.eventType.publicEvent === true) publicEvent = "évènement public -";
+        if (this.state.eventType.privateEvent === true) privateEvent = "évènement privé -";
         
         return (
-          <p><FaRegEye className="react-icons"/><b>{festival} {fete} {hotel} {proEvent} {animation} {publicEvent} {privateEvent}</b></p>
+          <p><IoIosMicrophone className="react-icons"/><b> {festival} {fete} {hotel} {proEvent} {animation} {publicEvent} {privateEvent}</b></p>
         )
       }
-      function Results({ wilaya, edit, eventType }) {
+      function Results({ wilaya, edit }) {
   
         const [openInfo, setopenInfo] = React.useState(false);
       
@@ -413,7 +419,6 @@ class Profile extends Component {
                 wilaya={this.state.wilaya} 
                 style={{ width:'100%' }}
                 edit={this.state.edit}
-                eventType={this.state.eventType}
               />
               <br/>
               { this.state.edit === true && (

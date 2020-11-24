@@ -72,7 +72,7 @@ function EditProfile(props) {
     
     const [isConfirmed, setisConfirmed] = React.useState(false);
 
-    const [btn0, setBtn0] = React.useState(true);
+    const [btn0, setBtn0] = React.useState(false);
     const [btn1, setBtn1] = React.useState(false);
     const [btn2, setBtn2] = React.useState(false);
     const [btn3, setBtn3] = React.useState(false);
@@ -145,6 +145,7 @@ function EditProfile(props) {
             if (localStorage.getItem('currentBtn') == 1) return (<EditPrestations/>)
             if (localStorage.getItem('currentBtn') == 2) return (<EditVideos _id={user.id} />)
             if (localStorage.getItem('currentBtn') == 3) return (<EditGallery id={user.id} type={3}/>)
+            else return (<EditArtistProfile/>)
         }
         else {
             if (btn0 === true) return (<EditArtistProfile/>)
@@ -152,6 +153,7 @@ function EditProfile(props) {
             if (btn1 === true) return (<EditPrestations/>)
             if (btn2 === true) return (<EditVideos _id={user.id} />)
             if (btn3 === true) return (<EditGallery id={user.id} type={3}/>)
+            else return (<EditArtistProfile/>)
         }
     }
 
@@ -175,7 +177,7 @@ function EditProfile(props) {
                     <BiPhotoAlbum className="react-icons-bar" />
                 </ListItem>
                 <ListItem>
-                    <a href="/ChangePassword" style={{ color: '#191919', padding: '0px' }}><RiLockPasswordLine className="react-icons-bar" /></a>
+                    <a href="/ChangePassword" style={{ color: '#191919', padding: '0px 0px' }}><RiLockPasswordLine className="react-icons-bar" /></a>
                 </ListItem>
             </List>
         </div>
