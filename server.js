@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const morgan = require('morgan');
+const path = require("path");
 const cors = require('cors');
 
 const users = require("./routes/api/users");
@@ -15,6 +16,7 @@ const photos = require("./routes/api/photos");
 
 const app = express();
 app.use(express.static('./public'));
+app.use(express.static(path.join(__dirname, "client/build")));
 app.use('/uploads', express.static('uploads'));
 
 // DB Config

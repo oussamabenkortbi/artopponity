@@ -12,7 +12,7 @@ export default function Results() {
                 setArtists(res.data.artists);
             }).catch(e => console.log(e));
     }, []);
-
+  
     // const res = (
     //     <div>
     //         {   
@@ -24,7 +24,7 @@ export default function Results() {
     // )
 
     let number;
-    if (artists.length) {
+    if (artists[0]) {
         if (artists.length > 9) number = (
             <h5 className="center-align">
                 {artists.length} Artist Deja Inscrit
