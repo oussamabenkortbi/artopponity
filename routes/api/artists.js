@@ -44,29 +44,15 @@ router.post("/getInfoArtists", (req, res) => {
   });
 })
 
-router.post("/getArtistsProgress", (req, res) => {
-  Artist.findOne({ _id: req.body._id }).then(artist => {
-    let progress = 0;
-      if (artist.fullName) progress = progress + 10;
-      if (artist.description) progress = progress + 10;
-      if (artist.wilaya) progress = progress + 10;
-      if (artist.type) progress = progress + 10;
-      if (artist.description) progress = progress + 10;
-      if (artist.isValid) progress = progress + 10;
-    res.json({ progress: progress })
-  });
-})
-
 router.get("/getArtistList", (req, res) => {
   Artist.find({ 
     $and: [ 
-      { fullName: { $ne: '' } },
-      { description: { $ne: '' } },
-      { wilaya: { $ne: '' } },
-      { type: { $ne: '' } },
-      { description: { $ne: '' } },
-      { isValid: true },
+      { fullName: { $ne: null } },
+      { description: { $ne: null } },
+      { wilaya: { $ne: null } },
+      { dicipline: { $ne: null } },
     ]}, {})
+    // .then(artists => { res.json({ artists }); })
     .then(artists => { res.json({ artists }); })
 })
 

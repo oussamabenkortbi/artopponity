@@ -6,10 +6,11 @@ const bcrypt = require("bcryptjs");
 const User = require("../../models/User");
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: 'mail.branchiny.com',
+  port: '587',
   auth: {
-    user: 'kortbyoussama',
-    pass: 'Sonicx204@'
+    user: 'contact',
+    pass: 'contactbranchiny2020'
   }
 });
 
@@ -24,7 +25,7 @@ router.post('/send', (req, res) => {
     link = "http://" + req.get('host') + "/verify?id=" + user._id;
     
     mailOptions = {
-        from: 'kortbyoussama@gmail.com',
+        from: 'contact@branchiny.com',
         to : user.email,
         subject : "Vérifier votre adresse émail",
         html : "Bonjour,<br> Veuillez cliquer sur le lien pour vérifier votre email.<br><a href="+link+">Cliquez ici pour vérifier</a><br>Cordialement",
@@ -87,7 +88,7 @@ router.post('/ForgotPassword', (req, res) => {
                         .then(() => {
                             link = "https://branchiny.com/"
                             mailOptions = {
-                                from: 'kortbyoussama@gmail.com',
+                                from: 'contact@branchiny.com',
                                 to : req.body.email,
                                 subject : "Mot de pass oublié",
                                 html : "Bonjour,<br> Votre mot de passe temporaire est <b>"+tmp+"</b>.<br>Veuillez changer votre mot de passe en moins de 24H. <br><a href="+link+"></a><br>Cordialement"

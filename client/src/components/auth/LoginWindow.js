@@ -15,10 +15,6 @@ const useStyles = makeStyles((theme) => ({
         paddingTop: theme.spacing(0),
         textAlign: 'center',
         height: '100%',
-        // borderWidth: '1px',
-        // borderColor: '#191919',
-        // borderStyle: 'solid',
-        // border: '3px solid #191919',
         backgroundColor: '#fbcf36',
         borderRadius: '15px',
         color: '#191919',
@@ -45,19 +41,9 @@ export default function Result() {
 
     return (
         <div className={classes.root}>
-            <Grid 
-            container 
-            spacing={2}
-            direction="column"
-            justify="center"
-            alignItems="center"
-            >
-                <Grid item xs>
-                    <Paper className={classes.paper} elevation={24}>
-                        <Login/>
-                    </Paper>
-                </Grid>
-            </Grid>
+            <Paper className={classes.paper} elevation={24}>
+                <Login/>
+            </Paper>
       </div>
     )
 }

@@ -8,7 +8,6 @@ import { logoutUser } from "../../../actions/authActions";
 
 import { Wilaya } from '../Types';
 import Dropdown from 'react-dropdown';
-import Categorie from './Categorie'
 
 import { FormLabel, FormControl, FormGroup, FormControlLabel, Checkbox, Button } from '@material-ui/core';
 
@@ -95,7 +94,6 @@ function EditArtistInfo(props) {
                                 style={{ color: '#191919' }}
                             />
                         </div>
-                        <Categorie id={props.auth.user.id}/>
                         <div>
                             <FormControl component="fieldset">
                                 <FormLabel component="legend" style={{ color: '#191919' }}><b>Type d'evènement</b></FormLabel>

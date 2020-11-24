@@ -11,6 +11,15 @@ export const registerUser = (userData) => dispatch => {
     .then(res => {
       const Data = {
         _id: res.data._id,
+        eventType: {
+          festival: false,
+          fete: false,
+          hotel: false,
+          proEvent: false,
+          animation: false,
+          publicEvent: false,
+          privateEvent: false,
+        },
         isValid: false,
       };
 
@@ -21,7 +30,7 @@ export const registerUser = (userData) => dispatch => {
           if (userData.type === "Artist") {
             axios.post("/api/artists/registerArtist", newData)
               .then(() => {
-                axios.post("/api/users/login", userData)
+                axios.post("/api/users/login", newData)
                   .then(res => {
                     // Set token to localStorage
                     const { token } = res.data;

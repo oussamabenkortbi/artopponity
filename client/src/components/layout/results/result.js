@@ -16,11 +16,11 @@ const useStyles = makeStyles((theme) => ({
     },
     paper: {
         marginBottom: theme.spacing(5),
-        padding: theme.spacing(2),
+        padding: theme.spacing(5),
         backgroundColor: '#fbcf36',
         color: '#191919',
         borderRadius: '15px',
-        minWidth: '315px',
+        // minWidth: '315px',
         maxWidth: '500px'
     },
     cover: {
@@ -57,6 +57,7 @@ export default function Result({artist}) {
     const [Max, setMaxArtists] = useState(0);
 
     React.useEffect(() => { 
+
         axios.post("/api/photos/getProfilePic", { artist: artist._id }) // get photos
             .then(res => { setProfilePicture(res.data.photo.image) })
             .catch(e => console.log(e))
@@ -150,6 +151,8 @@ export default function Result({artist}) {
         )
     }
 
+    if (Price === 0 || ProfilePicture === '' || CoverPicture === '' || Min === 0 || Max === 0) return null;
+
     return (
         <div className={classes.root}>
             <Paper className={classes.paper} elevation={8}> {/* onClick={this.onSubmit} */}
@@ -158,12 +161,14 @@ export default function Result({artist}) {
                     <br/>
                     <div className={classes.center}>
                         <h2><b>{artist.fullName} </b><CheckValid/></h2>
-                        <h5>{artist.type}</h5>
+                        <h5>{artist.dicipline}</h5>
                     </div>
                 </div>
+                <br/>
                 <div className="search-result">
                     <GetPrice/>
                     <h6><FaMapMarkedAlt className="react-icons"/><b> {artist.wilaya}</b></h6>
+                    <br/>
                     <p style={{ maxHeight: '100px', overflow: 'auto' }}>{artist.description}</p>
                 </div>
                 <div className={classes.center}>

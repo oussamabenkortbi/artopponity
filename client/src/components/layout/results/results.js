@@ -31,9 +31,9 @@ export default function Results() {
     )
 
     return (
-        <div>
+        <div className="container-fluid" style={{ textAlign: 'center' }}>
             {number}
-            <div style={{ display: 'inline-flex', flexWrap: 'wrap', gap: '1em' }}>
+            <div className="row" style={{ display: 'flex', flexWrap: 'wrap', textAlign: 'center', justifyContent: 'space-between' }}>
                 { artists[0] && (
                     <Result artist={artists[0]} key={artists[0].fullName}/>
                 )}
@@ -42,6 +42,9 @@ export default function Results() {
                 )}
                 { artists[2] && (
                     <Result artist={artists[2]} key={artists[2].fullName}/>
+                )}
+                { artists[3] && (
+                    <Result artist={artists[3]} key={artists[3].fullName}/>
                 )}
             </div>
             <br/>

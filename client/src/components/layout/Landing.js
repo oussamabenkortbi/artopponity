@@ -97,22 +97,24 @@ class Landing extends Component {
 
     let AuthCheck;
     if(this.props.auth.isAuthenticated === false) AuthCheck = (
-      <div className="container center" style={{ height: "100%", marginTop: '50px' }}>
-        <div className="row">
-          <div className="col-md">
-            <div className="container center">
-              <img src={Logo} alt="BRANCHINY" width="100%" style={{ padding: '15px'}}/>
-              <h3>
+      <div style={{ minHeight: '130vh', maxHeight: "150vh", backgroundColor: '#fbcf36' }}>
+        <div className="container center" style={{ height: "100vh", marginTop: '50px', backgroundColor: '#fbcf36' }}>
+          <div className="row">
+            <div className="col-md">
+              <img src={Logo} alt="BRANCHINY" width="100%" style={{ padding: '30px'}}/>
+              <h3 style={{ paddingTop: '20px '}}>
                 <b>Nous connectons les artistes aux opportunités afin de faciliter le booking</b>
               </h3>
             </div>
+            <div className="col-md-5" style={{ paddingTop: '20px', backgroundColor: '#fbcf36'}}>
+              <LoginWindow/>
+            </div>
           </div>
-          <div className="col-md-5" style={{ paddingTop: '30px'}}>
-            <LoginWindow/>
+          <div className="col-md" style={{ paddingTop: '20px', backgroundColor: '#fbcf36' }}>
+            <div><Results/></div>
           </div>
+          {/* <Footer/> */}
         </div>
-        <Results/>
-        {/* <Footer/> */}
       </div>
     ); else {
       const { user } = this.props.auth;
