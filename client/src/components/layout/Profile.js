@@ -13,7 +13,6 @@ import Prestations from './Prestations/prestations';
 import Videos from './Videos/videos';
 import Photos from './Gallery/Photos';
 import EditArtistInfo from './Editor/EditArtistInfo'
-import EditArtistDescription from './Editor/EditArtistDescription'
 
 import Alert from '@material-ui/lab/Alert';
 import { Dialog, Hidden, Paper, Button } from '@material-ui/core'
@@ -21,7 +20,7 @@ import { Dialog, Hidden, Paper, Button } from '@material-ui/core'
 import { FaCheckCircle, FaMapMarkedAlt, FaMoneyBillAlt, FaRegEye } from "react-icons/fa";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { RiMusic2Fill } from "react-icons/ri";
-import { IoIosMicrophone } from "react-icons/io";
+import { GiPartyFlags } from "react-icons/gi";
 
 import Progress from './Editor/Progress';
 
@@ -58,13 +57,6 @@ class Profile extends Component {
 
     };
   }
-
-  onEdit = () => {
-    this.setState({ edit: true });
-  };
-  onSave = () => {
-    this.setState({ edit: false });
-  };
 
   componentDidMount() {
     var artist = { //get id from link
@@ -166,38 +158,14 @@ class Profile extends Component {
         },
       }));
   
-      function Description({description, edit}) {
-  
-        const [openDescription, setopenDescription] = React.useState(false);
-  
-        const handleOpenDescription = () => {
-          setopenDescription(true);
-        };
-      
-        const handleCloseDescription = () => {
-          setopenDescription(false);
-        };
-  
+      function Description({description}) {
+
         const classes = useStyles();
   
         return (
           <Paper className={classes.paper} elevation={5}>
             <h5 style={{ paddingBottom: '15px'}}><b>Description</b></h5>
             <p style={{ maxHeight: '300px', overflow: 'auto' }}>{description}</p>
-            { edit === true && (
-                <div>
-                  <Button variant="contained" onClick={handleOpenDescription} style={{ backgroundColor: '#191919', color: '#fbcf36' }}>
-                    Modifié
-                  </Button>
-                  <Dialog
-                      open={openDescription}
-                      onClose={handleCloseDescription}
-                  >
-                    <EditArtistDescription/>
-                  </Dialog>
-                </div>
-              )
-            }
           </Paper>
         )
       }
@@ -233,20 +201,11 @@ class Profile extends Component {
         if (this.state.eventType.privateEvent === true) privateEvent = "évènement privé -";
         
         return (
-          <p><IoIosMicrophone className="react-icons"/><b> {festival} {fete} {hotel} {proEvent} {animation} {publicEvent} {privateEvent}</b></p>
+          <p><GiPartyFlags className="react-icons"/><b> {festival} {fete} {hotel} {proEvent} {animation} {publicEvent} {privateEvent}</b></p>
         )
       }
       function Results({ wilaya, edit }) {
-  
-        const [openInfo, setopenInfo] = React.useState(false);
-      
-        const handleOpenInfo = () => {
-          setopenInfo(true);
-        };
-        const handleCloseInfo = () => {
-          setopenInfo(false);
-        };
-  
+    
         let getWilaya;
   
         if (wilaya !== "") getWilaya = (
@@ -263,22 +222,8 @@ class Profile extends Component {
               <GetPrice/>
               {getWilaya}
               <EventType/>
-              <p><RiMusic2Fill className="react-icons"/><b> repertoir hiphop breakdance urbain</b></p>
+              <p><RiMusic2Fill className="react-icons"/><b> categories</b></p>
               <p><FaRegEye className="react-icons"/><b> profile visité 'x' fois</b></p>
-              { edit === true && (
-                  <div>
-                    <Button variant="contained" onClick={handleOpenInfo} style={{ backgroundColor: '#191919', color: '#fbcf36' }}>
-                      Modifié
-                    </Button>
-                    <Dialog
-                        open={openInfo}
-                        onClose={handleCloseInfo}
-                    >
-                      <EditArtistInfo/>
-                    </Dialog>
-                  </div>
-                )
-              }
             </Paper>          
           </div>
         )
@@ -330,7 +275,7 @@ class Profile extends Component {
   
       if (this.state.error === true) return (<h3 className="col s12 center-align"><b>Error 404: Artist n'exist pas</b></h3>)
   
-      let isValid, VideChecker, ConfirmeChecker, isAuth, validIcon;
+      let isValid, VideChecker, ConfirmeChecker, validIcon;
   
   
       if (this.state.isValid === true) validIcon = (<FaCheckCircle/>)
@@ -338,22 +283,6 @@ class Profile extends Component {
       if (this.state.dashboard === true) {
         VideChecker = (<Progress id={user.id} bar={false}/>)
         if (this.state.isConfirmed === false) ConfirmeChecker = (<Alert severity="error" style={{ marginBottom: '20px' }}>Confirmé Votre Email !</Alert>)
-        isAuth = (
-          <div>
-            { this.state.edit === true && (
-                <Button variant="contained" onClick={this.onSave} style={{ backgroundColor: '#191919', color: '#fbcf36' }}>
-                  Enregistrer
-                </Button>
-              )
-            }
-            { this.state.edit === false && (
-                <Button variant="contained" onClick={this.onEdit} style={{ backgroundColor: '#191919', color: '#fbcf36' }}>
-                  modifier Profile
-                </Button>
-              )
-            }
-          </div>
-        )
       }
   
       return (
@@ -408,7 +337,6 @@ class Profile extends Component {
           <div className="container center">
             <h1><b>{this.state.fullName} {validIcon}</b></h1>
             <h5 style={{ marginBottom: '15px' }}>{this.state.type}</h5>
-            {isAuth}
             <br/>
           </div>
           <div className="container-fluid">
@@ -418,20 +346,44 @@ class Profile extends Component {
               <Results 
                 wilaya={this.state.wilaya} 
                 style={{ width:'100%' }}
-                edit={this.state.edit}
               />
               <br/>
-              { this.state.edit === true && (
-                  <div>
-                    { this.state.prestations[0] && (
-                      <>
-                        <Prestations prestations={this.state.prestations} editable={2}/>
-                      </>
-                    )}
-                  </div>
-                )
-              }
-              { this.state.edit === false && (
+              <div>
+                { this.state.prestations[0] && (
+                  <>
+                    <Prestations prestations={this.state.prestations} editable={1}/>
+                  </>
+                )}
+              </div>
+              <Description
+                description={this.state.description} 
+                style={{ width:'100%' }}
+              />
+              <br/>
+              { this.state.videos[0] && (
+                <Videos videos={this.state.videos}/>
+              )}
+              { this.state.photos[0] && (
+                <Photos photos={this.state.photos}/>
+              )}
+              <CalendarPaper/>
+            </Hidden>
+            <Hidden xsDown implementation="css">
+              <div className="row">
+                <div className="col-md-4">
+                  <Results 
+                    wilaya={this.state.wilaya} 
+                    style={{ width:'100%' }}
+                  />
+                  <br/>
+                  <Description
+                    description={this.state.description} 
+                    style={{ width:'100%' }}
+                  />
+                  <br/>
+                  <CalendarPaper/>
+                </div>
+                <div className="col-md">
                   <div>
                     { this.state.prestations[0] && (
                       <>
@@ -439,126 +391,14 @@ class Profile extends Component {
                       </>
                     )}
                   </div>
-                )
-              }
-              <Description
-                description={this.state.description} 
-                style={{ width:'100%' }}
-                edit={this.state.edit}
-              />
-              <br/>
-              { this.state.edit === true && (
-                  <div>
-                    { this.state.videos[0] && (
-                      <>
-                        <Videos videos={this.state.videos} editable={true}/>
-                      </>
-                    )}
-                  </div>
-                )
-              }
-              { this.state.edit === false && (
-                  <div>
-                    { this.state.videos[0] && (
-                      <>
-                        <Videos videos={this.state.videos}/>
-                      </>
-                    )}
-                  </div>
-                )
-              }
-              { this.state.edit === true && (
-                  <>
-                    { this.state.photos[0] && (
-                      <Photos photos={this.state.photos} editable={true}/>
-                    )}
-                  </>
-                )
-              }
-              { this.state.edit === false && (
-                  <>
-                    { this.state.photos[0] && (
-                      <Photos photos={this.state.photos}/>
-                    )}
-                  </>
-                )
-              }
-              <CalendarPaper/>
-            </Hidden>
-            <Hidden xsDown implementation="css"> {/* Desktop & Tablet */}
-              <div className="row">
-                <div className="col-md-4">
-                  <Results 
-                    wilaya={this.state.wilaya} 
-                    style={{ width:'100%' }}
-                    edit={this.state.edit}
-                  />
-                  <br/>
-                  <Description
-                    description={this.state.description} 
-                    style={{ width:'100%' }}
-                    edit={this.state.edit}
-                  />
-                  <br/>
-                  <CalendarPaper/>
-                </div>
-                <div className="col-md">
-                  { this.state.edit === true && (
-                      <div>
-                        { this.state.prestations[0] && (
-                          <>
-                            <Prestations prestations={this.state.prestations} editable={2}/>
-                          </>
-                        )}
-                      </div>
-                    )
-                  }
-                  { this.state.edit === false && (
-                      <div>
-                        { this.state.prestations[0] && (
-                          <>
-                            <Prestations prestations={this.state.prestations} editable={1}/>
-                          </>
-                        )}
-                      </div>
-                    )
-                  }
-                  { this.state.edit === true && (
-                      <div>
-                        { this.state.videos[0] && (
-                          <>
-                            <Videos videos={this.state.videos} editable={true}/>
-                          </>
-                        )}
-                      </div>
-                    )
-                  }
-                  { this.state.edit === false && (
-                      <div>
-                        { this.state.videos[0] && (
-                          <>
-                            <Videos videos={this.state.videos}/>
-                          </>
-                        )}
-                      </div>
-                    )
-                  }
-                  { this.state.edit === true && (
-                      <>
-                        { this.state.photos[0] && (
-                          <Photos photos={this.state.photos} editable={true}/>
-                        )}
-                      </>
-                    )
-                  }
-                  { this.state.edit === false && (
-                      <>
-                        { this.state.photos[0] && (
-                          <Photos photos={this.state.photos}/>
-                        )}
-                      </>
-                    )
-                  }
+                  { this.state.videos[0] && (
+                    <>
+                      <Videos videos={this.state.videos}/>
+                    </>
+                  )}
+                  { this.state.photos[0] && (
+                    <Photos photos={this.state.photos}/>
+                  )}
                 </div>
               </div>
             </Hidden>

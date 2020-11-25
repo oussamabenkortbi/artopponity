@@ -78,6 +78,7 @@ class EditPrestation extends Component {
                             style={{height: "150px"}}
                             name="description"
                             type="textarea"
+                            rows="4" cols="50" maxlength="200"
                         />
                         <span className="red-text">{errors.description}</span>
                     </div>

@@ -139,22 +139,24 @@ function EditProfile(props) {
     
     const BtnChecker = () => {
 
-        if (localStorage.getItem('currentBtn')) {
-            if (localStorage.getItem('currentBtn') === 0) return (<EditArtistProfile/>)
-            if (localStorage.getItem('currentBtn') === 5) return (<EditArtistInfo/>)
-            if (localStorage.getItem('currentBtn') === 1) return (<EditPrestations/>)
-            if (localStorage.getItem('currentBtn') === 2) return (<EditVideos _id={user.id} />)
-            if (localStorage.getItem('currentBtn') === 3) return (<EditGallery id={user.id} type={3}/>)
-            else return (<EditArtistProfile/>)
-        }
-        else {
-            if (btn0 === true) return (<EditArtistProfile/>)
-            if (btn5 === true) return (<EditArtistInfo/>)
-            if (btn1 === true) return (<EditPrestations/>)
-            if (btn2 === true) return (<EditVideos _id={user.id} />)
-            if (btn3 === true) return (<EditGallery id={user.id} type={3}/>)
-            else return (<EditArtistProfile/>)
-        }
+        // if (btn0 === true) return (<EditArtistProfile/>)
+        // if (btn5 === true) return (<EditArtistInfo/>)
+        // if (btn1 === true) return (<EditPrestations/>)
+        // if (btn2 === true) return (<EditVideos _id={user.id} />)
+        // if (btn3 === true) return (<EditGallery id={user.id} type={3}/>)
+        // else return (<EditArtistProfile/>)
+        if (localStorage.getItem('currentBtn') === '0') return (<EditArtistProfile/>)
+        if (localStorage.getItem('currentBtn') === '5') return (<EditArtistInfo/>)
+        if (localStorage.getItem('currentBtn') === '1') return (<EditPrestations/>)
+        if (localStorage.getItem('currentBtn') === '2') return (<EditVideos _id={user.id} />)
+        if (localStorage.getItem('currentBtn') === '3') return (<EditGallery id={user.id} type={3}/>)
+        if (btn0 === true) return (<EditArtistProfile/>)
+        if (btn5 === true) return (<EditArtistInfo/>)
+        if (btn1 === true) return (<EditPrestations/>)
+        if (btn2 === true) return (<EditVideos _id={user.id} />)
+        if (btn3 === true) return (<EditGallery id={user.id} type={3}/>)
+        else return (<EditArtistProfile/>)
+
     }
 
     const drawer = (
@@ -186,9 +188,12 @@ function EditProfile(props) {
     const container = window !== undefined ? () => window().document.body : undefined;
 
     if (isConfirmed === false) return (
-        <div className="container center" style={{ height: '100vh', paddingTop: '30vh' }}>
-            <h2><b>Inscription effectuée avec succes</b></h2>
+        <div className="container center" style={{ height: '100vh', paddingTop: '30vh', maxWidth: '700px' }}>
+            <h2><b>Inscription effectuée avec succés</b></h2>
+            <br/>
             <h5><b>Confirmez Votre Email</b></h5>
+            <br/>
+            <p>si vous ne trouvez pas le mail de confirmation sur votre boîte de réception, veuillez vérifier la section spam</p>
         </div>
     )
     

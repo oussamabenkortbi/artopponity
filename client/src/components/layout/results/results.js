@@ -7,7 +7,7 @@ export default function Results() {
     const [ artists, setArtists ] = React.useState([]);
 
     React.useEffect(() => {
-        axios.get("/api/artists/getArtistList")
+        axios.post("/api/artists/getArtistList")
             .then(res => {
                 setArtists(res.data.artists);
             }).catch(e => console.log(e));

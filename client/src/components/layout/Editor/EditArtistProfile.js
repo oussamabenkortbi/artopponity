@@ -50,10 +50,10 @@ class EditArtistProfile extends Component {
             ;
 
         axios.post("/api/photos/getProfilePic", { artist: user.id }) // get photos
-            .then(res => { this.setState({ profilePic: res.data.photo.image }) })
+            .then(res => { if (res.data.photo) this.setState({ profilePic: res.data.photo.image }) })
             .catch(e => console.log(e))
         axios.post("/api/photos/getCoverPic", { artist: user.id }) // get photos
-            .then(res => { this.setState({ coverPic: res.data.photo.image }) })
+            .then(res => { if (res.data.photo) this.setState({ coverPic: res.data.photo.image }) })
             .catch(e => console.log(e))
     }
     

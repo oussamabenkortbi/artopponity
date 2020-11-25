@@ -65,7 +65,7 @@ export default function EditPhotos({id, type, photo}) {
         e.preventDefault();
         if (!PreviewSource) return;
         if (!photo) return;
-        if (!OldPreviewSource) return;
+        // if (!OldPreviewSource) return;
         editImage(PreviewSource);
     }
 
@@ -134,7 +134,7 @@ export default function EditPhotos({id, type, photo}) {
                 <div className="row">
                     <Button 
                         variant="contained" 
-                        onClick={onEditSubmit}
+                        onClick={onSubmit} //onEditSubmit
                         style={{ backgroundColor: '#191919', color: '#fbcf36' }}
                         >
                         Enregistrer
@@ -189,7 +189,7 @@ export default function EditPhotos({id, type, photo}) {
                         type="file"
                         name="image"
                         onChange={FileInputChange}
-                        required
+                        // required
                     />
                     <br/>
                     <div style={{ paddingTop: '10px'}}></div>

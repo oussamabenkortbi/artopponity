@@ -28,7 +28,7 @@ router.post('/send', (req, res) => {
         from: 'contact@branchiny.com',
         to : user.email,
         subject : "Vérifier votre adresse émail",
-        html : "Bonjour,<br> Veuillez cliquer sur le lien pour vérifier votre email.<br><a href="+link+">Cliquez ici pour vérifier</a><br>Cordialement",
+        html : "Bonjour,<br>merci de rejoindre á branchiny,<br>Veuillez cliquer sur le lien pour vérifier votre email.<br><a href="+link+">Cliquez ici pour vérifier</a><br>Artistiquement votre",
     }
     
     transporter.sendMail(mailOptions, function(error, info){
@@ -91,13 +91,13 @@ router.post('/ForgotPassword', (req, res) => {
                                 from: 'contact@branchiny.com',
                                 to : req.body.email,
                                 subject : "Mot de pass oublié",
-                                html : "Bonjour,<br> Votre mot de passe temporaire est <b>"+tmp+"</b>.<br>Veuillez changer votre mot de passe en moins de 24H. <br><a href="+link+"></a><br>Cordialement"
+                                html : "Bonjour,<br> Votre mot de passe temporaire est <b>"+tmp+"</b>.<br>Veuillez changer votre mot de passe en moins de 24H. <br><a href="+link+"></a><br>Artistiquement votre"
                             }
                         
                             transporter.sendMail(mailOptions, function(error, info){
                                 if (error) res.status(400).json(error);
                                 else {
-                                    errors.email = "Un mot de passe temporaire a été envoyé à votre email, Veuillez changer votre mot de passe en moins de 24H.";
+                                    errors.email = "Un mot de passe temporaire a été envoyé à votre email, Veuillez changer votre mot de passe en moins de 24H. si vous ne trouvez pas le mail de confirmation sur votre boîte de réception, veuillez vérifier la section spam";
                                     res.status(400).json(errors);
                                 }    
                             });

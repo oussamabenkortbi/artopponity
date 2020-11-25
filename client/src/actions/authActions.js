@@ -41,56 +41,13 @@ export const registerUser = (userData) => dispatch => {
                     const decoded = jwt_decode(token);
                     // Set current user
                     dispatch(setCurrentUser(decoded));
+                    // reload page
+                    window.location.reload();
                   })
                   .catch(err => console.log(err));
               }).catch(err => console.log(err))
           }
-          // if (userData.type === "Client") {
-          //   axios.post("/api/artists/registerArtist", newData)
-          //     .then(() => {
-          //       axios.post("/api/users/login", userData)
-          //         .then(res => {
-          //           // Set token to localStorage
-          //           const { token } = res.data;
-          //           localStorage.setItem("jwtToken", token);
-          //           // Set token to Auth header
-          //           setAuthToken(token);
-          //           // Decode token to get user data
-          //           const decoded = jwt_decode(token);
-          //           // Set current user
-          //           dispatch(setCurrentUser(decoded));
-          //         })
-          //         .catch(err => console.log(err));
-          //     }).catch(err => console.log(err))
-          // }
-          // if (userData.type === "Admin") {
-          //   axios.post("/api/artists/registerArtist", newData)
-          //     .then(() => {
-          //       axios.post("/api/users/login", userData)
-          //         .then(res => {
-          //           // Set token to localStorage
-          //           const { token } = res.data;
-          //           localStorage.setItem("jwtToken", token);
-          //           // Set token to Auth header
-          //           setAuthToken(token);
-          //           // Decode token to get user data
-          //           const decoded = jwt_decode(token);
-          //           // Set current user
-          //           dispatch(setCurrentUser(decoded));
-          //         })
-          //         .catch(err => console.log(err));
-          //     }).catch(err => console.log(err))
-          // }
         }).catch(err => console.log(err))
-      
-      // if (userData.type === "Client") {
-      //   axios.post("/api/clients/addClient", res.data)
-      //   .catch(err => console.log(err))
-      // }
-      // if (userData.type === "Admin") {
-      //   axios.post("/api/admins/addAdmin", res.data)
-      //   .catch(err => console.log(err))
-      // }
     })
     .catch(err => 
       dispatch({
@@ -104,7 +61,6 @@ export const registerUser = (userData) => dispatch => {
 export const updatePassword = (userData) => dispatch => {
   axios
     .post("/api/users/updatePassword", userData)
-    .then(() => console.log("success"))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

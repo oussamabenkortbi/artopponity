@@ -141,7 +141,10 @@ router.post("/updatePassword", (req, res) => {
             user.password = hash;
             user
               .save()
-              .then(() => res.json({ success: true }))
+              .then(() => {
+                errors.changed = "Votre mot de pass à été modifer"
+                res.status(400).json(errors);
+              })
               .catch(err => console.log(err));
           });
         });

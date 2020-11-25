@@ -44,7 +44,7 @@ router.post("/getInfoArtists", (req, res) => {
   });
 })
 
-router.get("/getArtistList", (req, res) => {
+router.post("/getArtistList", (req, res) => {
   Artist.find({ 
     $and: [ 
       { fullName: { $ne: null } },
@@ -52,15 +52,16 @@ router.get("/getArtistList", (req, res) => {
       { wilaya: { $ne: null } },
       { dicipline: { $ne: null } },
     ]}, {})
-    // .then(artists => { res.json({ artists }); })
-    .then(artists => { res.json({ artists }); })
+    .then(artists => { res.status(200).json({ artists }); })
+    .catch(err => console.log(err))
 })
 
 router.post("/FindArtist", (req, res) => {
   Artist.find({ 
     $and: [ 
       { wilaya: req.body.wilaya }, 
-      { type: req.body.type },
+      { eventType: req.body.type },
+      // plus de 75% de progress
     ]}, {_id: 0, __v: 0})
     .then(artist => { res.json({ artist }) });
 })

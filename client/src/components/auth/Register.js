@@ -129,6 +129,10 @@ class Register extends Component {
 
   render() {
     const { errors } = this.state;
+
+    // const Types = () = {
+    //   if(selectedIndexAccount === 0) return
+    // }
     
     // const success = true;
     
@@ -142,48 +146,50 @@ class Register extends Component {
                 <b>Inscrivez</b> Vous
               </h3>
               <br/>
-              <div className="container">
-                <div className="row">
-                  <DropdownButton onClick={this.handleClickListItemAccount} id="dropdown-item-button" variant="danger" title={this.state.labelAccount}></DropdownButton>
-                  <Menu
-                    id="lock-menu-account"
-                    anchorEl={this.state.anchorElAccount}
-                    keepMounted
-                    open={Boolean(this.state.anchorElAccount)}
-                    onClose={this.handleCloseAccount}
-                  >
-                    {AccountTypes.map((option, index) => (
-                      <MenuItem
-                      key={option}
-                      disabled={index === 1 || index === 2 || index === 3 || index === 4}
-                      selected={index === this.state.selectedIndexAccount}
-                      onClick={(event) => this.handleMenuItemClickAccount(event, index)}
-                      >
-                        {option}
-                      </MenuItem>
-                    ))}
-                  </Menu>
-                  <div className="Button-Padding"><br/></div>
-                  <DropdownButton onClick={this.handleClickListItem} id="dropdown-item-button" variant="danger" title={this.state.label}></DropdownButton>
-                  <Menu
-                    id="lock-menu"
-                    anchorEl={this.state.anchorEl}
-                    keepMounted
-                    open={Boolean(this.state.anchorEl)}
-                    onClose={this.handleClose}
-                  >
-                    {Deciplines.map((option, index) => (
-                      <MenuItem
-                      key={option}
-                      // disabled={index === 0}
-                      selected={index === this.state.selectedIndex}
-                      onClick={(event) => this.handleMenuItemClick(event, index)}
-                      >
-                        {option}
-                      </MenuItem>
-                    ))}
-                  </Menu>
-                </div>
+              <div className="container-fluid">
+                <DropdownButton onClick={this.handleClickListItemAccount} id="dropdown-item-button" variant="danger" title={this.state.labelAccount}></DropdownButton>
+                <Menu
+                  id="lock-menu-account"
+                  anchorEl={this.state.anchorElAccount}
+                  keepMounted
+                  open={Boolean(this.state.anchorElAccount)}
+                  onClose={this.handleCloseAccount}
+                >
+                  {AccountTypes.map((option, index) => (
+                    <MenuItem
+                    key={option}
+                    disabled={index === 1 || index === 2 || index === 3 || index === 4}
+                    selected={index === this.state.selectedIndexAccount}
+                    onClick={(event) => this.handleMenuItemClickAccount(event, index)}
+                    >
+                      {option}
+                    </MenuItem>
+                  ))}
+                </Menu>
+                <div className="Button-Padding"><br/></div>
+                { this.state.isAccountSelected === true && (
+                  <div>
+                    <DropdownButton onClick={this.handleClickListItem} id="dropdown-item-button" variant="danger" title={this.state.label}></DropdownButton>
+                    <Menu
+                      id="lock-menu"
+                      anchorEl={this.state.anchorEl}
+                      keepMounted
+                      open={Boolean(this.state.anchorEl)}
+                      onClose={this.handleClose}
+                    >
+                      {Deciplines.map((option, index) => (
+                        <MenuItem
+                        key={option}
+                        // disabled={index === 0}
+                        selected={index === this.state.selectedIndex}
+                        onClick={(event) => this.handleMenuItemClick(event, index)}
+                        >
+                          {option}
+                        </MenuItem>
+                      ))}
+                    </Menu>
+                  </div>
+                )}
                 { this.state.showMessages === true && (
                   <div>
                     { this.state.isDiciplineSelected === false && 

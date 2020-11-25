@@ -79,13 +79,14 @@ class EditPrestations extends Component {
                         />
                     </div>
                     <div className="Button-Margin">
-                        <label htmlFor="description" style={{ color: '#191919' }}>Description</label>
+                        <label htmlFor="description" style={{ color: '#191919' }}>Description (en 3 lignes)</label>
                         <textarea 
                             onChange={this.onChange}
                             type="textarea"
                             value={this.state.description}
                             style={{height: "150px"}}
                             name="description"
+                            rows="4" cols="50" maxlength="200"
                         />
                     </div>
                     <div>

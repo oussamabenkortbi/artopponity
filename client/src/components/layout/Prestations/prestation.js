@@ -130,14 +130,14 @@ export default function Result({prestation, editable}) {
                     <div style={{ flex: '20%' }}></div>
                 </div>
                 <div style={{ display: 'flex', flexWrap: 'wrap'}}>
-                    <div style={{ display: 'inline-flex', flexWrap: 'wrap', gap: '30px', flex: '80%' }}>
+                    <div style={{ display: 'inline-flex', flexWrap: 'wrap', gap: '30px', flex: '70%' }}>
                         <h5 className="moneyicon"><FaMoneyBillAlt className="react-icons"/><b> {prestation.price} DA</b></h5><p className="description money">prix</p>
                         <h5 className="timeicon"><CgTimelapse className="react-icons"/><b> {prestation.time} MIN</b></h5><p className="description time">time</p>
                         <h5 className="icon"><BsFillPeopleFill className="react-icons"/><b> {prestation.artists}</b></h5>
                         <h5 className="icon"><FaVectorSquare className="react-icons"/><b> {prestation.space} M²</b></h5>
                         <h5 className="icon"><GiSandsOfTime className="react-icons"/><b> {prestation.prepareTime} MIN</b></h5>
                     </div>
-                    <div style={{ flex: '25%', textAlign: 'right' }}>
+                    <div style={{ flex: '30%', textAlign: 'right' }}>
                         <EditChecker/>
                     </div>
                 </div>
