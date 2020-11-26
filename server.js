@@ -56,7 +56,7 @@ app.use("/api/admins", admins);
 app.use("/api/clients", clients);
 app.use("/api/prestations", prestations);
 app.use("/api/videos", videos);
-app.use("/verify", emails)
+app.use("/api/verify", emails)
 app.use("/api/photos", photos);
 
 const port = process.env.PORT || 5000;

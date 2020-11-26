@@ -31,6 +31,9 @@
     "passport-jwt": "^4.0.0",
     "validator": "^13.1.17"
   },
+  "proxy": {
+    "target": "http://localhost:5000"
+  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "nodemon": "^2.0.6"

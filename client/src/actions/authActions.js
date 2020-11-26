@@ -25,7 +25,7 @@ export const registerUser = (userData) => dispatch => {
 
       const newData = Object.assign(Data, userData);
 
-      axios.post("/verify/send", newData)
+      axios.post("/api/verify/send", newData)
         .then(() => {
           if (userData.type === "Artist") {
             axios.post("/api/artists/registerArtist", newData)
@@ -120,7 +120,7 @@ export const logoutUser = () => dispatch => {
 };
 
 export const restorePassword = (user) => dispatch => {
-  axios.post("/verify/ForgotPassword", user)
+  axios.post("/api/verify/ForgotPassword", user)
     .catch(err => 
       dispatch({
         type: "GET_ERRORS",
