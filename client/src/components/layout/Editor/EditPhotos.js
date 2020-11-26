@@ -59,14 +59,8 @@ export default function EditPhotos({id, type, photo}) {
     const onSubmit = (e) => {
         e.preventDefault();
         if (!PreviewSource) return;
-        uploadImage(PreviewSource);
-    }
-    const onEditSubmit = (e) => {
-        e.preventDefault();
-        if (!PreviewSource) return;
-        if (!photo) return;
-        // if (!OldPreviewSource) return;
-        editImage(PreviewSource);
+        if (!photo) uploadImage(PreviewSource);
+        if (photo) editImage(PreviewSource);
     }
 
     const uploadImage = async (base64Encoded) => {

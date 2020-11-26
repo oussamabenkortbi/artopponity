@@ -12,10 +12,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Prestations from './Prestations/prestations';
 import Videos from './Videos/videos';
 import Photos from './Gallery/Photos';
-import EditArtistInfo from './Editor/EditArtistInfo'
 
 import Alert from '@material-ui/lab/Alert';
-import { Dialog, Hidden, Paper, Button } from '@material-ui/core'
+import { Hidden, Paper } from '@material-ui/core'
 
 import { FaCheckCircle, FaMapMarkedAlt, FaMoneyBillAlt, FaRegEye } from "react-icons/fa";
 import { BsFillPeopleFill } from "react-icons/bs";

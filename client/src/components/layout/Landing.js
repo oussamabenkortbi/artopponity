@@ -97,7 +97,7 @@ class Landing extends Component {
 
     let AuthCheck;
     if(this.props.auth.isAuthenticated === false) AuthCheck = (
-      <div style={{ minHeight: '130vh', minHeight: "100vh", maxHeight: "200vh", backgroundColor: '#fbcf36' }}>
+      <div style={{ minHeight: "100vh", maxHeight: "200vh", backgroundColor: '#fbcf36' }}>
         <div className="container center" style={{ marginTop: '50px', backgroundColor: '#fbcf36' }}>
           <div className="row">
             <div className="col-md">

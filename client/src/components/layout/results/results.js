@@ -12,29 +12,18 @@ export default function Results() {
                 setArtists(res.data.artists);
             }).catch(e => console.log(e));
     }, []);
-  
-    // const res = (
-    //     <div>
-    //         {   
-    //             artists.map(
-    //                 artist => <Result artist={artist} key={artist.fullName}/>
-    //             )
-    //         }
-    //     </div>
-    // )
-
-    let number;
-    if (artists[0]) {
-        if (artists.length > 9) number = (
-            <h5 className="center-align">
-                {artists.length} Artist Deja Inscrit
-            </h5>
-        )
-    }
 
     return (
         <div className="container-fluid" style={{ textAlign: 'center' }}>
-            {number}
+            { artists[0] && (
+                <div>
+                    { artists.length > 9 && (
+                        <h5 className="center-align">
+                            {artists.length} Artist Deja Inscrit
+                        </h5>
+                    )}
+                </div>
+            )}
             <div className="row" style={{ display: 'flex', flexWrap: 'wrap', textAlign: 'center', justifyContent: 'space-between' }}>
                 { artists[0] && (
                     <Result artist={artists[0]} key={artists[0].fullName}/>
