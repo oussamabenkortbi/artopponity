@@ -22,7 +22,7 @@ router.post('/send', (req, res) => {
     }
     
     host = req.get('host');
-    link = "http://" + req.get('host') + "/verify?id=" + user._id;
+    link = "https://branchiny.com/api/verify?id=" + user._id;
     
     mailOptions = {
         from: 'contact@branchiny.com',
@@ -43,7 +43,7 @@ router.get('/', (req,res) => {
             if (user) {
                 user.isConfirmed = true;
                 user.save().then( () => {
-                    res.status(200).redirect('http://localhost:3000/login');
+                    res.status(200).redirect('http://branchiny.com/login');
                 })
             }
             else {
