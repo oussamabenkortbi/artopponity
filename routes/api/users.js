@@ -172,7 +172,7 @@ router.post("/isConfirmed", (req, res) => {
 
   User.findOne({ _id: req.body._id }, { isConfirmed: 1 })
     .then(user => {
-      res.json({ isConfirmed: user.isConfirmed });
+      if (user) res.json({ isConfirmed: user.isConfirmed });
     }).catch(err => console.log(err))
 })
 

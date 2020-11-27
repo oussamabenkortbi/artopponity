@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const nodemailer = require('nodemailer');
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const keys = require("../../config/keys");
 
 const User = require("../../models/User");
 
@@ -16,34 +18,51 @@ const transporter = nodemailer.createTransport({
 
 router.post('/send', (req, res) => {
 
-    let user = {
+    const errors = {}
+
+    const user = {
         _id: req.body._id,
         email: req.body.email
     }
     
-    host = req.get('host');
-    link = "http://" + req.get('host') + "/verify?id=" + user._id;
-    
-    mailOptions = {
-        from: 'contact@branchiny.com',
-        to : user.email,
-        subject : "Vérifier votre adresse émail",
-        html : "Bonjour,<br>merci de rejoindre á branchiny,<br>Veuillez cliquer sur le lien pour vérifier votre email.<br><a href="+link+">Cliquez ici pour vérifier</a><br>Artistiquement votre",
+    const link = "http://branchiny.com/api/verify?id="
+    const payload = {
+        id: user._id
     }
+    jwt.sign(
+        payload,
+        keys.secretOrKey,
+        {
+          expiresIn: 86400 // 1 day in seconds
+        },
+        (err, token) => {
+            mailOptions = {
+                from: 'contact@branchiny.com',
+                to : user.email,
+                subject : "Vérifier votre adresse émail",
+                html : "Bonjour,<br>merci de rejoindre á branchiny,<br>Veuillez cliquer sur le lien pour vérifier votre email.<br><a href="+link+token+">Cliquez ici pour vérifier</a><br>Artistiquement votre",
+            }
+            transporter.sendMail(mailOptions, function(error, info){
+                if (error) res.status(400).json(error);
+                else {
+                    errors.email = "Le mail de confirmation a été envoyé à votre email. si vous ne le trouvez pas, veuillez vérifier la section spam";
+                    res.status(400).json(errors)
+                }
+            });
+        }
+    )
     
-    transporter.sendMail(mailOptions, function(error, info){
-        if (error) res.status(400).json(error);
-        else res.json('Email sent: ' + info.response)
-    });
 });
 
-router.get('/', (req,res) => {
+router.get('/', (req, res) => {
+    const id = (jwt.decode(req.query.id)).id
+    
     if ((req.protocol + "://" + req.get('host') ) == ("http://" + req.get('host'))) {
-        User.findOne({ _id: req.query.id }).then(user => {
+        User.findOne({ _id: id }).then(user => {
             if (user) {
                 user.isConfirmed = true;
                 user.save().then( () => {
-                    res.status(200).redirect('http://localhost:3000/login');
+                    res.status(200).redirect('http://branchiny.com/login');
                 })
             }
             else {

@@ -11,7 +11,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { logoutUser } from "../../actions/authActions";
+import { logoutUser, confirmUser } from "../../actions/authActions";
 import Navbar from './Navbar';
 import axios from 'axios'
 
@@ -21,6 +21,8 @@ import EditPrestations from './Editor/EditPrestations';
 import EditGallery from './Editor/EditGallery';
 import EditVideos from "./Editor/EditVideos";
 import Progress from './Editor/Progress';
+
+import ConfirmEmail from './ConfirmEmail'
 
 import { GrUserSettings } from "react-icons/gr";
 import { BsInfoSquare } from "react-icons/bs";
@@ -65,9 +67,10 @@ const useStyles = makeStyles((theme) => ({
 
 function EditProfile(props) {
 
-    const { window } = props;
     const classes = useStyles();
     const theme = useTheme();
+    const { window } = props;
+
     const [mobileOpen, setMobileOpen] = React.useState(false);
     
     const [isConfirmed, setisConfirmed] = React.useState(false);
@@ -77,12 +80,12 @@ function EditProfile(props) {
     const [btn2, setBtn2] = React.useState(false);
     const [btn3, setBtn3] = React.useState(false);
     const [btn5, setBtn5] = React.useState(false);
-    
-    const { user } = props.auth;
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
+
+    const { user } = props.auth;
 
     React.useEffect(() => {
         const artist = {
@@ -94,7 +97,7 @@ function EditProfile(props) {
             })
         if (!localStorage.getItem("currentBtn")) localStorage.setItem("currentBtn", 0);
     }, [user.id]);
-    // React.useEffect()
+
     const handlebtn0 = () => {
         localStorage.setItem("currentBtn", 0);
         setBtn0(true);
@@ -139,22 +142,18 @@ function EditProfile(props) {
     
     const BtnChecker = () => {
 
-        // if (btn0 === true) return (<EditArtistProfile/>)
-        // if (btn5 === true) return (<EditArtistInfo/>)
-        // if (btn1 === true) return (<EditPrestations/>)
-        // if (btn2 === true) return (<EditVideos _id={user.id} />)
-        // if (btn3 === true) return (<EditGallery id={user.id} type={3}/>)
-        // else return (<EditArtistProfile/>)
         if (localStorage.getItem('currentBtn') === '0') return (<EditArtistProfile/>)
         if (localStorage.getItem('currentBtn') === '5') return (<EditArtistInfo/>)
         if (localStorage.getItem('currentBtn') === '1') return (<EditPrestations/>)
         if (localStorage.getItem('currentBtn') === '2') return (<EditVideos _id={user.id} />)
         if (localStorage.getItem('currentBtn') === '3') return (<EditGallery id={user.id} type={3}/>)
+
         if (btn0 === true) return (<EditArtistProfile/>)
         if (btn5 === true) return (<EditArtistInfo/>)
         if (btn1 === true) return (<EditPrestations/>)
         if (btn2 === true) return (<EditVideos _id={user.id} />)
         if (btn3 === true) return (<EditGallery id={user.id} type={3}/>)
+
         else return (<EditArtistProfile/>)
 
     }
@@ -188,13 +187,7 @@ function EditProfile(props) {
     const container = window !== undefined ? () => window().document.body : undefined;
 
     if (isConfirmed === false) return (
-        <div className="container center" style={{ height: '100vh', paddingTop: '30vh', maxWidth: '700px' }}>
-            <h2><b>Inscription effectuée avec succés</b></h2>
-            <br/>
-            <h5><b>Confirmez Votre Email</b></h5>
-            <br/>
-            <p>si vous ne trouvez pas le mail de confirmation sur votre boîte de réception, veuillez vérifier la section spam</p>
-        </div>
+        <ConfirmEmail/>
     )
     
     return (
@@ -277,6 +270,7 @@ function EditProfile(props) {
 
 EditProfile.propTypes = {
     logoutUser: PropTypes.func.isRequired,
+    confirmUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired
 };
 
@@ -287,5 +281,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    { logoutUser }
+    { logoutUser, confirmUser }
 )(withRouter(EditProfile));

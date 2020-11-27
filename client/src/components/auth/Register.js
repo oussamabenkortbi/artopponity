@@ -12,7 +12,13 @@ import { Checkbox, FormControlLabel, Menu, MenuItem } from '@material-ui/core';
 import DropdownButton from 'react-bootstrap/DropdownButton'
 
 const AccountTypes = [
-  'Artist', 'Client', 'Manager', 'Studio', "Ecole d'art"
+  'Artist', 
+  'Client', 
+  'Manager', 
+  'Studio', 
+  "Ecole d'art",
+  'Salle de spectacle',
+  'Prèstataire technique'
 ]
 
 class Register extends Component {
@@ -77,7 +83,7 @@ class Register extends Component {
     })
   }
 
-  onSubmit = e => {
+  onRegister = e => {
     e.preventDefault();
     if (this.state.isDiciplineSelected === true && this.state.isAccountSelected === true && this.state.agree === true) {
       const newUser = {
@@ -89,7 +95,7 @@ class Register extends Component {
         dicipline: this.state.label,
         type: this.state.labelAccount,
       };
-      this.props.registerUser(newUser, this.props.history);
+      this.props.registerUser(newUser);
     } else this.setState({ showMessages: true })
   };
 
@@ -129,19 +135,13 @@ class Register extends Component {
 
   render() {
     const { errors } = this.state;
-
-    // const Types = () = {
-    //   if(selectedIndexAccount === 0) return
-    // }
-    
-    // const success = true;
     
     return (
       <div className="App container" style={{ height: "100%", maxWidth: '500px' }}>
         <div className="row">
           <div className="col">
             <br/>
-            <form onSubmit={this.onSubmit}>
+            <form onSubmit={this.onRegister}>
               <h3 className="center">
                 <b>Inscrivez</b> Vous
               </h3>
@@ -158,7 +158,7 @@ class Register extends Component {
                   {AccountTypes.map((option, index) => (
                     <MenuItem
                     key={option}
-                    disabled={index === 1 || index === 2 || index === 3 || index === 4}
+                    disabled={index === 1 || index === 2 || index === 3 || index === 4 || index === 5 || index === 6}
                     selected={index === this.state.selectedIndexAccount}
                     onClick={(event) => this.handleMenuItemClickAccount(event, index)}
                     >
@@ -180,7 +180,6 @@ class Register extends Component {
                       {Deciplines.map((option, index) => (
                         <MenuItem
                         key={option}
-                        // disabled={index === 0}
                         selected={index === this.state.selectedIndex}
                         onClick={(event) => this.handleMenuItemClick(event, index)}
                         >
@@ -202,7 +201,7 @@ class Register extends Component {
                   </div>
                 )}
               </div>
-              <div style={{ padding: '0px 10px' }}></div>
+              <div style={{ padding: '0px 20px' }}></div>
               <div className="input-field">
                 <input
                   required
@@ -225,6 +224,7 @@ class Register extends Component {
                   error={errors.phoneNumber}
                   id="phone"
                   type="number"
+                  min="0"
                   className={classnames("", {
                     invalid: errors.phoneNumber
                   })}

@@ -41,9 +41,9 @@ class Login extends Component {
     this.setState({ [e.target.id]: e.target.value });
   };
 
-  onSubmit = e => {
+  onLogin = e => {
     e.preventDefault();
-
+    console.log("login")
     const userData = {
       email: this.state.email,
       password: this.state.password
@@ -60,7 +60,7 @@ class Login extends Component {
       <div className="container center" style={{ height: '100%', maxWidth: '500px' }}>
         <div className="row">
           <div className="col">
-            <form onSubmit={this.onSubmit}>
+            <form onSubmit={this.onLogin}>
               <br/>
               <h4><b>rejoignez votre communauté artistique professionnelle</b></h4>
               <br/>
@@ -113,12 +113,12 @@ class Login extends Component {
                 type="submit"
                 ><b>Connexion</b>
               </Button>
-              <br/>
-              <p style={{ paddingTop: '20px' }}>mot de pass <Link style={{ color: '#ff414e' }}
-                to="/ForgotPassword">oublié?</Link>
-              </p>
-              <Popup/>
             </form>
+            <br/>
+            <p style={{ paddingTop: '20px' }}>mot de pass <Link style={{ color: '#ff414e' }}
+              to="/ForgotPassword">oublié?</Link>
+            </p>
+            <Popup/>
           </div>
         </div>
       </div>

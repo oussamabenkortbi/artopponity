@@ -30,7 +30,7 @@ export const registerUser = (userData) => dispatch => {
           if (userData.type === "Artist") {
             axios.post("/api/artists/registerArtist", newData)
               .then(() => {
-                axios.post("/api/users/login", newData)
+                axios.post("/api/users/login", userData)
                   .then(res => {
                     // Set token to localStorage
                     const { token } = res.data;
@@ -43,12 +43,22 @@ export const registerUser = (userData) => dispatch => {
                     dispatch(setCurrentUser(decoded));
                     // reload page
                     window.location.reload();
-                  })
-                  .catch(err => console.log(err));
-              }).catch(err => console.log(err))
+                  }).catch(err => console.log(err))
+              })
+              .catch(err => console.log(err))
           }
         }).catch(err => console.log(err))
     })
+    .catch(err => 
+      dispatch({
+        type: GET_ERRORS,
+        payload: err
+      })
+    )
+};
+
+export const confirmUser = (userData) => dispatch => {
+  axios.post("/api/verify/send", userData)
     .catch(err => 
       dispatch({
         type: GET_ERRORS,
@@ -71,6 +81,7 @@ export const updatePassword = (userData) => dispatch => {
 
 // Login - get user token
 export const loginUser = (userData) => dispatch => {
+  console.log("login")
   axios.post("/api/users/login", userData)
     .then(res => {
       // Set token to localStorage

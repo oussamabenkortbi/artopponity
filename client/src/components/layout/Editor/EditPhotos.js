@@ -40,7 +40,7 @@ export default function EditPhotos({id, type, photo}) {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onloadend = () => {
-            setOldPreviewSource(PreviewSource)
+            setOldPreviewSource(reader.result)
             setPreviewSource(reader.result)
         }
     }
@@ -59,8 +59,11 @@ export default function EditPhotos({id, type, photo}) {
     const onSubmit = (e) => {
         e.preventDefault();
         if (!PreviewSource) return;
-        if (!photo) uploadImage(PreviewSource);
-        if (photo) editImage(PreviewSource);
+        if (photo) {
+            if (photo.image === "") uploadImage(PreviewSource);
+            else editImage(PreviewSource);
+        }
+        else uploadImage(PreviewSource);
     }
 
     const uploadImage = async (base64Encoded) => {
