@@ -148,22 +148,24 @@ export default function EditPhotos({id, type, photo}) {
             </div>
         )
         if (state === 2) return (
-            <div>
-                <Button 
-                    variant="contained" 
-                    onClick={onEdit0}
-                    style={{ backgroundColor: '#191919', color: '#fbcf36' }}
-                    >
-                    Annuler
-                </Button>
-                <div style={{ paddingTop: '10px'}}></div>
-                <Button 
-                    variant="contained" 
-                    onClick={deletePhoto}
-                    style={{ backgroundColor: '#191919', color: '#fbcf36' }}
-                    >
-                    Supprimer
-                </Button>
+            <div className="container" style={{ margin: '10px 20px' }}>
+                <div className="row">
+                    <Button 
+                        variant="contained" 
+                        onClick={onEdit0}
+                        style={{ backgroundColor: '#191919', color: '#fbcf36' }}
+                        >
+                        Annuler
+                    </Button>
+                    <div style={{ paddingLeft: '10px'}}></div>
+                    <Button 
+                        variant="contained" 
+                        onClick={deletePhoto}
+                        style={{ backgroundColor: '#191919', color: '#fbcf36' }}
+                        >
+                        Supprimer
+                    </Button>
+                </div>
             </div>
         )
     }

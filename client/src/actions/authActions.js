@@ -26,7 +26,7 @@ export const registerUser = (userData) => dispatch => {
       const newData = Object.assign(Data, userData);
 
       axios.post("/api/verify/send", newData)
-        .then(() => {
+        .catch(() => {
           if (userData.type === "Artist") {
             axios.post("/api/artists/registerArtist", newData)
               .then(() => {
@@ -47,7 +47,7 @@ export const registerUser = (userData) => dispatch => {
               })
               .catch(err => console.log(err))
           }
-        }).catch(err => console.log(err))
+        })
     })
     .catch(err => 
       dispatch({

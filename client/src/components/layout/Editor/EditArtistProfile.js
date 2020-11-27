@@ -8,7 +8,6 @@ import Dialog from '@material-ui/core/Dialog';
 import axios from "axios";
 import classnames from "classnames";
 import EditPhotos from "./EditPhotos";
-// import UserData from '../../auth/userData'
 
 class EditArtistProfile extends Component {
 
@@ -50,10 +49,10 @@ class EditArtistProfile extends Component {
             ;
 
         axios.post("/api/photos/getProfilePic", { artist: user.id }) // get photos
-            .then(res => { if (res.data.photo) this.setState({ profilePic: res.data.photo.image }) })
+            .then(res => { if (res.data.photo) this.setState({ profilePic: res.data.photo }) })
             .catch(e => console.log(e))
         axios.post("/api/photos/getCoverPic", { artist: user.id }) // get photos
-            .then(res => { if (res.data.photo) this.setState({ coverPic: res.data.photo.image }) })
+            .then(res => { if (res.data.photo) this.setState({ coverPic: res.data.photo }) })
             .catch(e => console.log(e))
     }
     
@@ -88,10 +87,6 @@ class EditArtistProfile extends Component {
               setOpen(false);
             };
 
-            const pic = {
-                image: photo
-            }
-
             return (
               <>
                     <Button variant="contained" onClick={handleClickOpen} style={{ color: '#191919', backgroundColor: '#fbcf36' }}>modifier</Button>
@@ -99,7 +94,7 @@ class EditArtistProfile extends Component {
                         open={open}
                         onClose={handleClose}
                     >
-                        <EditPhotos id={user.id} type={type} photo={pic}/>
+                        <EditPhotos id={user.id} type={type} photo={photo}/>
                     </Dialog>
               </>
             );
@@ -122,7 +117,7 @@ class EditArtistProfile extends Component {
                         </div>
                         { this.state.coverPic && (
                             <img 
-                                src={this.state.coverPic} 
+                                src={this.state.coverPic.image} 
                                 alt="CoverPicture" 
                                 style={{ 
                                 height: "100%",
@@ -154,7 +149,7 @@ class EditArtistProfile extends Component {
                         </div>
                         { this.state.profilePic && (
                             <img 
-                                src={this.state.profilePic} 
+                                src={this.state.profilePic.image} 
                                 alt="ProfilePicture" 
                                 style={{
                                 width: "100%",
