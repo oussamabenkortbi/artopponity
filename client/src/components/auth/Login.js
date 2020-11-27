@@ -43,12 +43,10 @@ class Login extends Component {
 
   onLogin = e => {
     e.preventDefault();
-    console.log("login")
     const userData = {
       email: this.state.email,
       password: this.state.password
     }
-    
     this.props.loginUser(userData);
   };
 

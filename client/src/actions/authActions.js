@@ -81,7 +81,6 @@ export const updatePassword = (userData) => dispatch => {
 
 // Login - get user token
 export const loginUser = (userData) => dispatch => {
-  console.log("login")
   axios.post("/api/users/login", userData)
     .then(res => {
       // Set token to localStorage

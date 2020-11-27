@@ -10,8 +10,12 @@ export default function Results() {
         axios.post("/api/artists/getArtistList")
             .then(res => {
                 setArtists(res.data.artists);
+                console.log(res.data.artists.length)
             }).catch(e => console.log(e));
     }, []);
+
+    const artist1 = artists.length - 1;
+    const artist2 = artists.length;
 
     return (
         <div className="container-fluid" style={{ textAlign: 'center' }}>
@@ -25,17 +29,11 @@ export default function Results() {
                 </div>
             )}
             <div className="row" style={{ display: 'flex', flexWrap: 'wrap', textAlign: 'center', justifyContent: 'space-between' }}>
-                { artists[0] && (
-                    <Result artist={artists[0]} key={artists[0].fullName}/>
+                { artists[artist1] && (
+                    <Result artist={artists[artist1]} key={artists[artist1].fullName}/>
                 )}
-                { artists[1] && (
-                    <Result artist={artists[1]} key={artists[1].fullName}/>
-                )}
-                { artists[2] && (
-                    <Result artist={artists[2]} key={artists[2].fullName}/>
-                )}
-                { artists[3] && (
-                    <Result artist={artists[3]} key={artists[3].fullName}/>
+                { artists[artist2] && (
+                    <Result artist={artists[artist2]} key={artists[artist2].fullName}/>
                 )}
             </div>
             <br/>

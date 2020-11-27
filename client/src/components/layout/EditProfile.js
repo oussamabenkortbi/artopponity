@@ -105,6 +105,7 @@ function EditProfile(props) {
         setBtn2(false);
         setBtn3(false);
         setBtn5(false);
+        handleDrawerToggle();
     };
     const handlebtn1 = () => {
         localStorage.setItem("currentBtn", 1);
@@ -121,6 +122,7 @@ function EditProfile(props) {
         setBtn2(true);
         setBtn3(false);
         setBtn5(false);
+        handleDrawerToggle();
     };
     const handlebtn3 = () => {
         localStorage.setItem("currentBtn", 3);
@@ -129,6 +131,7 @@ function EditProfile(props) {
         setBtn2(false);
         setBtn3(true);
         setBtn5(false);
+        handleDrawerToggle();
     };
 
     const handlebtn5 = () => {
@@ -138,6 +141,7 @@ function EditProfile(props) {
         setBtn2(false);
         setBtn3(false);
         setBtn5(true);
+        handleDrawerToggle();
     };
     
     const BtnChecker = () => {

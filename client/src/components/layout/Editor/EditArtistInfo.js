@@ -139,7 +139,7 @@ function EditArtistInfo(props) {
                                 width: '100px'
                             }}
                             >
-                            modifier
+                            Enregistrer
                         </Button>
                     </form>
                 </div>
