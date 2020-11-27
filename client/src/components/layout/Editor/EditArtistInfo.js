@@ -80,6 +80,7 @@ function EditArtistInfo(props) {
                                 style={{height: "150px", maxWidth: '100%'}}
                                 name="description"
                                 type="textarea"
+                                rows="10" cols="80" maxlength="1000"
                             />
                         </div>
                         <div>
