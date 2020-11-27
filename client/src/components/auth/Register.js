@@ -14,9 +14,6 @@ import DropdownButton from 'react-bootstrap/DropdownButton'
 const AccountTypes = [
   'Artist', 
   'Client', 
-  // 'Manager', 
-  // 'Studio', 
-  // "Ecole d'art",
   'Salle de spectacle',
   'Prèstataire technique'
 ]
