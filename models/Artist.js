@@ -22,6 +22,9 @@ const ArtistSchema = new Schema({
     wilaya: {
         type: String,
     },
+    progress: {
+        type: Number,
+    },
     isValid: {
         type: Boolean,
         required: true

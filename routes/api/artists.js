@@ -57,13 +57,14 @@ router.post("/getArtistList", (req, res) => {
 })
 
 router.post("/FindArtist", (req, res) => {
-  Artist.find({ 
-    $and: [ 
-      { wilaya: req.body.wilaya }, 
-      { eventType: req.body.type },
-      // plus de 75% de progress
-    ]}, {_id: 0, __v: 0})
+  Artist.find({ progress: { $gte: 75 } }, {_id: 0, __v: 0})
     .then(artist => { res.json({ artist }) });
+})
+
+router.post("/setProgress", (req, res) => {
+  Artist.findOne({ _id: req.body._id }).then(artist => {
+    if (artist) if (req.body.progress) artist.progress = req.body.progress
+  })
 })
 
 module.exports = router;

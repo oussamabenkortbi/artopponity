@@ -74,6 +74,22 @@ export default function CustomizedProgressBars({ id, bar }) {
         if (res.data.photos[1]) { prog = prog + 5 }
         setGalleryProgress(prog)
       }).catch(e => console.log(e))    
+
+    const FirstProgress = artistProgress + prestationsProgress + videoFirstProgress + ProfilePicProgress + CoverProgress
+    const SecondProgress = prestationsSecondProgress + videoSecondProgress + GalleryProgress
+    let finalProgress;
+    if (FirstProgress >= 75) {
+      finalProgress = FirstProgress + SecondProgress;
+    }
+    else {
+      finalProgress = FirstProgress;
+    }
+    const progress = {
+      _id: id,
+      progress: finalProgress
+    }
+    axios.post("/api/artists/setProgress", progress)
+      .catch(e => console.log(e))
   }, [id]);
     
   const FirstProgress = artistProgress + prestationsProgress + videoFirstProgress + ProfilePicProgress + CoverProgress
