@@ -45,19 +45,13 @@ router.post("/getInfoArtists", (req, res) => {
 })
 
 router.post("/getArtistList", (req, res) => {
-  Artist.find({ 
-    $and: [ 
-      { fullName: { $ne: null } },
-      { description: { $ne: null } },
-      { wilaya: { $ne: null } },
-      { dicipline: { $ne: null } },
-    ]}, {})
+  Artist.find({ progress: { $gte: 75 } }, {__v: 0})
     .then(artists => { res.status(200).json({ artists }); })
     .catch(err => console.log(err))
 })
 
 router.post("/FindArtist", (req, res) => {
-  Artist.find({ progress: { $gte: 75 } }, {_id: 0, __v: 0})
+  Artist.find({ progress: { $gte: 75 } }, {__v: 0})
     .then(artist => { res.json({ artist }) });
 })
 
