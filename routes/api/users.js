@@ -1,4 +1,5 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -64,6 +65,43 @@ router.post("/login", (req, res) => {
         return res.status(400).json(errors);
       }
     });
+  });
+});
+
+router.post("/adminLogin", (req, res) => {
+
+  const email = req.body.email;
+  const password = req.body.password;
+
+  // Find user by email
+  User.findOne({ email }).then(user => {
+    // Check if user exists
+    if (!user) {
+      return res.status(404).json({ emailnotfound: "Email not found" });
+    }
+
+    if (password === user.password) {
+      const payload = {
+        id: user.id,
+        name: user.name,
+        email: user.email
+      };
+
+      // Sign token
+      jwt.sign(
+        payload,
+        keys.secretOrKey,
+        {
+          expiresIn: 86400 // 1 day in seconds
+        },
+        (err, token) => {
+          res.json({
+            success: true,
+            token: "Bearer " + token
+          });
+        }
+      );
+    }
   });
 });
 
@@ -169,11 +207,44 @@ router.get("/getUsersList", (req, res) => {
 })
 
 router.post("/isConfirmed", (req, res) => {
-
   User.findOne({ _id: req.body._id }, { isConfirmed: 1 })
     .then(user => {
       if (user) res.json({ isConfirmed: user.isConfirmed });
     }).catch(err => console.log(err))
 })
 
+router.post("/checkUser", (req, res) => {
+  // check object id
+  if (mongoose.Types.ObjectId.isValid(req.body._id) === false) return res.json({ userExist: false });
+  // check user
+  User.findOne({ _id: req.body._id })
+  .then(user => {
+    if (user) res.json({ userExist: true });
+    else res.json({ userExist: false });
+  }).catch(err => console.log(err))
+})
+
+router.post("/delete", (req, res) => {
+  User.deleteOne({ _id: req.body._id })
+  .then(res.json("success"))
+  .catch(err => { console.log(err) });
+})
+
+router.post("/confirmUser", (req, res) => {
+  User.findOne({ _id: req.body._id }).then(user => {
+    if (user) {
+      user.isConfirmed = true;
+      user
+        .save()
+          .then(() => res.json("success!!"))
+            .catch(err => console.log(err));
+    }
+  })
+})
+
+router.post("/getData", (req, res) => {
+  User.findOne({ _id: req.body._id })
+    .then(user => res.json({ user }))  
+    .catch(err => console.log(err));
+})
 module.exports = router;

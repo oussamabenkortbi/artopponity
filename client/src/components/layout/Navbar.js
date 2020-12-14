@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { logoutUser } from "../../actions/authActions";
+import { logoutUser, logoutAdmin } from "../../actions/authActions";
 import Logo from "../../components/images/logo.svg"
 import { Navbar, Nav } from 'react-bootstrap';
 import Hidden from '@material-ui/core/Hidden';
@@ -18,9 +18,27 @@ class NavbarBranchiny extends Component {
     this.props.logoutUser();
     window.location.href = '/';
   };
+  onAdminLogout = e => {
+    e.preventDefault();
+    this.props.logoutAdmin();
+    window.location.href = '/';
+  };
 
   render() {
     //if not logged in:
+    if (this.props.auth.isAdminAuthenticated === true) return (
+      <Navbar collapseOnSelect className="nav" sticky="top">
+        <Navbar.Brand href="" className="logo"><img src={Logo} alt="BRANCHINY" height="40px"/></Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="mr-auto"></Nav>
+          <Nav>
+            <a href="/AdminDashboard" style={{ color: '#191919', margin: '0px 20px', padding: '10px 0px' }}><GoSettings className="react-icons-navbar"/></a>
+            <p onClick={this.onAdminLogout} style={{ color: '#191919', paddingLeft: '15px', paddingTop: '10px' }}><BiLogOut className="react-icons-navbar"/></p>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+    )
     if (this.props.auth.isAuthenticated === false) {
       return (
         <div>
@@ -97,14 +115,16 @@ class NavbarBranchiny extends Component {
 
 NavbarBranchiny.propTypes = {
   logoutUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  logoutAdmin: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  errors: state.errors
 });
 
 export default connect(
   mapStateToProps,
-  { logoutUser }
+  { logoutUser, logoutAdmin }
 )(NavbarBranchiny);

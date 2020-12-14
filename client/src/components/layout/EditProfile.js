@@ -105,7 +105,6 @@ function EditProfile(props) {
         setBtn2(false);
         setBtn3(false);
         setBtn5(false);
-        handleDrawerToggle();
     };
     const handlebtn1 = () => {
         localStorage.setItem("currentBtn", 1);
@@ -122,7 +121,6 @@ function EditProfile(props) {
         setBtn2(true);
         setBtn3(false);
         setBtn5(false);
-        handleDrawerToggle();
     };
     const handlebtn3 = () => {
         localStorage.setItem("currentBtn", 3);
@@ -131,7 +129,6 @@ function EditProfile(props) {
         setBtn2(false);
         setBtn3(true);
         setBtn5(false);
-        handleDrawerToggle();
     };
 
     const handlebtn5 = () => {
@@ -141,7 +138,53 @@ function EditProfile(props) {
         setBtn2(false);
         setBtn3(false);
         setBtn5(true);
-        handleDrawerToggle();
+    };
+
+    const handlemobilebtn0 = () => {
+        localStorage.setItem("currentBtn", 0);
+        setBtn0(true);
+        setBtn1(false);
+        setBtn2(false);
+        setBtn3(false);
+        setBtn5(false);
+        handleDrawerToggle()
+    };
+    const handlemobilebtn1 = () => {
+        localStorage.setItem("currentBtn", 1);
+        setBtn0(false);
+        setBtn1(true);
+        setBtn2(false);
+        setBtn3(false);
+        setBtn5(false);
+        handleDrawerToggle()
+    };
+    const handlemobilebtn2 = () => {
+        localStorage.setItem("currentBtn", 2);
+        setBtn0(false);
+        setBtn1(false);
+        setBtn2(true);
+        setBtn3(false);
+        setBtn5(false);
+        handleDrawerToggle()
+    };
+    const handlemobilebtn3 = () => {
+        localStorage.setItem("currentBtn", 3);
+        setBtn0(false);
+        setBtn1(false);
+        setBtn2(false);
+        setBtn3(true);
+        setBtn5(false);
+        handleDrawerToggle()
+    };
+
+    const handlemobilebtn5 = () => {
+        localStorage.setItem("currentBtn", 5);
+        setBtn0(false);
+        setBtn1(false);
+        setBtn2(false);
+        setBtn3(false);
+        setBtn5(true);
+        handleDrawerToggle()
     };
     
     const BtnChecker = () => {
@@ -165,26 +208,50 @@ function EditProfile(props) {
     const drawer = (
         <div>
             <div className={classes.toolbar} ></div>
-            <List style={{ paddingTop: '145px' }}>
-                <ListItem button onClick={handlebtn0}>
-                    <GrUserSettings className="react-icons-bar" />
-                </ListItem>
-                <ListItem button onClick={handlebtn5}>
-                    <BsInfoSquare className="react-icons-bar" />
-                </ListItem>
-                <ListItem button onClick={handlebtn1}>
-                    <GiPartyFlags className="react-icons-bar" />
-                </ListItem>
-                <ListItem button onClick={handlebtn2}>
-                    <BsCollectionPlay className="react-icons-bar" />
-                </ListItem>
-                <ListItem button onClick={handlebtn3}>
-                    <BiPhotoAlbum className="react-icons-bar" />
-                </ListItem>
-                <ListItem>
-                    <a href="/ChangePassword" style={{ color: '#191919', padding: '0px 0px' }}><RiLockPasswordLine className="react-icons-bar" /></a>
-                </ListItem>
-            </List>
+            <Hidden smUp implementation="css">
+                <List style={{ paddingTop: '145px' }}>
+                    <ListItem button onClick={handlemobilebtn0}>
+                        <GrUserSettings className="react-icons-bar" />
+                    </ListItem>
+                    <ListItem button onClick={handlemobilebtn5}>
+                        <BsInfoSquare className="react-icons-bar" />
+                    </ListItem>
+                    <ListItem button onClick={handlemobilebtn1}>
+                        <GiPartyFlags className="react-icons-bar" />
+                    </ListItem>
+                    <ListItem button onClick={handlemobilebtn2}>
+                        <BsCollectionPlay className="react-icons-bar" />
+                    </ListItem>
+                    <ListItem button onClick={handlemobilebtn3}>
+                        <BiPhotoAlbum className="react-icons-bar" />
+                    </ListItem>
+                    <ListItem>
+                        <a href="/ChangePassword" style={{ color: '#191919', padding: '0px 0px' }}><RiLockPasswordLine className="react-icons-bar" /></a>
+                    </ListItem>
+                </List>
+            </Hidden>
+            <Hidden xsDown implementation="css">
+                <List style={{ paddingTop: '145px' }}>
+                    <ListItem button onClick={handlebtn0}>
+                        <GrUserSettings className="react-icons-bar" />
+                    </ListItem>
+                    <ListItem button onClick={handlebtn5}>
+                        <BsInfoSquare className="react-icons-bar" />
+                    </ListItem>
+                    <ListItem button onClick={handlebtn1}>
+                        <GiPartyFlags className="react-icons-bar" />
+                    </ListItem>
+                    <ListItem button onClick={handlebtn2}>
+                        <BsCollectionPlay className="react-icons-bar" />
+                    </ListItem>
+                    <ListItem button onClick={handlebtn3}>
+                        <BiPhotoAlbum className="react-icons-bar" />
+                    </ListItem>
+                    <ListItem>
+                        <a href="/ChangePassword" style={{ color: '#191919', padding: '0px 0px' }}><RiLockPasswordLine className="react-icons-bar" /></a>
+                    </ListItem>
+                </List>
+            </Hidden>
         </div>
     );
 
@@ -215,15 +282,6 @@ function EditProfile(props) {
                 </Hidden>
                 <Hidden xsDown implementation="css">
                     <Toolbar>
-                        <IconButton
-                            color="inherit"
-                            aria-label="open drawer"
-                            edge="start"
-                            onClick={handleDrawerToggle}
-                            className={classes.menuButton}
-                        >
-                            <IoMdSettings className="react-icons"/>
-                        </IconButton>
                         <Progress id={user.id} bar={true}/>
                     </Toolbar>
                 </Hidden>

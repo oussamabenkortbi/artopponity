@@ -61,6 +61,14 @@ class Profile extends Component {
     var artist = { //get id from link
       _id: this.props.id,
     };
+    // check valid id
+    axios.post("/api/users/checkUser", artist)
+      .then(res => {
+        if (res.data.userExist === false) {
+          window.location.href = "/error404"
+        }
+      }).catch(err => console.log(err))
+
     if (this.props.auth && this.props.auth.isAuthenticated === true) {
       const { user } = this.props.auth;
       if (this.props.id === user.id) { //link id vs user id 
@@ -335,7 +343,7 @@ class Profile extends Component {
           <br/>
           <div className="container center">
             <h1><b>{this.state.fullName} {validIcon}</b></h1>
-            <h5 style={{ marginBottom: '15px' }}>{this.state.type}</h5>
+            <h3 style={{ marginBottom: '15px' }}>{this.state.dicipline}</h3>
             <br/>
           </div>
           <div className="container-fluid">

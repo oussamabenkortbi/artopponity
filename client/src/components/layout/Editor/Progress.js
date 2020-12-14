@@ -35,6 +35,7 @@ export default function CustomizedProgressBars({ id, bar }) {
   const [ProfilePicProgress, setProfilePicProgress] = React.useState(0);
   const [CoverProgress, setCoverProgress] = React.useState(0);
   const [GalleryProgress, setGalleryProgress] = React.useState(0);
+  const [ValidProgress, setValidProgress] = React.useState(0);
   
 
   React.useEffect(() => {
@@ -47,17 +48,18 @@ export default function CustomizedProgressBars({ id, bar }) {
         if(res.data.artist.fullName) { prog = prog + 10 }
         if(res.data.artist.description) { prog = prog + 10 }
         if(res.data.artist.wilaya) { prog = prog + 10 }
-        if (res.data.artist.eventType.festival === true || res.data.artist.eventType.fete === true || res.data.artist.eventType.hotel === true || res.data.artist.eventType.proEvent === true || res.data.artist.eventType.animation === true || res.data.artist.eventType.publicEvent === true || res.data.artist.eventType.privateEvent === true) { prog = prog + 5 }
+        if(res.data.artist.eventType.festival === true || res.data.artist.eventType.fete === true || res.data.artist.eventType.hotel === true || res.data.artist.eventType.proEvent === true || res.data.artist.eventType.animation === true || res.data.artist.eventType.publicEvent === true || res.data.artist.eventType.privateEvent === true) { prog = prog + 5 }
         setArtistProgress(prog)
+        if(res.data.artist.isValid === true) setValidProgress(5)
       }).catch(err => console.log(err));
       
-      axios.post("/api/prestations/get", artist)
+    axios.post("/api/prestations/get", artist)
       .then(res => {
         if (res.data.prestations[0]) setPrestationsProgress(10)
-        if (res.data.prestations[1]) setPrestationsSecondProgress(10)
+        if (res.data.prestations[1]) setPrestationsSecondProgress(5)
       }).catch(err => console.log(err));
       
-      axios.post("/api/videos/get", artist)
+    axios.post("/api/videos/get", artist)
       .then(res => {
         if (res.data.videos[0]) { setVideoFirstProgress(10) }
         if (res.data.videos[1]) { setVideoSecondProgress(5) }
@@ -73,36 +75,34 @@ export default function CustomizedProgressBars({ id, bar }) {
         if (res.data.photos[0]) { prog = prog + 5 }
         if (res.data.photos[1]) { prog = prog + 5 }
         setGalleryProgress(prog)
-      }).catch(e => console.log(e))    
-
-    const FirstProgress = artistProgress + prestationsProgress + videoFirstProgress + ProfilePicProgress + CoverProgress
-    const SecondProgress = prestationsSecondProgress + videoSecondProgress + GalleryProgress
-    let finalProgress;
-    if (FirstProgress >= 75) {
-      finalProgress = FirstProgress + SecondProgress;
-    }
-    else {
-      finalProgress = FirstProgress;
-    }
-    const progress = {
-      _id: id,
-      progress: finalProgress
-    }
-    axios.post("/api/artists/setProgress", progress)
-      .catch(e => console.log(e))
+      }).catch(e => console.log(e))   
+     
   }, [id]);
-    
+
   const FirstProgress = artistProgress + prestationsProgress + videoFirstProgress + ProfilePicProgress + CoverProgress
-  const SecondProgress = prestationsSecondProgress + videoSecondProgress + GalleryProgress
+  const SecondProgress = prestationsSecondProgress + videoSecondProgress + GalleryProgress + ValidProgress
   let finalProgress;
   if (FirstProgress >= 75) {
     finalProgress = FirstProgress + SecondProgress;
     localStorage.setItem("final", finalProgress);
-    console.log(finalProgress)
+    
+    const progress = {
+        _id: id,
+        progress: finalProgress
+      }
+      axios.post("/api/artists/setProgress", progress)
+      .catch(e => console.log(e))
   }
   else {
     finalProgress = FirstProgress;
     localStorage.setItem("final", finalProgress);
+    
+    const progress = {
+        _id: id,
+        progress: finalProgress
+      }
+      axios.post("/api/artists/setProgress", progress)
+      .catch(e => console.log(e))
   }
 
     

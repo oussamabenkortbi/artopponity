@@ -46,6 +46,11 @@ router.post('/getProfilePic', (req, res) => {
         .then(photo => res.json({photo}))
     .catch(err => console.log(err))
 })
+router.post('/getProfilePicOnly', (req, res) => {
+    Photo.findOne({ $and: [ { owner: req.body.artist }, { type: 1 } ] })
+        .then(photo => res.json({photo: photo.image}))
+    .catch(err => console.log(err))
+})
 router.post('/getCoverPic', (req, res) => {
     Photo.findOne({ $and: [ { owner: req.body.artist }, { type: 2 } ] })
         .then(photo => res.json({photo}))

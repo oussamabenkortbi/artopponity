@@ -4,11 +4,10 @@ import 'react-dropdown/style.css';
 // import Dropdown from 'react-dropdown';
 // import DatePicker from "react-datepicker";
 // import "react-datepicker/dist/react-datepicker.css";
-// import { Type, Wilaya } from './Types'
+// import { Type, Wilaya } from './Types';
 
-import LoginWindow from "../auth/LoginWindow"
-// import Xlr from '../images/xlr4.png'
-import Logo from "../../components/images/logo.svg"
+import LoginWindow from "../auth/LoginWindow";
+import Logo from "../../components/images/logo.svg";
 
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -91,11 +90,14 @@ class Landing extends Component {
         onClick={()=>{this.onSearch()}}
         >CHERCHER
     </button>
-   */
+  */
 
   render(){
 
     let AuthCheck;
+    if(this.props.auth.isAdminAuthenticated === true) {
+      window.location.href = '/AdminDashboard/'
+    }
     if(this.props.auth.isAuthenticated === false) AuthCheck = (
       <div style={{ minHeight: "100vh", maxHeight: "200vh", backgroundColor: '#fbcf36' }}>
         <div className="container center" style={{ marginTop: '50px', backgroundColor: '#fbcf36' }}>
@@ -116,7 +118,8 @@ class Landing extends Component {
           {/* <Footer/> */}
         </div>
       </div>
-    ); else {
+    ); 
+    else {
       const { user } = this.props.auth;
       window.location.href = '/p/' + user.id;
     }
@@ -163,7 +166,7 @@ class Landing extends Component {
 
 Landing.propTypes = {
   logoutUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({

@@ -3,8 +3,14 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const AdminSchema = new Schema({
-    _id: {
-        type: Schema.Types.ObjectId,
+    email: {
+        type: String,
+        trim: true,
+        lowercase: true,
+        required: true
+    },
+    password: {
+        type: String,
         required: true
     },
 });

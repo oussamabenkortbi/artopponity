@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { loginUser } from "../../actions/authActions";
+import { loginUser, loginAdmin } from "../../actions/authActions";
 import Button from '@material-ui/core/Button';
 import classnames from "classnames";
 import Popup from './Popup';
@@ -26,6 +26,9 @@ class Login extends Component {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps.auth.isAdminAuthenticated) {
+      window.location.href = "/AdminDashboard/";
+    }
     if (nextProps.auth.isAuthenticated) {
       const { user } = nextProps.auth;
       window.location.href = "/p/" + user.id;
@@ -47,7 +50,8 @@ class Login extends Component {
       email: this.state.email,
       password: this.state.password
     }
-    this.props.loginUser(userData);
+    if (userData.email === "admin@branchiny.com") this.props.loginAdmin(userData);
+    else this.props.loginUser(userData);
   };
 
   render() {
@@ -126,6 +130,7 @@ class Login extends Component {
 
 Login.propTypes = {
   loginUser: PropTypes.func.isRequired,
+  loginAdmin: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -137,5 +142,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { loginUser }
+  { loginUser, loginAdmin }
 )(Login);

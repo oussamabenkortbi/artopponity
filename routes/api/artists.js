@@ -57,8 +57,33 @@ router.post("/FindArtist", (req, res) => {
 
 router.post("/setProgress", (req, res) => {
   Artist.findOne({ _id: req.body._id }).then(artist => {
-    if (artist) if (req.body.progress) artist.progress = req.body.progress
+    artist.progress = req.body.progress;
+    artist.save()
+      .then(() => res.json("success!!"))
+        .catch(err => console.log(err));
   })
+})
+
+router.post("/validateArtist", (req, res) => {
+  Artist.findOne({ _id: req.body._id }).then(artist => {
+    artist.isValid = true;
+    artist
+      .save()
+        .then(() => res.json("success!!"))
+          .catch(err => console.log(err));
+  })
+})
+
+router.post("/delete", (req, res) => {
+  Artist.deleteOne({ _id: req.body._id })
+    .then(res.json("success"))
+    .catch(err => { console.log(err) });
+})
+
+router.post("/getAll", (req, res) => {
+  Artist.find({})
+    .then(artists => { res.status(200).json({ artists }); })
+    .catch(err => console.log(err))
 })
 
 module.exports = router;
