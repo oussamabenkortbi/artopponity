@@ -68,12 +68,11 @@ function Dashboard(props) {
           Spectacle: 0,
           Animateur: 0,
         }
-        setArtists(res.data.artists)
-        res.data.artists.map(artist => {
-          axios.post("/api/photos/getProfilePicOnly", { artist: artist._id }) // get photos
-            .then(res => { 
-              if (res.data.photo) Object.assign(artist, res.data)
-            }).catch(err => console.log(err))
+        res.data.artists.map((artist, key) => {
+          axios.post("/api/users/getUserInfo", { artist: artist._id })
+          .then(res => { 
+            Object.assign(artist, res.data.user)
+          }).catch(err => console.log(err))
           switch (artist.dicipline) {
             case 'DJ': diciplines.DJ++; cptDicipline++; break;
             case 'Musiciens': diciplines.Musiciens++; cptDicipline++; break;
@@ -88,6 +87,7 @@ function Dashboard(props) {
           if (artist.progress < 75) cptProgressLessThan75++;
           else if (artist.progress >= 75) cptProgressGTE75++;
         })
+        setArtists(res.data.artists)
         setDiciplines(diciplines)
         setDiciplinesPourcentage({
           DJ: diciplines.DJ / cptDicipline * 100,
@@ -163,6 +163,8 @@ function Dashboard(props) {
       .then(() => props.history.go(0)).catch(err => console.log(err));
   }
 
+  console.log(artists)
+
   return (
     <div className="container" style={{ minHeight: '100vh', maxHeight: '700vh' }}>
       <br/>
@@ -202,6 +204,7 @@ function Dashboard(props) {
               {
                 artists.map((artist) => (
                     <Paper className={classes.paper} elevation={5}>
+                      <h5 style={{ paddingBottom: '15px'}}><b>nom: {artist.name}</b></h5>
                       <h5 style={{ paddingBottom: '15px'}}><b>nom du projet: {artist.fullName}</b></h5>
                       <h5 style={{ paddingBottom: '15px'}}><b>dicipline: {artist.dicipline}</b></h5>
                       { artist.progress && <h5 style={{ paddingBottom: '15px'}}><b>progress: {artist.progress} %</b></h5>}

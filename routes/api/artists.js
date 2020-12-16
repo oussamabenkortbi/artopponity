@@ -12,6 +12,7 @@ router.post("/registerArtist" , (req, res) => {
         phoneNumber: req.body.phoneNumber,
         dicipline: req.body.dicipline,
         eventType: req.body.eventType,
+        progress: req.body.progress,
         isValid: false,
       });
       newArtist.save()
@@ -24,6 +25,7 @@ router.post("/registerArtist" , (req, res) => {
       if (req.body.description) artist.description = req.body.description;
       if (req.body.wilaya) artist.wilaya = req.body.wilaya;
       if (req.body.isValid) artist.isValid = req.body.isValid;
+      if (req.body.progress) artist.progress = req.body.progress;
       if (req.body.dicipline) artist.dicipline = req.body.dicipline;
       if (req.body.eventType) artist.eventType = req.body.eventType;
       if (req.body.categories) artist.categories = req.body.categories;

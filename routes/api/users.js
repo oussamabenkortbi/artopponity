@@ -121,6 +121,9 @@ router.post("/register", (req, res) => {
     if (user) {
       return res.status(400).json({ email: "Email already exists" });
     } else {
+      
+      if (email === "admin@branchiny.com") return res.status(400).json({ email: "Email invalid" });
+      
       const newUser = new User({
         name: req.body.name,
         email: req.body.email,
@@ -239,6 +242,12 @@ router.post("/confirmUser", (req, res) => {
           .then(() => res.json("success!!"))
             .catch(err => console.log(err));
     }
+  })
+})
+
+router.post("/getUserInfo", (req, res) => {
+  User.findOne({ _id: req.body.artist }, { password: 0, _id: 0, __v: 0 }).then(user => {
+    res.json({ user })
   })
 })
 

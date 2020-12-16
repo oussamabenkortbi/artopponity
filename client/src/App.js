@@ -14,7 +14,7 @@ import RegisterPage from "./components/auth/RegisterPage";
 import LoginPage from "./components/auth/LoginPage";
 
 import PrivateAdminRoute from "./components/private-route/PrivateAdminRoute";
-import AdminDashboard from "./components/layout/Admin/Dashboard";
+import AdminDashboard from "./components/layout/Admin/DashboardClass";
 
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import ProfileRouter from "./components/layout/ProfileRouter";
