@@ -28,7 +28,8 @@ class NavbarBranchiny extends Component {
     //if not logged in:
     if (this.props.auth.isAdminAuthenticated === true) return (
       <Navbar collapseOnSelect className="nav" sticky="top">
-        <Navbar.Brand href="" className="logo"><img src={Logo} alt="BRANCHINY" height="40px"/></Navbar.Brand>
+        <Navbar.Brand href="" className="logo"><h1>ARTOPPONITY</h1></Navbar.Brand>
+        {/* <Navbar.Brand href="" className="logo"><img src={Logo} alt="ARTOPPONITY" height="40px"/></Navbar.Brand> */}
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto"></Nav>
@@ -44,7 +45,7 @@ class NavbarBranchiny extends Component {
         <div>
           <Hidden smUp implementation="css"> 
             <Navbar collapseOnSelect expand="true" className="nav" sticky="top">
-              <Navbar.Brand href="/" className="logo"><img src={Logo} alt="BRANCHINY" height="40px" /></Navbar.Brand>
+              <Navbar.Brand href="" className="logo"><h1>ARTOPPONITY</h1></Navbar.Brand>
               <Navbar.Toggle aria-controls="responsive-navbar-nav" />
               <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto"></Nav>
@@ -59,7 +60,7 @@ class NavbarBranchiny extends Component {
           </Hidden>
           <Hidden xsDown implementation="css"> 
             <Navbar collapseOnSelect className="nav" sticky="top">
-              <Navbar.Brand href="/" className="logo"><img src={Logo} alt="BRANCHINY" height="40px" /></Navbar.Brand>
+              <Navbar.Brand href="" className="logo"><h1>ARTOPPONITY</h1></Navbar.Brand>
               <Navbar.Toggle aria-controls="responsive-navbar-nav" />
               <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto"></Nav>
@@ -79,7 +80,7 @@ class NavbarBranchiny extends Component {
         <div>
           <Hidden smUp implementation="css">
             <Navbar collapseOnSelect expand="true" className="nav" sticky="top">
-              <Navbar.Brand href={link} className="logo"><img src={Logo} alt="BRANCHINY" height="40px"/></Navbar.Brand>
+              <Navbar.Brand href="" className="logo"><h1>ARTOPPONITY</h1></Navbar.Brand>
               <Navbar.Toggle aria-controls="responsive-navbar-nav" />
               <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto"></Nav>
@@ -95,7 +96,7 @@ class NavbarBranchiny extends Component {
           </Hidden>
           <Hidden xsDown implementation="xs">
             <Navbar collapseOnSelect className="nav" sticky="top">
-              <Navbar.Brand href={link} className="logo"><img src={Logo} alt="BRANCHINY" height="40px"/></Navbar.Brand>
+              <Navbar.Brand href="" className="logo"><h1>ARTOPPONITY</h1></Navbar.Brand>
               <Navbar.Toggle aria-controls="responsive-navbar-nav" />
               <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto"></Nav>

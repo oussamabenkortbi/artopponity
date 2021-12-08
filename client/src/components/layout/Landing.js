@@ -103,7 +103,7 @@ class Landing extends Component {
         <div className="container center" style={{ marginTop: '50px', backgroundColor: '#fbcf36' }}>
           <div className="row">
             <div className="col-md">
-              <img src={Logo} alt="BRANCHINY" width="100%" style={{ padding: '30px'}}/>
+              <h1 className="big-title">ARTOPPONITY</h1>
               <h3 style={{ paddingTop: '20px '}}>
                 <b>Nous connectons les artistes aux opportunités afin de faciliter le booking</b>
               </h3>

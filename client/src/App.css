@@ -78,8 +78,8 @@ p {
   background-color: var(--yellow);
   height: 20em;
 }
-.logo {
-  padding-bottom: 9.5px;
+.big-title {
+  font-size: 200;
 }
 input
 {
