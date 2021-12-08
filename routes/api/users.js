@@ -122,7 +122,7 @@ router.post("/register", (req, res) => {
       return res.status(400).json({ email: "Email already exists" });
     } else {
       
-      if (email === "admin@branchiny.com") return res.status(400).json({ email: "Email invalid" });
+      if (req.body.email === "admin@branchiny.com") return res.status(400).json({ email: "Email invalid" });
       
       const newUser = new User({
         name: req.body.name,
